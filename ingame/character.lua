@@ -89,7 +89,6 @@ function Ingame.Character:keepCharInMap()
 	if self.y > #self.appropriateScene.tiles[1]*Ingame.Settings.tileSize-0.1 then self.y = #self.appropriateScene.tiles[1]*Ingame.Settings.tileSize-0.1 end
 end
 
---Character.AI = {}
 function Ingame.Character:AI_think(dt)
 	self:AI_walkToGoal(dt)
 end

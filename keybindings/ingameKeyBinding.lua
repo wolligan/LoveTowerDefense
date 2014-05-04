@@ -1,6 +1,6 @@
-KeyBindings.ingameKeyBinding = {}
+KeyBindings.IngameKeyBinding = {}
 
-KeyBindings.ingameKeyBinding["w"] = {
+KeyBindings.IngameKeyBinding["w"] = {
 	mode = "repeat",
 	fun = function(dt)
         print("loofn")
@@ -8,7 +8,7 @@ KeyBindings.ingameKeyBinding["w"] = {
 	end
 }
 
-KeyBindings.ingameKeyBinding["a"] = {
+KeyBindings.IngameKeyBinding["a"] = {
 	mode = "repeat",
 	fun = function(dt)
 		Ingame.getActiveScene().characters[Ingame.getActiveScene().playerIndex]:moveLeft(dt)
@@ -16,7 +16,7 @@ KeyBindings.ingameKeyBinding["a"] = {
 }
 
 
-KeyBindings.ingameKeyBinding["s"] = {
+KeyBindings.IngameKeyBinding["s"] = {
 	mode = "repeat",
 	fun = function(dt)
 		Ingame.getActiveScene().characters[Ingame.getActiveScene().playerIndex]:moveDown(dt)
@@ -24,7 +24,7 @@ KeyBindings.ingameKeyBinding["s"] = {
 }
 
 
-KeyBindings.ingameKeyBinding["d"] = {
+KeyBindings.IngameKeyBinding["d"] = {
 	mode = "repeat",
 	fun = function(dt)
 		Ingame.getActiveScene().characters[Ingame.getActiveScene().playerIndex]:moveRight(dt)
@@ -32,7 +32,7 @@ KeyBindings.ingameKeyBinding["d"] = {
 }
 
 
-KeyBindings.ingameKeyBinding["up"] = {
+KeyBindings.IngameKeyBinding["up"] = {
 	mode = "single",
 	fun = function(dt)
 		Ingame.getActiveScene().playerIndex = math.min(#Ingame.getActiveScene().characters, Ingame.getActiveScene().playerIndex + 1)
@@ -41,7 +41,7 @@ KeyBindings.ingameKeyBinding["up"] = {
 }
 
 
-KeyBindings.ingameKeyBinding["down"] = {
+KeyBindings.IngameKeyBinding["down"] = {
 	mode = "single",
 	fun = function(dt)
 		Ingame.getActiveScene().playerIndex = math.max(1, Ingame.getActiveScene().playerIndex - 1)
@@ -50,7 +50,7 @@ KeyBindings.ingameKeyBinding["down"] = {
 }
 
 
-KeyBindings.ingameKeyBinding["right"] = {
+KeyBindings.IngameKeyBinding["right"] = {
 	mode = "single",
 	fun = function(dt)
 		Ingame.activeSceneIndex = math.min(Ingame.activeSceneIndex+1, #Ingame.loadedScenes)
@@ -58,7 +58,7 @@ KeyBindings.ingameKeyBinding["right"] = {
 }
 
 
-KeyBindings.ingameKeyBinding["left"] = {
+KeyBindings.IngameKeyBinding["left"] = {
 	mode = "single",
 	fun = function(dt)
 		Ingame.activeSceneIndex = math.max(Ingame.activeSceneIndex-1, 1)
@@ -66,7 +66,7 @@ KeyBindings.ingameKeyBinding["left"] = {
 }
 
 
-KeyBindings.ingameKeyBinding["escape"] = {
+KeyBindings.IngameKeyBinding["escape"] = {
 	mode = "single",
 	fun = function(dt)
 		love.event.push("quit")

@@ -5,18 +5,17 @@ require "ingame.scene"
 require "ingame.tileDict"
 require "ingame.camera"
 
-Ingame.activeKeyBinding = KeyBindings.ingameKeyBinding
+Ingame.activeKeyBinding = KeyBindings.IngameKeyBinding
 Ingame.activeSceneIndex = 0
 Ingame.loadedScenes = {}
 Ingame.paused = false
 
 function Ingame.init()
     Ingame.activeSceneIndex = 1
-    Ingame.loadedScenes[#Ingame.loadedScenes + 1] = Ingame.Scene()
-    Ingame.loadedScenes[#Ingame.loadedScenes + 1] = Ingame.Scene()
-
-    Ingame.loadedScenes[1]:createRandomLevel()
-    Ingame.loadedScenes[2]:createRandomLevel()
+    for i=1,3 do
+        Ingame.loadedScenes[#Ingame.loadedScenes + 1] = Ingame.Scene()
+        Ingame.loadedScenes[i]:createRandomLevel()
+    end
 end
 
 function Ingame.render()

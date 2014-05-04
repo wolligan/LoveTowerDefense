@@ -22,7 +22,6 @@ function Ingame.Scene:new()
 end
 
 function Ingame.Scene:createRandomLevel()
-	math.randomseed(os.time())
 	self.playerIndex = 1
 
 	for x = 1,Ingame.Settings.levelSize do
@@ -191,9 +190,6 @@ function Ingame.Scene:Route_getRoute(startX, startY, goalX, goalY)
 			if closed[curNeighbor] == nil then
 				local tentative_g_score = g_score[current] + math.sqrt(math.pow(current[1] - curNeighbor[1], 2) + math.pow(current[2] - curNeighbor[2], 2))
 				tentative_g_score = tentative_g_score + math.pow(Ingame.Settings.tileSize/Ingame.tileDict[self.tiles[current[1]][current[2]]][4],2)
-				-- if Ingame.tileDict[self.tiles[current[1]][current[2]]][5] then
-					-- tentative_g_score = tentative_g_score * tentative_g_score
-				-- end
 				if not open[curNeighbor] or tentative_g_score < g_score[curNeighbor] then
 					cameFrom[curNeighbor] = current
 					g_score[curNeighbor] = tentative_g_score
@@ -210,14 +206,15 @@ end
 function Ingame.Scene:Route_getNeighbors(node, neighborTable)
 	local neighbors = {}
 
-	-- if not neighborTable[node[1] - 1][node[2] - 1] then neighborTable[node[1] - 1][node[2] - 1] = {node[1] - 1,	node[2] - 1 } end
 	if not neighborTable[node[1] - 1][node[2]    ] then neighborTable[node[1] - 1][node[2]    ] = {node[1] - 1,	node[2]     } end
-	-- if not neighborTable[node[1] - 1][node[2] + 1] then neighborTable[node[1] - 1][node[2] + 1] = {node[1] - 1,	node[2] + 1	} end
 	if not neighborTable[node[1]    ][node[2] - 1] then neighborTable[node[1]    ][node[2] - 1] = {node[1],		node[2] - 1	} end
 	if not neighborTable[node[1]    ][node[2] + 1] then neighborTable[node[1]    ][node[2] + 1] = {node[1],		node[2] + 1	} end
-	-- if not neighborTable[node[1] + 1][node[2] - 1] then neighborTable[node[1] + 1][node[2] - 1] = {node[1] + 1,	node[2] - 1	} end
 	if not neighborTable[node[1] + 1][node[2]    ] then neighborTable[node[1] + 1][node[2]    ] = {node[1] + 1,	node[2]		} end
-	-- if not neighborTable[node[1] + 1][node[2] + 1] then neighborTable[node[1] + 1][node[2] + 1] = {node[1] + 1,	node[2] + 1	} end
+
+--	if not neighborTable[node[1] + 1][node[2] + 1] then neighborTable[node[1] + 1][node[2] + 1] = {node[1] + 1,	node[2] + 1	} end
+--	if not neighborTable[node[1] - 1][node[2] + 1] then neighborTable[node[1] - 1][node[2] + 1] = {node[1] - 1,	node[2] + 1	} end
+--	if not neighborTable[node[1] + 1][node[2] - 1] then neighborTable[node[1] + 1][node[2] - 1] = {node[1] + 1,	node[2] - 1	} end
+--	if not neighborTable[node[1] - 1][node[2] - 1] then neighborTable[node[1] - 1][node[2] - 1] = {node[1] - 1,	node[2] - 1 } end
 
 
 	neighbors[#neighbors+1] = neighborTable[node[1] - 1][node[2]    ]
