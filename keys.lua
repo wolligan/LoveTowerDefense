@@ -1,33 +1,32 @@
 require "keybindings"
 
-keys = {}
-keys.activeKeys = {}
-keys.activeKeyBinding = keyBindings.defaultKeyBinding
+Keys = {}
+Keys.activeKeys = {}
 
 function love.keypressed(key)
-	keys.activeKeys[key] = true
-	if keys.activeKeyBinding[key] then
-		if keys.activeKeyBinding[key].mode == "single" then
-			keys.activeKeyBinding[key].fun()
+	Keys.activeKeys[key] = true
+	if Game.state.activeKeyBinding[key] then
+		if Game.state.activeKeyBinding[key].mode == "single" then
+			Game.state.activeKeyBinding[key].fun()
 		end
 	end
 end
 
 function love.keyreleased(key)
-	keys.activeKeys[key] = false
+	Keys.activeKeys[key] = false
 end
 
-function keys.isKeyDown(key)
-	if keys.activeKeys[key] then
-		return keys.activeKeys[key]
+function Keys.isKeyDown(key)
+	if Keys.activeKeys[key] then
+		return Keys.activeKeys[key]
 	else
 		return false
 	end
 end
 
-function keys.handleKeyBindings(dt)
-	for key,keyBinding in pairs(keys.activeKeyBinding) do
-		if keys.isKeyDown(key) and keyBinding.mode == "repeat" then
+function Keys.handleKeyBindings(dt)
+	for key,keyBinding in pairs(Game.state.activeKeyBinding) do
+		if Keys.isKeyDown(key) and keyBinding.mode == "repeat" then
 			keyBinding.fun(dt)
 		end
 	end

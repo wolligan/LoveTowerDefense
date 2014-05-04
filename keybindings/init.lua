@@ -1,3 +1,3 @@
-keyBindings = {}
+KeyBindings = {}
 
-require "keybindings.defaultKeyBinding"
+require "keybindings.ingameKeyBinding"
