@@ -44,7 +44,7 @@ function Ingame.Character:moveDown(dt)
 
 	local tileSpeed = Ingame.tileDict[self:getTileIndex()][4]
 	self.y = self.y + Ingame.Settings.playerMoveSpeed*dt*tileSpeed
-	if self.y > #Ingame.getActiveScene().tiles[1]*Ingame.Settings.tileSize-0.1 then self.y = #Ingame.getActiveScene().tiles[1]*Ingame.Settings.tileSize-0.1 end
+	if self.y > #self.appropriateScene.tiles[1]*Ingame.Settings.tileSize-0.1 then self.y = #self.appropriateScene.tiles[1]*Ingame.Settings.tileSize-0.1 end
 
 	self:checkObstacleY()
 end
@@ -54,7 +54,7 @@ function Ingame.Character:moveRight(dt)
 
 	local tileSpeed = Ingame.tileDict[self:getTileIndex()][4]
 	self.x = self.x + Ingame.Settings.playerMoveSpeed*dt*tileSpeed
-	if self.x > #Ingame.getActiveScene().tiles*Ingame.Settings.tileSize-0.1 then self.x = #Ingame.getActiveScene().tiles*Ingame.Settings.tileSize-0.1 end
+	if self.x > #self.appropriateScene.tiles*Ingame.Settings.tileSize-0.1 then self.x = #self.appropriateScene.tiles*Ingame.Settings.tileSize-0.1 end
 
 	self:checkObstacleX()
 end
@@ -74,19 +74,19 @@ function Ingame.Character:checkObstacleY()
 end
 
 function Ingame.Character:getTileIndex()
-	local tileCoordX, tileCoordY = Ingame.getActiveScene():getTileCoordinatesUnderCharacter(self)
-	return Ingame.getActiveScene().tiles[tileCoordX][tileCoordY]
+	local tileCoordX, tileCoordY = self.appropriateScene:getTileCoordinatesUnderCharacter(self)
+	return self.appropriateScene.tiles[tileCoordX][tileCoordY]
 end
 
 function Ingame.Character:getTileCoordinate()
-	return Ingame.getActiveScene():getTileCoordinatesUnderCharacter(self)
+	return self.appropriateScene:getTileCoordinatesUnderCharacter(self)
 end
 
 function Ingame.Character:keepCharInMap()
 	if self.x < 0 then self.x = 0 end
 	if self.y < 0 then self.y = 0 end
-	if self.x > #Ingame.getActiveScene().tiles*Ingame.Settings.tileSize-0.1 then self.x = #Ingame.getActiveScene().tiles*Ingame.Settings.tileSize-0.1 end
-	if self.y > #Ingame.getActiveScene().tiles[1]*Ingame.Settings.tileSize-0.1 then self.y = #Ingame.getActiveScene().tiles[1]*Ingame.Settings.tileSize-0.1 end
+	if self.x > #self.appropriateScene.tiles*Ingame.Settings.tileSize-0.1 then self.x = #self.appropriateScene.tiles*Ingame.Settings.tileSize-0.1 end
+	if self.y > #self.appropriateScene.tiles[1]*Ingame.Settings.tileSize-0.1 then self.y = #self.appropriateScene.tiles[1]*Ingame.Settings.tileSize-0.1 end
 end
 
 --Character.AI = {}

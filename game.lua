@@ -8,15 +8,11 @@ require "gui"
 require "tables"
 
 Game = {}
-Game.state = Ingame
+Game.state = nil
 
 function Game.init()
 	success = love.window.setMode( 800, 600, {fullscreen=false} )
-
-    if not Game.state.inited then
-        Game.state.init()
-        Game.state.inited = true
-    end
+    Game.changeState(Ingame)
 end
 
 function Game.render()
