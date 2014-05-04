@@ -5,6 +5,7 @@ require "mainmenu"
 require "networking"
 require "splashscreen"
 require "gui"
+require "tables"
 
 Game = {}
 Game.state = Ingame

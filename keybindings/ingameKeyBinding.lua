@@ -4,14 +4,14 @@ KeyBindings.ingameKeyBinding["w"] = {
 	mode = "repeat",
 	fun = function(dt)
         print("loofn")
-		Ingame.Scene.characters[Ingame.Scene.playerIndex]:moveUp(dt)
+		Ingame.getActiveScene().characters[Ingame.getActiveScene().playerIndex]:moveUp(dt)
 	end
 }
 
 KeyBindings.ingameKeyBinding["a"] = {
 	mode = "repeat",
 	fun = function(dt)
-		Ingame.Scene.characters[Ingame.Scene.playerIndex]:moveLeft(dt)
+		Ingame.getActiveScene().characters[Ingame.getActiveScene().playerIndex]:moveLeft(dt)
 	end
 }
 
@@ -19,7 +19,7 @@ KeyBindings.ingameKeyBinding["a"] = {
 KeyBindings.ingameKeyBinding["s"] = {
 	mode = "repeat",
 	fun = function(dt)
-		Ingame.Scene.characters[Ingame.Scene.playerIndex]:moveDown(dt)
+		Ingame.getActiveScene().characters[Ingame.getActiveScene().playerIndex]:moveDown(dt)
 	end
 }
 
@@ -27,7 +27,7 @@ KeyBindings.ingameKeyBinding["s"] = {
 KeyBindings.ingameKeyBinding["d"] = {
 	mode = "repeat",
 	fun = function(dt)
-		Ingame.Scene.characters[Ingame.Scene.playerIndex]:moveRight(dt)
+		Ingame.getActiveScene().characters[Ingame.getActiveScene().playerIndex]:moveRight(dt)
 	end
 }
 
@@ -35,7 +35,7 @@ KeyBindings.ingameKeyBinding["d"] = {
 KeyBindings.ingameKeyBinding["up"] = {
 	mode = "single",
 	fun = function(dt)
-		Ingame.Scene.playerIndex = math.min(#Ingame.Scene.characters, Ingame.Scene.playerIndex + 1)
+		Ingame.getActiveScene().playerIndex = math.min(#Ingame.getActiveScene().characters, Ingame.getActiveScene().playerIndex + 1)
 		--camera.rotation = camera.rotation + 10*dt
 	end
 }
@@ -44,8 +44,24 @@ KeyBindings.ingameKeyBinding["up"] = {
 KeyBindings.ingameKeyBinding["down"] = {
 	mode = "single",
 	fun = function(dt)
-		Ingame.Scene.playerIndex = math.max(1, Ingame.Scene.playerIndex - 1)
+		Ingame.getActiveScene().playerIndex = math.max(1, Ingame.getActiveScene().playerIndex - 1)
 		--camera.rotation = camera.rotation - 10*dt
+	end
+}
+
+
+KeyBindings.ingameKeyBinding["right"] = {
+	mode = "single",
+	fun = function(dt)
+		Ingame.activeSceneIndex = math.min(Ingame.activeSceneIndex+1, #Ingame.loadedScenes)
+	end
+}
+
+
+KeyBindings.ingameKeyBinding["left"] = {
+	mode = "single",
+	fun = function(dt)
+		Ingame.activeSceneIndex = math.max(Ingame.activeSceneIndex-1, 1)
 	end
 }
 

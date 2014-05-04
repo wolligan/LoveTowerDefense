@@ -3,7 +3,10 @@ MainMenu = {}
 
 
 function MainMenu.init()
+    if not MainMenu.inited then
 
+    end
+    MainMenu.inited = true
 end
 
 function MainMenu.render()
