@@ -1,0 +1,3 @@
+keyBindings = {}
+
+require "keybindings.defaultKeyBinding"
