@@ -6,3 +6,12 @@ function table.length(t)
 
 	return length
 end
+
+function table.contains(t, item)
+    for _,value in pairs(t) do
+       if value == item then
+            return true
+        end
+    end
+    return false
+end

@@ -8,6 +8,7 @@ require "networking"
 require "splashscreen"
 require "gui"
 require "tables"
+require "lighttest"
 
 Game.spritePool = {}
 Game.soundPool = {}
@@ -16,7 +17,7 @@ Game.state = nil
 function Game.init()
 	math.randomseed(os.time())
 	success = love.window.setMode( 1920, 1080, {fullscreen=true} )
-    Game.changeState(SplashScreen)
+    Game.changeState(LightTest)
 end
 
 function Game.render()

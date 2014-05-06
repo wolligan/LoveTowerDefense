@@ -4,6 +4,7 @@ require "ingame.settings"
 require "ingame.scene"
 require "ingame.tileDict"
 require "ingame.camera"
+require "ingame.lighting"
 
 Ingame.activeKeyBinding = KeyBindings.IngameKeyBinding
 Ingame.activeSceneIndex = 0
