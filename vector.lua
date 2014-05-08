@@ -11,7 +11,7 @@ end
 function Vector.normalize(x,y)
     local length = Vector.length(x,y)
 
-    return x / length, y / length
+    return x / length, y / length, length
 end
 
 function Vector.reflect(vx, vy, nx, ny)
@@ -21,4 +21,14 @@ function Vector.reflect(vx, vy, nx, ny)
     local refY = 2 * dot * ny - vy
 
     return -refX, -refY
+end
+
+--- returns whether vector b looks in right direction of vector a or in left direction
+-- @return
+function Vector.getTurn(x1,y1, x2,y2)
+	local det = y1*x2 - x1*y2
+	if det < 0 then return "right"
+	elseif det > 0 then return "left"
+	else return "same_direction"
+	end
 end

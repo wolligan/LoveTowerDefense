@@ -16,6 +16,10 @@ function Ingame.Scene:new()
 
     self.characters = {}
     self.playerIndex = 0
+
+    self.lightSources = {}
+    self.meshes = {}
+
     self.maxTilesOnScreen = {}
     self.maxTilesOnScreen[1] = math.floor(love.graphics.getWidth()  / Ingame.Settings.tileSize)+2
     self.maxTilesOnScreen[2] = math.floor(love.graphics.getHeight() / Ingame.Settings.tileSize)
