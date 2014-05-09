@@ -1,4 +1,5 @@
 require "OO"
+require "color"
 
 Ingame.Mesh = {}
 OO.createClass(Ingame.Mesh)
@@ -27,4 +28,16 @@ function Ingame.Mesh.createDiscoCircle(x,y, size, slices)
     end
 
     return Ingame.Mesh(vertices, {255,255,255}, reflectorSides)
+end
+
+function Ingame.Mesh.createRectangle(x,y, size, color, reflectorSides)
+    local vertices = {}
+    color = color or Color.white
+    reflectorSides = reflectorSides or {1,2,3,4}
+    vertices = {x - size, y + size,
+                x + size, y + size,
+                x + size, y - size,
+                x - size, y - size}
+
+    return Ingame.Mesh(vertices, color, reflectorSides)
 end

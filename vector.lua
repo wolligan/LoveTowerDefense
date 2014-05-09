@@ -32,3 +32,41 @@ function Vector.getTurn(x1,y1, x2,y2)
 	else return "same_direction"
 	end
 end
+
+function Vector.add(x1,y1, x2,y2)
+    local x = x1+x2
+    local y = y1+y2
+    return x,y
+end
+
+function Vector.addAndNormalize(x1,y1, x2,y2)
+    local x = x1+x2
+    local y = y1+y2
+    local x,y,len = Vector.normalize(x,y)
+    return x,y,len
+end
+
+function Vector.sub(x1,y1, x2,y2)
+    local x = x1-x2
+    local y = y1-y2
+    return x,y
+end
+
+function Vector.subAndNormalize(x1,y1, x2,y2)
+    local x = x1-x2
+    local y = y1-y2
+    local x,y,len = Vector.normalize(x,y)
+    return x,y,len
+end
+
+function Vector.mul(x1,y1, x2,y2)
+    local x = x1*x2
+    local y = y1*y2
+    return x,y
+end
+
+function Vector.div(x1,y1, x2,y2)
+    local x = x1/x2
+    local y = y1/y2
+    return x,y
+end
