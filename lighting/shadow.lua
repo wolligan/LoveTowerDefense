@@ -32,6 +32,7 @@ function Lighting.Shadow:calculateOrigin()
 
         self.positionBorderCenter  = {(self.vertices[1] + self.vertices[3])/2, (self.vertices[2] + self.vertices[4])/2}
         self.distancePositionToBorderCenter = Vector.length(self.position[1] - self.positionBorderCenter[1], self.position[2] - self.positionBorderCenter[2])
+
     end
 end
 
@@ -98,12 +99,12 @@ function Lighting.Shadow:getVolumeStartPoints(lightSource, mesh)
         local dotBefore = Vector.dot(normalBeforeCurX, normalBeforeCurY, lightVecX, lightVecY)
         local dotAfter  = Vector.dot(normalAfterCurX,  normalAfterCurY,  lightVecX, lightVecY)
 
-        if (dotBefore >= 0 and dotAfter <= 0) then
+        if (dotBefore > 0 and dotAfter < 0) then
             volumeStartPoints[3] = curX
             volumeStartPoints[4] = curY
         end
 
-        if (dotBefore <= 0 and dotAfter >= 0) then
+        if (dotBefore < 0 and dotAfter > 0) then
             volumeStartPoints[1] = curX
             volumeStartPoints[2] = curY
         end

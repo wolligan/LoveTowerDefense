@@ -10,7 +10,7 @@ function Ingame.Mesh:new(vertices, color, reflectorSides)
    self.reflectorSides = reflectorSides or {}
 end
 
-function Ingame.Mesh.createDiscoCircle(x,y, size, slices)
+function Ingame.Mesh.createDiscoCircle(x,y, size, slices, color)
     local vertices = {}
     local reflectorSides = {}
 
@@ -27,7 +27,7 @@ function Ingame.Mesh.createDiscoCircle(x,y, size, slices)
 
     end
 
-    return Ingame.Mesh(vertices, {255,255,255}, reflectorSides)
+    return Ingame.Mesh(vertices, color, reflectorSides)
 end
 
 function Ingame.Mesh.createRectangle(x,y, size, color, reflectorSides)

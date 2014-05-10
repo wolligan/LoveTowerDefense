@@ -173,8 +173,12 @@ function Lighting.Reflection:calculateOrigin()
 
                                             self.vertices[3], self.vertices[4],
                                             self.reflectionVecRightX, self.reflectionVecRightY)
-    self.positionBorderCenter  = {(self.vertices[1] + self.vertices[3])/2, (self.vertices[2] + self.vertices[4])/2}
-    self.distancePositionToBorderCenter = Vector.length(self.position[1] - self.positionBorderCenter[1], self.position[2] - self.positionBorderCenter[2])
+    if self.position then
+        self.positionBorderCenter  = {(self.vertices[1] + self.vertices[3])/2, (self.vertices[2] + self.vertices[4])/2}
+        self.distancePositionToBorderCenter = Vector.length(self.position[1] - self.positionBorderCenter[1], self.position[2] - self.positionBorderCenter[2])
+    else
+        self.isAReflection = false
+    end
 end
 
 function Lighting.Reflection:getRight()

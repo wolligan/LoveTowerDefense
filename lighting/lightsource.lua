@@ -35,11 +35,14 @@ end
 
 --- renders a fullscreen quad with inverted stencil with shadows
 function Lighting.LightSource:drawLight()
+
     love.graphics.setInvertedStencil(function() self:drawShadows() end)
 
+    love.graphics.setBlendMode("additive")
     love.graphics.setColor(unpack(self.color))
     love.graphics.rectangle("fill", 0,0,love.graphics.getWidth(), love.graphics.getHeight())
 
+    love.graphics.setBlendMode("alpha")
     love.graphics.setInvertedStencil(nil)
 end
 
