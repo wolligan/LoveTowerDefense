@@ -1,10 +1,10 @@
 require "OO"
 
-Ingame.Shadow = {}
-Ingame.Shadow.shadowLength = math.sqrt(math.pow(love.graphics.getWidth(), 2) + math.pow(love.graphics.getHeight(), 2))*20
-OO.createClass(Ingame.Shadow)
+Lighting.Shadow = {}
+Lighting.Shadow.shadowLength = math.sqrt(math.pow(love.graphics.getWidth(), 2) + math.pow(love.graphics.getHeight(), 2))*20
+OO.createClass(Lighting.Shadow)
 
-function Ingame.Shadow:new(lightSource, mesh)
+function Lighting.Shadow:new(lightSource, mesh)
     self.lightSource = lightSource
     self.mesh = mesh
 
@@ -16,26 +16,29 @@ function Ingame.Shadow:new(lightSource, mesh)
     self:calculateOrigin()
 end
 
-function Ingame.Shadow:render()
+function Lighting.Shadow:render()
     if not self.isInMesh then
         love.graphics.polygon("fill", unpack(self.vertices))
     end
 end
 
-function Ingame.Shadow:calculateOrigin()
+function Lighting.Shadow:calculateOrigin()
     if not self.isInMesh then
         self.position = Intersection.LineLine(  self.vertices[1], self.vertices[2],
                                                 self.directionLeftX, self.directionLeftY,
 
                                                 self.vertices[3], self.vertices[4],
                                                 self.directionRightX, self.directionRightY)
+
+        self.positionBorderCenter  = {(self.vertices[1] + self.vertices[3])/2, (self.vertices[2] + self.vertices[4])/2}
+        self.distancePositionToBorderCenter = Vector.length(self.position[1] - self.positionBorderCenter[1], self.position[2] - self.positionBorderCenter[2])
     end
 end
 
 --- calculates the reflection polygon
 -- @param lightSource LightSource object that will get a shadow
 -- @param mesh Mesh object that casts a shadow
-function Ingame.Shadow:calculateVertices(lightSource, mesh)
+function Lighting.Shadow:calculateVertices(lightSource, mesh)
     local volumeStartPoints = self:getVolumeStartPoints(lightSource, mesh)
     if not self.isInMesh then
         self.directionLeftX, self.directionLeftY = Vector.subAndNormalize(volumeStartPoints[3], volumeStartPoints[4], lightSource.position[1], lightSource.position[2])
@@ -43,8 +46,8 @@ function Ingame.Shadow:calculateVertices(lightSource, mesh)
 
         self.vertices = {   volumeStartPoints[1], volumeStartPoints[2],
                             volumeStartPoints[3], volumeStartPoints[4],
-                            volumeStartPoints[3] + self.directionLeftX * Ingame.Shadow.shadowLength, volumeStartPoints[4] + self.directionLeftY * Ingame.Shadow.shadowLength,
-                            volumeStartPoints[1] + self.directionRightX * Ingame.Shadow.shadowLength, volumeStartPoints[2] + self.directionRightY * Ingame.Shadow.shadowLength}
+                            volumeStartPoints[3] + self.directionLeftX * Lighting.Shadow.shadowLength, volumeStartPoints[4] + self.directionLeftY * Lighting.Shadow.shadowLength,
+                            volumeStartPoints[1] + self.directionRightX * Lighting.Shadow.shadowLength, volumeStartPoints[2] + self.directionRightY * Lighting.Shadow.shadowLength}
     end
 end
 
@@ -52,7 +55,7 @@ end
 -- @param lightSource LightSource object
 -- @param mesh Mesh Object
 -- @return {x1,y1, x2,y2}
-function Ingame.Shadow:getVolumeStartPoints(lightSource, mesh)
+function Lighting.Shadow:getVolumeStartPoints(lightSource, mesh)
     local volumeStartPoints = {}
     for i=1,#mesh.vertices,2 do
         -- calculate indices
@@ -111,7 +114,7 @@ function Ingame.Shadow:getVolumeStartPoints(lightSource, mesh)
     return volumeStartPoints
 end
 
-function Ingame.Shadow:calculateDirection()
+function Lighting.Shadow:calculateDirection()
     if not self.isInMesh then
         self.directionX, self.directionY = Vector.addAndNormalize(self.directionLeftX, self.directionLeftY, self.directionRightX, self.directionRightY)
     end

@@ -4,9 +4,6 @@ require "ingame.settings"
 require "ingame.scene"
 require "ingame.tileDict"
 require "ingame.camera"
-require "ingame.lighting"
-require "ingame.lightsource"
-require "ingame.reflection"
 require "ingame.mesh"
 
 Ingame.activeKeyBinding = KeyBindings.IngameKeyBinding

@@ -1,11 +1,11 @@
 require "OO"
-Ingame.Reflection = {}
-OO.createClass(Ingame.Reflection)
+Lighting.Reflection = {}
+OO.createClass(Lighting.Reflection)
 
-Ingame.Reflection.maxBounces = 3
-Ingame.Reflection.reflectionLength = math.sqrt(math.pow(love.graphics.getWidth(), 2) + math.pow(love.graphics.getHeight(), 2))*20
+Lighting.Reflection.maxBounces = 3
+Lighting.Reflection.reflectionLength = math.sqrt(math.pow(love.graphics.getWidth(), 2) + math.pow(love.graphics.getHeight(), 2))*20
 
-function Ingame.Reflection:new(lightSource, rightX, rightY, leftX, leftY, r,g,b, bouncedTimes, meshIndex)
+function Lighting.Reflection:new(lightSource, rightX, rightY, leftX, leftY, r,g,b, bouncedTimes, meshIndex)
     self.meshIndex = meshIndex
     self.vertices  = {}
     self:calculateVertices(lightSource, rightX, rightY, leftX, leftY)
@@ -22,7 +22,7 @@ function Ingame.Reflection:new(lightSource, rightX, rightY, leftX, leftY, r,g,b,
 end
 
 --- renders reflection with inverted stencil with shadows
-function Ingame.Reflection:render()
+function Lighting.Reflection:render()
     self:drawLight()
     self:drawReflections()
     --love.graphics.setColor(255,0,255)
@@ -30,7 +30,7 @@ function Ingame.Reflection:render()
 end
 
 --- renders a fullscreen quad with inverted stencil with shadows
-function Ingame.Reflection:drawLight()
+function Lighting.Reflection:drawLight()
     love.graphics.setInvertedStencil(function() self:drawShadows() end)
     love.graphics.setBlendMode("additive")
 
@@ -43,31 +43,33 @@ function Ingame.Reflection:drawLight()
 end
 
 --- draws all shadow polygons of Reflection
-function Ingame.Reflection:drawShadows()
+function Lighting.Reflection:drawShadows()
     for i,curShadow in pairs(self.shadows) do
         curShadow:render()
     end
 end
 
-function Ingame.Reflection:drawReflections()
+function Lighting.Reflection:drawReflections()
     for i,curReflection in pairs(self.reflections) do
         curReflection:render()
     end
 end
 
-function Ingame.Reflection:update(scene)
+function Lighting.Reflection:update(scene)
     self:updateShadows(scene)
     self:updateReflections(scene)
 end
 
 --- TODO make faster
-function Ingame.Reflection:updateShadows(scene)
+function Lighting.Reflection:updateShadows(scene)
     self.shadows = {}
     for i=1,#scene do
         if self.meshIndex ~= i then
-            local curShadow = Ingame.Shadow(self, scene[i])
+            local curShadow = Lighting.Shadow(self, scene[i])
             if not curShadow.isInMesh then
-                self.shadows[#self.shadows + 1] = curShadow
+                if self.distancePositionToBorderCenter < curShadow.distancePositionToBorderCenter then
+                    self.shadows[#self.shadows + 1] = curShadow
+                end
             end
         end
     end
@@ -76,14 +78,14 @@ function Ingame.Reflection:updateShadows(scene)
 end
 
 --- TODO implement
-function Ingame.Reflection:updateReflections(scene)
-    if self.bouncedTimes < Ingame.Reflection.maxBounces then
+function Lighting.Reflection:updateReflections(scene)
+    if self.bouncedTimes < Lighting.Reflection.maxBounces then
 
     end
 end
 
 --- recalculates reflection polygon, left point converges to right point
-function Ingame.Reflection:updateLeftSide(lightSource, shadowVecLeftX, shadowVecLeftY)
+function Lighting.Reflection:updateLeftSide(lightSource, shadowVecLeftX, shadowVecLeftY)
     local newLeft = Intersection.LineLineseg(lightSource.position[1], lightSource.position[2], shadowVecLeftX, shadowVecLeftY, self.vertices[1], self.vertices[2], self.vertices[3], self.vertices[4])
 
     if newLeft then
@@ -91,14 +93,14 @@ function Ingame.Reflection:updateLeftSide(lightSource, shadowVecLeftX, shadowVec
         self.vertices[2] = newLeft[2]
 
         local newRefDirX, newRefDirY = Vector.subAndNormalize(newLeft[1], newLeft[2], self.position[1], self.position[2])
-        newRefDirX, newRefDirY = Vector.mul(newRefDirX, newRefDirY, Ingame.Reflection.reflectionLength, Ingame.Reflection.reflectionLength)
+        newRefDirX, newRefDirY = Vector.mul(newRefDirX, newRefDirY, Lighting.Reflection.reflectionLength, Lighting.Reflection.reflectionLength)
 
         self.vertices[7], self.vertices[8] = Vector.add(newLeft[1], newLeft[2], newRefDirX, newRefDirY)
     end
 end
 
 --- recalculates reflection polygon, left point converges to right point
-function Ingame.Reflection:updateRightSide(lightSource, shadowVecRightX, shadowVecRightY)
+function Lighting.Reflection:updateRightSide(lightSource, shadowVecRightX, shadowVecRightY)
     local newRight = Intersection.LineLineseg(lightSource.position[1], lightSource.position[2], shadowVecRightX, shadowVecRightY, self.vertices[1], self.vertices[2], self.vertices[3], self.vertices[4])
 
     if newRight then
@@ -106,16 +108,16 @@ function Ingame.Reflection:updateRightSide(lightSource, shadowVecRightX, shadowV
         self.vertices[4] = newRight[2]
 
         local newRefDirX, newRefDirY = Vector.subAndNormalize(newRight[1], newRight[2], self.position[1], self.position[2])
-        newRefDirX, newRefDirY = Vector.mul(newRefDirX, newRefDirY, Ingame.Reflection.reflectionLength, Ingame.Reflection.reflectionLength)
+        newRefDirX, newRefDirY = Vector.mul(newRefDirX, newRefDirY, Lighting.Reflection.reflectionLength, Lighting.Reflection.reflectionLength)
 
         self.vertices[5], self.vertices[6] = Vector.add(newRight[1], newRight[2], newRefDirX, newRefDirY)
     end
 end
 
 --- splits reflection in two smaller reflections
-function Ingame.Reflection:split(lightSource, shadowVecLeftX, shadowVecLeftY, shadowVecRightX, shadowVecRightY)
+function Lighting.Reflection:split(lightSource, shadowVecLeftX, shadowVecLeftY, shadowVecRightX, shadowVecRightY)
     local leftSplit = self
-    local rightSplit = Ingame.Reflection(lightSource, self:getRight(), self:getLeft(), unpack(self.color), self.bouncedTimes)
+    local rightSplit = Lighting.Reflection(lightSource, self:getRight(), self:getLeft(), unpack(self.color), self.bouncedTimes)
 
     leftSplit:updateRightSide(lightSource, shadowVecLeftX, shadowVecLeftY)
     rightSplit:updateLeftSide(lightSource, shadowVecRightX, shadowVecRightY)
@@ -129,7 +131,7 @@ end
 -- @param rightY y-coordinate of right point that shall be reflected
 -- @param leftX x-coordinate of left point that shall be reflected
 -- @param leftY y-coordinate of left point that shall be reflected
-function Ingame.Reflection:calculateVertices(lightSource, rightX, rightY, leftX, leftY)
+function Lighting.Reflection:calculateVertices(lightSource, rightX, rightY, leftX, leftY)
 -- calculate normal
     local rightToLeftX, rightToLeftY = Vector.subAndNormalize(leftX, leftY, rightX, rightY)
 
@@ -158,33 +160,27 @@ function Ingame.Reflection:calculateVertices(lightSource, rightX, rightY, leftX,
     self.vertices[3] = rightX
     self.vertices[4] = rightY
 
-    self.vertices[5] = rightX + self.reflectionVecRightX * Ingame.Reflection.reflectionLength
-    self.vertices[6] = rightY + self.reflectionVecRightY * Ingame.Reflection.reflectionLength
+    self.vertices[5] = rightX + self.reflectionVecRightX * Lighting.Reflection.reflectionLength
+    self.vertices[6] = rightY + self.reflectionVecRightY * Lighting.Reflection.reflectionLength
 
-    self.vertices[7] = leftX + self.reflectionVecLeftX * Ingame.Reflection.reflectionLength
-    self.vertices[8] = leftY + self.reflectionVecLeftY * Ingame.Reflection.reflectionLength
+    self.vertices[7] = leftX + self.reflectionVecLeftX * Lighting.Reflection.reflectionLength
+    self.vertices[8] = leftY + self.reflectionVecLeftY * Lighting.Reflection.reflectionLength
 end
 
-function Ingame.Reflection:calculateOrigin()
+function Lighting.Reflection:calculateOrigin()
     self.position = Intersection.LineLine(  self.vertices[1], self.vertices[2],
                                             self.reflectionVecLeftX, self.reflectionVecLeftY,
 
                                             self.vertices[3], self.vertices[4],
                                             self.reflectionVecRightX, self.reflectionVecRightY)
+    self.positionBorderCenter  = {(self.vertices[1] + self.vertices[3])/2, (self.vertices[2] + self.vertices[4])/2}
+    self.distancePositionToBorderCenter = Vector.length(self.position[1] - self.positionBorderCenter[1], self.position[2] - self.positionBorderCenter[2])
 end
 
-function Ingame.Reflection:getRight()
+function Lighting.Reflection:getRight()
     return self.vertices[3], self.vertices[4]
 end
 
-function Ingame.Reflection:getLeft()
+function Lighting.Reflection:getLeft()
     return self.vertices[1], self.vertices[2]
-end
-
---- calculates the shadow polygons for a list of shadowcasters
--- TODO make faster
--- @param lightSource LightSource object
--- @param scene list of Mesh objects
-function Ingame.Reflection.getShadowPolygonsOfScene(scene, meshIndexOfReflection)
-
 end
