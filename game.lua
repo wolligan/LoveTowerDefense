@@ -16,7 +16,7 @@ Game.state = nil
 
 function Game.init()
 	math.randomseed(os.time())
-	success = love.window.setMode( 1920, 1080, {fullscreen=true} )
+	success = love.window.setMode( 800, 600, { fullscreen = false } )
     Game.changeState(Testing.Lighting)
 end
 

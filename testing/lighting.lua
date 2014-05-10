@@ -22,7 +22,8 @@ function Testing.Lighting.init()
     ]]
     Testing.Lighting.meshs = {}
 
-    local arraySize = 10
+    local arraySize = 3
+    local border = 200
     local rectSize = 20
     local colors = {Color.blue, Color.red, Color.green, Color.yellow}
     curColorIndex = 1
@@ -30,8 +31,8 @@ function Testing.Lighting.init()
         for y = 1,arraySize do
             curColorIndex = curColorIndex % #colors
             if curColorIndex == 0 then curColorIndex = #colors end
-            Testing.Lighting.meshs[#Testing.Lighting.meshs + 1] = Ingame.Mesh.createRectangle((love.graphics.getWidth()-rectSize)  * ((x-1)/(arraySize-1)) + rectSize/2,
-                                                                                              (love.graphics.getHeight()-rectSize) * ((y-1)/(arraySize-1)) + rectSize/2,
+            Testing.Lighting.meshs[#Testing.Lighting.meshs + 1] = Ingame.Mesh.createRectangle((love.graphics.getWidth()-border*2)  * ((x-1)/(arraySize-1)) + border,
+                                                                                              (love.graphics.getHeight()-border*2) * ((y-1)/(arraySize-1)) + border,
                                                                                               rectSize, colors[curColorIndex])
             curColorIndex = curColorIndex + 1
         end
