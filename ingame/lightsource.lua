@@ -45,7 +45,7 @@ end
 --- draws all shadow polygons of lightsource
 function Ingame.LightSource:drawShadows()
     for i,curShadow in pairs(self.shadows) do
-        love.graphics.polygon("fill", unpack(curShadow))
+        curShadow:render()
     end
 end
 
@@ -62,15 +62,30 @@ function Ingame.LightSource:update(scene)
     self:updateReflections(scene)
 end
 
+--- calculates the shadow polygons for a list of shadowcasters
+-- @param scene list of Mesh objects
 function Ingame.LightSource:updateShadows(scene)
-    self.shadows = Ingame.Lighting.getShadowPolygonsOfScene(self, scene)
+    self.shadows = {}
+    for i=1,#scene do
+        local curShadow = Ingame.Shadow(self, scene[i])
+        if not curShadow.isInMesh then
+            self.shadows[#self.shadows + 1] = curShadow
+        end
+    end
 end
 
 function Ingame.LightSource:updateReflections(scene)
-    self.reflections = Ingame.Lighting.getReflectionPolygonsOfScene(self, scene)
+    self.reflections = {}
+    for i=1,#scene do
+        self.reflections[#self.reflections+1] = Ingame.Lighting.getReflectionPolygons(self, scene[i], i )
+    end
+
+
     for i,curMeshReflections in pairs(self.reflections) do
         for j,curReflection in pairs(curMeshReflections) do
             curReflection:update(scene)
         end
     end
+
+
 end

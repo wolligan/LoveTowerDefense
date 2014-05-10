@@ -45,7 +45,7 @@ end
 --- draws all shadow polygons of Reflection
 function Ingame.Reflection:drawShadows()
     for i,curShadow in pairs(self.shadows) do
-        love.graphics.polygon("fill", unpack(curShadow))
+        curShadow:render()
     end
 end
 
@@ -62,7 +62,17 @@ end
 
 --- TODO make faster
 function Ingame.Reflection:updateShadows(scene)
-    self.shadows = Ingame.Lighting.getShadowPolygonsOfScene(self, scene, self.meshIndex)
+    self.shadows = {}
+    for i=1,#scene do
+        if self.meshIndex ~= i then
+            local curShadow = Ingame.Shadow(self, scene[i])
+            if not curShadow.isInMesh then
+                self.shadows[#self.shadows + 1] = curShadow
+            end
+        end
+    end
+
+    return shadowVolumes
 end
 
 --- TODO implement
@@ -169,4 +179,12 @@ end
 
 function Ingame.Reflection:getLeft()
     return self.vertices[1], self.vertices[2]
+end
+
+--- calculates the shadow polygons for a list of shadowcasters
+-- TODO make faster
+-- @param lightSource LightSource object
+-- @param scene list of Mesh objects
+function Ingame.Reflection.getShadowPolygonsOfScene(scene, meshIndexOfReflection)
+
 end

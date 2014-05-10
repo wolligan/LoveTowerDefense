@@ -14,12 +14,6 @@ Testing.Lighting.activeKeyBinding["escape"] = {
 
 function Testing.Lighting.init()
     Testing.Lighting.lights =  {Ingame.LightSource(0,0, 100,100,100)}
-    --[[
-    Testing.Lighting.meshs =    {   Ingame.Mesh.createDiscoCircle(love.graphics.getWidth()/2, love.graphics.getHeight()/2, 50, 20),
-                                    Ingame.Mesh.createRectangle(love.graphics.getWidth()/3, love.graphics.getHeight()/3, 20, Color.blue),
-                                    Ingame.Mesh.createRectangle(love.graphics.getWidth()*2/3, love.graphics.getHeight()*2/3, 20, Color.red)
-                                }
-    ]]
     Testing.Lighting.meshs = {}
 
     local arraySize = 3
@@ -62,7 +56,8 @@ function Testing.Lighting.render()
 end
 
 function Testing.Lighting.update(dt)
-    Testing.Lighting.lights[1].position  = {love.mouse.getX(), love.mouse.getY()}
+    --Testing.Lighting.lights[1].position  = {love.mouse.getX(), love.mouse.getY()}
+    Testing.Lighting.lights[1].position  = {love.graphics.getWidth()/2 + math.sin(love.timer.getTime()/4)*300, love.graphics.getHeight()/2 + math.cos(love.timer.getTime()/4)*300}
     for lightIndex=1,#Testing.Lighting.lights do
         Testing.Lighting.lights[lightIndex]:update(Testing.Lighting.meshs)
     end
