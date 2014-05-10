@@ -121,33 +121,25 @@ end
 -- @param leftY y-coordinate of left point that shall be reflected
 function Ingame.Reflection:calculateVertices(lightSource, rightX, rightY, leftX, leftY)
 -- calculate normal
-    local rightToLeftX = leftX - rightX
-    local rightToLeftY = leftY - rightY
+    local rightToLeftX, rightToLeftY = Vector.subAndNormalize(leftX, leftY, rightX, rightY)
 
     local normalX = -rightToLeftY
     local normalY = rightToLeftX
-    normalX, normalY = Vector.normalize(normalX, normalY)
 
 -- calculate reflection vectors
-    local lightVecToRightX = rightX - lightSource.position[1]
-    local lightVecToRightY = rightY - lightSource.position[2]
-    lightVecToRightX, lightVecToRightY = Vector.normalize(lightVecToRightX, lightVecToRightY)
-
-    local lightVecToLeftX = leftX - lightSource.position[1]
-    local lightVecToLeftY = leftY - lightSource.position[2]
-    lightVecToLeftX, lightVecToLeftY = Vector.normalize(lightVecToLeftX, lightVecToLeftY)
-
--- check if lightsource is in front of reflection
-    local dotWithRight = Vector.dot(lightVecToRightX, lightVecToRightY, normalX, normalY)
-    local dotWithLeft = Vector.dot(lightVecToLeftX, lightVecToLeftY, normalX, normalY)
-
-    self.isAReflection = (dotWithRight < 0 and dotWithLeft < 0)
 
 -- calculate reflection vectors
     local lightVecToRightX, lightVecToRightY = Vector.subAndNormalize(rightX, rightY, lightSource.position[1],lightSource.position[2])
     local lightVecToLeftX, lightVecToLeftY = Vector.subAndNormalize(leftX, leftY, lightSource.position[1],lightSource.position[2])
     self.reflectionVecRightX, self.reflectionVecRightY = Vector.reflect(lightVecToRightX, lightVecToRightY, normalX, normalY)
     self.reflectionVecLeftX,  self.reflectionVecLeftY  = Vector.reflect(lightVecToLeftX, lightVecToLeftY, normalX, normalY)
+
+
+-- check if lightsource is in front of reflection
+    local dotWithRight = Vector.dot(lightVecToRightX, lightVecToRightY, normalX, normalY)
+    local dotWithLeft = Vector.dot(lightVecToLeftX, lightVecToLeftY, normalX, normalY)
+
+    self.isAReflection = (dotWithRight < 0 and dotWithLeft < 0)
 
 -- set vertices
     self.vertices[1] = leftX
