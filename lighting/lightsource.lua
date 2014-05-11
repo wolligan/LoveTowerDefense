@@ -37,12 +37,11 @@ end
 function Lighting.LightSource:drawLight()
 
     love.graphics.setInvertedStencil(function() self:drawShadows() end)
-
-    love.graphics.setBlendMode("additive")
     love.graphics.setColor(unpack(self.color))
-    love.graphics.rectangle("fill", 0,0,love.graphics.getWidth(), love.graphics.getHeight())
+    love.graphics.setBlendMode("additive")
+    --love.graphics.rectangle("fill", 0,0,love.graphics.getWidth(), love.graphics.getHeight())
+    love.graphics.draw(Lighting.unlitSceneCanvas)
 
-    love.graphics.setBlendMode("alpha")
     love.graphics.setInvertedStencil(nil)
 end
 
@@ -100,23 +99,24 @@ end
 -- @return list of reflection polygons
 function Lighting.LightSource:getReflectionPolygons(mesh, meshIndexInScene)
     local allReflectionsOfPolygons = {}
-    for i=1,#mesh.vertices,2 do
+    local meshWorldVertices = mesh:getWorldVertices()
+    for i=1,#meshWorldVertices,2 do
         local curReflections =  {}
         local curSideIndex = (i+1)/2
         if table.contains(mesh.reflectorSides, curSideIndex) then
             local indexCurX = i
             local indexCurY = i + 1
 
-            local indexNextX = (i + 2) % #mesh.vertices
-            local indexNextY = (i + 3) % #mesh.vertices
-            if indexNextX == 0 then indexNextX = #mesh.vertices end
-            if indexNextY == 0 then indexNextY = #mesh.vertices end
+            local indexNextX = (i + 2) % #meshWorldVertices
+            local indexNextY = (i + 3) % #meshWorldVertices
+            if indexNextX == 0 then indexNextX = #meshWorldVertices end
+            if indexNextY == 0 then indexNextY = #meshWorldVertices end
 
-            local curX = mesh.vertices[indexCurX]
-            local curY = mesh.vertices[indexCurY]
+            local curX = meshWorldVertices[indexCurX]
+            local curY = meshWorldVertices[indexCurY]
 
-            local nextX = mesh.vertices[indexNextX]
-            local nextY = mesh.vertices[indexNextY]
+            local nextX = meshWorldVertices[indexNextX]
+            local nextY = meshWorldVertices[indexNextY]
 
             local refColor = Color.mul(self.color, mesh.color)
             local startingReflection = Lighting.Reflection(self, curX, curY, nextX, nextY, refColor[1], refColor[2], refColor[3], 1, meshIndexInScene)

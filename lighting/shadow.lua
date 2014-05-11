@@ -18,6 +18,8 @@ end
 
 function Lighting.Shadow:render()
     if not self.isInMesh then
+        love.graphics.setBlendMode("alpha")
+        love.graphics.setColor(255,255,255)
         love.graphics.polygon("fill", unpack(self.vertices))
     end
 end
@@ -58,30 +60,32 @@ end
 -- @return {x1,y1, x2,y2}
 function Lighting.Shadow:getVolumeStartPoints(lightSource, mesh)
     local volumeStartPoints = {}
-    for i=1,#mesh.vertices,2 do
+    local meshWorldVertices = mesh:getWorldVertices()
+
+    for i=1,#meshWorldVertices,2 do
         -- calculate indices
         local indexCurX = i
         local indexCurY = i + 1
 
-        local indexPrevX = (i - 2 + #mesh.vertices) % #mesh.vertices
-        local indexPrevY = (i - 1 + #mesh.vertices) % #mesh.vertices
-        if indexPrevX == 0 then indexPrevX = #mesh.vertices end
-        if indexPrevY == 0 then indexPrevY = #mesh.vertices end
+        local indexPrevX = (i - 2 + #meshWorldVertices) % #meshWorldVertices
+        local indexPrevY = (i - 1 + #meshWorldVertices) % #meshWorldVertices
+        if indexPrevX == 0 then indexPrevX = #meshWorldVertices end
+        if indexPrevY == 0 then indexPrevY = #meshWorldVertices end
 
-        local indexNextX = (i + 2) % #mesh.vertices
-        local indexNextY = (i + 3) % #mesh.vertices
-        if indexNextX == 0 then indexNextX = #mesh.vertices end
-        if indexNextY == 0 then indexNextY = #mesh.vertices end
+        local indexNextX = (i + 2) % #meshWorldVertices
+        local indexNextY = (i + 3) % #meshWorldVertices
+        if indexNextX == 0 then indexNextX = #meshWorldVertices end
+        if indexNextY == 0 then indexNextY = #meshWorldVertices end
 
         -- get positions
-        local curX = mesh.vertices[indexCurX]
-        local curY = mesh.vertices[indexCurY]
+        local curX = meshWorldVertices[indexCurX]
+        local curY = meshWorldVertices[indexCurY]
 
-        local prevX = mesh.vertices[indexPrevX]
-        local prevY = mesh.vertices[indexPrevY]
+        local prevX = meshWorldVertices[indexPrevX]
+        local prevY = meshWorldVertices[indexPrevY]
 
-        local nextX = mesh.vertices[indexNextX]
-        local nextY = mesh.vertices[indexNextY]
+        local nextX = meshWorldVertices[indexNextX]
+        local nextY = meshWorldVertices[indexNextY]
 
         local lightVecX, lightVecY = Vector.subAndNormalize(curX, curY, lightSource.position[1], lightSource.position[2])
 
