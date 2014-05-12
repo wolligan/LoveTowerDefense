@@ -1,5 +1,7 @@
--- create classes and derived classes
+--- create classes and derived classes
 OO = {}
+
+---
 function OO.createClass(ClassTable)
 	ClassTable.__index = ClassTable
 
@@ -11,6 +13,7 @@ function OO.createClass(ClassTable)
 						      })
 end
 
+---
 function OO.createDerivedClass(ClassTable, toInheritFrom)
 	ClassTable.__index = ClassTable
 	ClassTable.base = toInheritFrom
