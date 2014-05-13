@@ -6,6 +6,7 @@ require "TextOutput"
 require "Ingame"
 require "MainMenu"
 require "Networking"
+require "GUI"
 require "SplashScreen"
 require "GUI"
 require "Tables"
@@ -13,13 +14,13 @@ require "Testing"
 
 Game.spritePool = {}
 Game.soundPool = {}
+Game.fontPool = {}
 Game.state = nil
 
 ---
 function Game.init()
 	math.randomseed(os.time())
-	success = love.window.setMode( 800, 600, { fullscreen = false } )
-    Game.changeState(Testing.Lighting)
+    Game.changeState(Testing.GUI)
 end
 
 ---
@@ -58,6 +59,14 @@ function Game.getSprite(path)
 end
 
 ---
+function Game.getFont(path)
+    if not Game.fontPool[path] then
+        Game.fontPool[path] = love.graphics.newFont(path)
+    end
+    return Game.fontPool[path]
+end
+
+---
 function Game.getSound(path, type)
     if not Game.soundPool[path] then
         Game.soundPool[path] = love.audio.newSource(path, type)
@@ -72,5 +81,11 @@ end
 
 ---
 function Game.tidyUpSoundPool()
+    Game.soundPool = {}
+end
+
+
+---
+function Game.tidyUpFontPool()
     Game.soundPool = {}
 end

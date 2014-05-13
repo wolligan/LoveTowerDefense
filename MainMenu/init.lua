@@ -1,6 +1,5 @@
 --- ADD ME
 MainMenu = {}
-MainMenu.activeKeyBinding = KeyBindings.MainMenuKeyBinding
 
 
 ---

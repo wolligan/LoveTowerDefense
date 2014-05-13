@@ -1,17 +1,18 @@
---- ADD ME
+--- Holds a string buffer and renders strings on screen.
 TextOutput = {}
 TextOutput.buffer = {}
 TextOutput.maxLines = 100
 TextOutput.counter = 0
 
----
+--- prints a text on screen
+-- @param text string that shall be printed
 function TextOutput.print(text)
     TextOutput.counter = TextOutput.counter + 1
 	table.insert(TextOutput.buffer, 1, text)
     TextOutput.buffer[TextOutput.maxLines] = nil
 end
 
----
+--- renders string buffer on screen
 function TextOutput.draw()
 	love.graphics.setColor(255,255,255)
 	for i=1,#TextOutput.buffer do

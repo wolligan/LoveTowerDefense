@@ -1,7 +1,11 @@
---- ADD ME
+--- Includes all keybindings
 KeyBindings = {}
 
----
 require "Keybindings.IngameKeyBinding"
-require "Keybindings.MainMenuKeyBinding"
-require "Keybindings.SplashScreenKeyBinding"
+
+--- Loads a keybinding from File
+-- @param file path to file that shall be read
+-- @return KeyBindingTable
+function KeyBindings.loadFromFile(file)
+
+end

@@ -1,7 +1,6 @@
 --- ADD ME
 SplashScreen = {}
 
-SplashScreen.activeKeyBinding = KeyBindings.SplashScreenKeyBinding
 SplashScreen.timeToDisplay = 2 -- seconds
 SplashScreen.fadeTime = 1
 SplashScreen.alpha = 255

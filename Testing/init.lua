@@ -1,4 +1,4 @@
---- ADD ME
+--- Comes up with some little helpers like a coordinate system, ...
 Testing = {}
 Testing.CoordinateSystem = {}
 Testing.CoordinateSystem.zoom = 30
@@ -49,4 +49,5 @@ end
 require "Testing.Intersection"
 require "Testing.Lighting"
 require "Testing.Vector"
+require "Testing.GUI"
 

@@ -83,3 +83,14 @@ function Intersection.LineLineseg(p1x, p1y, v1x, v1y, p2x, p2y, p3x, p3y)
         end
     end
 end
+
+--- Checks if a point is in a rectangle
+-- @param x x-coordinate of point
+-- @param y y-coordinate of point
+-- @param left left coordinate of rectangle
+-- @param right right coordinate of rectangle
+-- @param top top coordinate of rectangle
+-- @param bottom bottom coordinate of rectangle
+function Intersection.checkPointRectangle(x,y,left,right,top,bottom)
+    return left <= x and right >= x and top <= y and bottom >= y
+end

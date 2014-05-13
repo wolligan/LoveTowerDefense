@@ -1,2 +1,0 @@
---- ADD ME
-KeyBindings.SplashScreenKeyBinding = {}
