@@ -45,7 +45,7 @@
   <li><a href="../modules/Game.html">Game</a></li>
   <li><a href="../modules/Lighting.html">Lighting</a></li>
   <li><a href="../modules/Lighting.LightSource.html">Lighting.LightSource</a></li>
-  <li><strong>Lighting.Shadow</strong></li>
+  <li><a href="../modules/Lighting.Shadow.html">Lighting.Shadow</a></li>
   <li><a href="../modules/Lighting.AmbientLight.html">Lighting.AmbientLight</a></li>
   <li><a href="../modules/Lighting.Reflection.html">Lighting.Reflection</a></li>
   <li><a href="../modules/TextOutput.html">TextOutput</a></li>
@@ -54,7 +54,7 @@
   <li><a href="../modules/GUI.Widget.html">GUI.Widget</a></li>
   <li><a href="../modules/GUI.html">GUI</a></li>
   <li><a href="../modules/GUI.Button.html">GUI.Button</a></li>
-  <li><a href="../modules/GUI.Container.html">GUI.Container</a></li>
+  <li><strong>GUI.Container</strong></li>
   <li><a href="../modules/GUI.Label.html">GUI.Label</a></li>
   <li><a href="../modules/Networking.html">Networking</a></li>
   <li><a href="../modules/Keybindings.html">Keybindings</a></li>
@@ -82,20 +82,36 @@
 
 <div id="content">
 
-<h1>Module <code>Lighting.Shadow</code></h1>
-<p>ADD ME</p>
+<h1>Module <code>GUI.Container</code></h1>
+<p>Container that holds a list of widgets</p>
 <p></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#Lighting.Shadow:calculateVertices">Lighting.Shadow:calculateVertices (lightSource, mesh)</a></td>
-	<td class="summary">calculates the reflection polygon</td>
+	<td class="name" nowrap><a href="#GUI.Container:new">GUI.Container:new (font, backgroundColor, foregroundColor, hoverColor, clickedColor, borderColor, fontColor)</a></td>
+	<td class="summary">Constructor</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#Lighting.Shadow:getVolumeStartPoints">Lighting.Shadow:getVolumeStartPoints (lightSource, mesh)</a></td>
-	<td class="summary"></td>
+	<td class="name" nowrap><a href="#GUI.Container:render">GUI.Container:render ()</a></td>
+	<td class="summary">renders all widgets in current GUI container</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Container:update">GUI.Container:update (dt)</a></td>
+	<td class="summary">updates current GUI container</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Container:notifyClick">GUI.Container:notifyClick ()</a></td>
+	<td class="summary">notifies a click</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Container:notifyRelease">GUI.Container:notifyRelease ()</a></td>
+	<td class="summary">notifies a release</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Container:addWidget">GUI.Container:addWidget (widget)</a></td>
+	<td class="summary">adds a widget to container</td>
 	</tr>
 </table>
 
@@ -106,56 +122,120 @@
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
     <dt>
-    <a name = "Lighting.Shadow:calculateVertices"></a>
-    <strong>Lighting.Shadow:calculateVertices (lightSource, mesh)</strong>
+    <a name = "GUI.Container:new"></a>
+    <strong>GUI.Container:new (font, backgroundColor, foregroundColor, hoverColor, clickedColor, borderColor, fontColor)</strong>
     </dt>
     <dd>
-    calculates the reflection polygon
+    Constructor
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">lightSource</span>
-         LightSource object that will get a shadow
+        <li><span class="parameter">font</span>
+
         </li>
-        <li><span class="parameter">mesh</span>
-         Mesh object that casts a shadow
+        <li><span class="parameter">backgroundColor</span>
+
+        </li>
+        <li><span class="parameter">foregroundColor</span>
+
+        </li>
+        <li><span class="parameter">hoverColor</span>
+
+        </li>
+        <li><span class="parameter">clickedColor</span>
+
+        </li>
+        <li><span class="parameter">borderColor</span>
+
+        </li>
+        <li><span class="parameter">fontColor</span>
+
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-
-        {x1,y1, x2,y2}
-    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "Lighting.Shadow:getVolumeStartPoints"></a>
-    <strong>Lighting.Shadow:getVolumeStartPoints (lightSource, mesh)</strong>
+    <a name = "GUI.Container:render"></a>
+    <strong>GUI.Container:render ()</strong>
     </dt>
     <dd>
+    renders all widgets in current GUI container
 
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Container:update"></a>
+    <strong>GUI.Container:update (dt)</strong>
+    </dt>
+    <dd>
+    updates current GUI container
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">lightSource</span>
-         LightSource object
-        </li>
-        <li><span class="parameter">mesh</span>
-         Mesh Object
+        <li><span class="parameter">dt</span>
+
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
 
-        {x1,y1, x2,y2}
-    </ol>
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Container:notifyClick"></a>
+    <strong>GUI.Container:notifyClick ()</strong>
+    </dt>
+    <dd>
+    notifies a click
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Container:notifyRelease"></a>
+    <strong>GUI.Container:notifyRelease ()</strong>
+    </dt>
+    <dd>
+    notifies a release
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Container:addWidget"></a>
+    <strong>GUI.Container:addWidget (widget)</strong>
+    </dt>
+    <dd>
+    adds a widget to container
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">widget</span>
+         widget that shall be added to container
+        </li>
+    </ul>
+
 
 
 

@@ -1,4 +1,4 @@
---- Widget that draws a string on screen
+--- Label Widget
 
 require "OO"
 require "GUI.Widget"
@@ -9,18 +9,24 @@ OO.createDerivedClass(GUI.Label, GUI.Widget)
 --- Constructor of Label
 -- @param text Text of Label
 function GUI.Label:new(text)
-    self.base.new(self)
-    self.text = text
+    GUI.Widget.new(self)
+    self.text = text or ""
 end
 
+--- Renders widget with a text field on top of it
 function GUI.Label:render()
-    local textWidth = GUI.font:getWidth(self.text)
-    local textHeight = GUI.font:getHeight(self.text)
-    local textPosX = self:getLeftAnchor() + self:getWidth()/2 - textWidth/2
-    local textPosY = self:getTopAnchor() + self:getHeight()/2 - textHeight/2
+    self:renderBackground()
+    self:renderCenteredText()
+end
 
-    self.base.render(self)
-    love.graphics.setFont(GUI.font)
-    love.graphics.setColor(0,255,0)
+--- renders text at center of label
+function GUI.Label:renderCenteredText()
+    local textWidth = self.apparentContainer.font:getWidth(self.text)
+    local textHeight = self.apparentContainer.font:getHeight(self.text)
+    local textPosX = math.floor(self:getLeftAnchor() + self:getWidth()/2 - textWidth/2)
+    local textPosY = math.floor(self:getTopAnchor() + self:getHeight()/2 - textHeight/2)
+
+    love.graphics.setFont(self.apparentContainer.font)
+    love.graphics.setColor(self.apparentContainer.fontColor)
     love.graphics.print(self.text, textPosX, textPosY)
 end

@@ -32,12 +32,14 @@ function love.mousepressed(x, y, button)
             end
         end
     end
+    GUI.notifyClick()
 end
 
 ---
 function love.mousereleased(x, y, button)
     local key = Keys.mouseButtonToKey(button)
 	Keys.activeKeys[key] = false
+    GUI.notifyRelease()
 end
 
 ---

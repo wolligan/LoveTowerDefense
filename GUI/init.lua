@@ -1,12 +1,11 @@
 --- Simple GUI-Toolkit
 
-GUI = {}
-GUI.widgets = {}
-GUI.Root = {}
+require "Color"
 
-function GUI.init()
-    GUI.font = Game.getFont("assets/fonts/comic.ttf", 12)
-end
+GUI = {}
+
+GUI.Root = {}
+GUI.activeContainer = nil
 
 --- Left Anchor Point of Screen
 function GUI.Root.getLeftAnchor()
@@ -38,21 +37,36 @@ function GUI.Root.getCenterVerAnchor()
     return love.graphics.getHeight()/2
 end
 
---- renders all loaded widgets
+--- renders active container
 function GUI.render()
-    for i,curWidget in pairs(GUI.widgets) do
-        curWidget:render()
+    if GUI.activeContainer then
+        GUI.activeContainer:render()
     end
 end
 
---- updates GUI
+--- updates active container
 function GUI.update(dt)
-    for i,curWidget in pairs(GUI.widgets) do
-        curWidget:update(dt)
+    if GUI.activeContainer then
+        GUI.activeContainer:update(dt)
+    end
+end
+
+--- notifies click to active container
+function GUI.notifyClick()
+    if GUI.activeContainer then
+        GUI.activeContainer:notifyClick()
+    end
+end
+
+--- notifies release to active container
+function GUI.notifyRelease()
+    if GUI.activeContainer then
+        GUI.activeContainer:notifyRelease()
     end
 end
 
 
-
+require "GUI.Container"
 require "GUI.Widget"
 require "GUI.Label"
+require "GUI.Button"
