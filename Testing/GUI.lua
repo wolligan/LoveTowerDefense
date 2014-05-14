@@ -1,7 +1,6 @@
 --- GUI Test creates two containers with buttons and labels, buttons change containers
 
 require "GUI"
-require "TextOutput"
 
 Testing.GUI = {}
 
@@ -12,7 +11,7 @@ function Testing.GUI.init()
     local guicont1 = GUI.Container()
 
     local b1_cont1 = GUI.Button("Button - Change to Container 2", function()
-        TextOutput.print("Button Click From Container 1")
+        Utilities.TextOutput.print("Button Click From Container 1")
         GUI.activeContainer = guicont2
     end)
 
@@ -45,7 +44,7 @@ function Testing.GUI.init()
 -- fill container 2
     -- create a button
     local b2_cont2 = GUI.Button("Button - Change to Container 1", function()
-        TextOutput.print("Button Click From Container 2")
+        Utilities.TextOutput.print("Button Click From Container 2")
         GUI.activeContainer = guicont1
     end)
 

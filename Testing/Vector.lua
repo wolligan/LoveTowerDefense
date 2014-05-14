@@ -45,8 +45,8 @@ function Testing.Vector.render()
 end
 
 function Testing.Vector.update(dt)
-    textOutput.print(Vector.getTurn(Testing.Vector.vec1[1],
-                                    Testing.Vector.vec1[2],
-                                    Testing.Vector.vec2[1],
-                                    Testing.Vector.vec2[2]))
+    Utilities.TextOutput.print(Utilities.Vector.getTurn(    Testing.Vector.vec1[1],
+                                                            Testing.Vector.vec1[2],
+                                                            Testing.Vector.vec2[1],
+                                                            Testing.Vector.vec2[2]))
 end

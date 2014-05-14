@@ -1,6 +1,6 @@
 --- ADD ME
-require "Vector"
-Intersection = {}
+require "Utilities.Vector"
+Utilities.Intersection = {}
 
 --- Calculates the intersection point of two lines
 -- line1 = p1 + r * v1
@@ -19,7 +19,7 @@ Intersection = {}
 -- @param v2y y-coordinate of v2
 
 -- @return if there is an intersection point: function returns {intersecX, intersecY} otherwise it returns nil
-function Intersection.LineLine(p1x, p1y, v1x, v1y, p2x, p2y, v2x, v2y)
+function Utilities.Intersection.LineLine(p1x, p1y, v1x, v1y, p2x, p2y, v2x, v2y)
     local ps1x = p1x
     local ps1y = p1y
 
@@ -66,19 +66,19 @@ end
 -- @param p3y y-coordinate of p3
 
 -- @return if there is an intersection point: function returns {intersecX, intersecY} otherwise it returns nil
-function Intersection.LineLineseg(p1x, p1y, v1x, v1y, p2x, p2y, p3x, p3y)
+function Utilities.Intersection.LineLineseg(p1x, p1y, v1x, v1y, p2x, p2y, p3x, p3y)
     local v2x = p3x-p2x
     local v2y = p3y-p2y
-    local intersection = Intersection.LineLine(p1x,p1y, v1x,v1y, p2x,p2y, v2x,v2y)
+    local intersection = Utilities.Intersection.LineLine(p1x,p1y, v1x,v1y, p2x,p2y, v2x,v2y)
     if intersection then
-        local linesegLength = Vector.length(v2x, v2y)
+        local linesegLength = Utilities.Vector.length(v2x, v2y)
 
         local vecP2IntersecX = intersection[1] - p2x
         local vecP2IntersecY = intersection[2] - p2y
 
-        local vecP2IntersecLength = Vector.length(vecP2IntersecX, vecP2IntersecY)
+        local vecP2IntersecLength = Utilities.Vector.length(vecP2IntersecX, vecP2IntersecY)
 
-        if vecP2IntersecLength <= linesegLength and Vector.dot(v2x,v2y, vecP2IntersecX, vecP2IntersecY) > 0 then
+        if vecP2IntersecLength <= linesegLength and Utilities.Vector.dot(v2x,v2y, vecP2IntersecX, vecP2IntersecY) > 0 then
            return intersection
         end
     end
@@ -91,6 +91,6 @@ end
 -- @param right right coordinate of rectangle
 -- @param top top coordinate of rectangle
 -- @param bottom bottom coordinate of rectangle
-function Intersection.checkPointRectangle(x,y,left,right,top,bottom)
+function Utilities.Intersection.checkPointRectangle(x,y,left,right,top,bottom)
     return left <= x and right >= x and top <= y and bottom >= y
 end

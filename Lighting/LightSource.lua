@@ -1,10 +1,9 @@
 --- ADD ME
 
-require "OO"
 require "Lighting.Shadow"
 
 Lighting.LightSource = {}
-OO.createClass(Lighting.LightSource)
+Utilities.OO.createClass(Lighting.LightSource)
 
 ---
 function Lighting.LightSource:new(x,y, r,g,b)
@@ -125,7 +124,7 @@ function Lighting.LightSource:getReflectionPolygons(mesh)
             local nextX = meshWorldVertices[indexNextX]
             local nextY = meshWorldVertices[indexNextY]
 
-            local refColor = Color.mul(self.color, mesh.color)
+            local refColor = Utilities.Color.mul(self.color, mesh.color)
             local startingReflection = Lighting.Reflection(self, curX, curY, nextX, nextY, refColor[1], refColor[2], refColor[3], 1)
             if startingReflection.isAReflection then
 
@@ -137,29 +136,29 @@ function Lighting.LightSource:getReflectionPolygons(mesh)
                             local curShadow = self.shadows[shadowIndex]
                             if not curShadow.isInMesh then
 
-                                local shadowVecLeftX, shadowVecLeftY = Vector.subAndNormalize(curShadow.vertices[7], curShadow.vertices[8], curShadow.vertices[1], curShadow.vertices[2])
-                                local shadowVecRightX, shadowVecRightY = Vector.subAndNormalize(curShadow.vertices[5], curShadow.vertices[6], curShadow.vertices[3], curShadow.vertices[4])
-                                local shadowDirX, shadowDirY = Vector.addAndNormalize(shadowVecLeftX, shadowVecLeftY, shadowVecRightX, shadowVecRightY)
-                                local curFromLightX, curFromLightY = Vector.subAndNormalize(curX, curY, self.position[1], self.position[2])
-                                local nextFromLightX, nextFromLightY = Vector.subAndNormalize(nextX, nextY, self.position[1], self.position[2])
-                                local smallShadowBorderX, smallShadowBorderY = Vector.sub(curShadow.vertices[1], curShadow.vertices[2], curShadow.vertices[3], curShadow.vertices[4])
-                                local curFromShadow12X, curFromShadow12Y = Vector.sub(curX, curY, curShadow.vertices[1], curShadow.vertices[2])
-                                local nextFromShadow12X, nextFromShadow12Y = Vector.sub(nextX, nextY, curShadow.vertices[1], curShadow.vertices[2])
+                                local shadowVecLeftX, shadowVecLeftY = Utilities.Vector.subAndNormalize(curShadow.vertices[7], curShadow.vertices[8], curShadow.vertices[1], curShadow.vertices[2])
+                                local shadowVecRightX, shadowVecRightY = Utilities.Vector.subAndNormalize(curShadow.vertices[5], curShadow.vertices[6], curShadow.vertices[3], curShadow.vertices[4])
+                                local shadowDirX, shadowDirY = Utilities.Vector.addAndNormalize(shadowVecLeftX, shadowVecLeftY, shadowVecRightX, shadowVecRightY)
+                                local curFromLightX, curFromLightY = Utilities.Vector.subAndNormalize(curX, curY, self.position[1], self.position[2])
+                                local nextFromLightX, nextFromLightY = Utilities.Vector.subAndNormalize(nextX, nextY, self.position[1], self.position[2])
+                                local smallShadowBorderX, smallShadowBorderY = Utilities.Vector.sub(curShadow.vertices[1], curShadow.vertices[2], curShadow.vertices[3], curShadow.vertices[4])
+                                local curFromShadow12X, curFromShadow12Y = Utilities.Vector.sub(curX, curY, curShadow.vertices[1], curShadow.vertices[2])
+                                local nextFromShadow12X, nextFromShadow12Y = Utilities.Vector.sub(nextX, nextY, curShadow.vertices[1], curShadow.vertices[2])
 
                                 -- check if a cur or next could be in shadow
-                                if  Vector.getTurn(smallShadowBorderX, smallShadowBorderY, curFromShadow12X, curFromShadow12Y) == "right" or
+                                if  Utilities.Vector.getTurn(smallShadowBorderX, smallShadowBorderY, curFromShadow12X, curFromShadow12Y) == "right" or
 
-                                    Vector.getTurn(smallShadowBorderX, smallShadowBorderY, nextFromShadow12X, nextFromShadow12Y) == "right" then
+                                    Utilities.Vector.getTurn(smallShadowBorderX, smallShadowBorderY, nextFromShadow12X, nextFromShadow12Y) == "right" then
 
-                                    local nextFromShadowLeftX, nextFromShadowLeftY = Vector.subAndNormalize(nextX, nextY, curShadow.vertices[7], curShadow.vertices[8])
-                                    local nextFromShadowRightX, nextFromShadowRightY = Vector.subAndNormalize(nextX, nextY, curShadow.vertices[5], curShadow.vertices[6])
-                                    local curFromShadowLeftX, curFromShadowLeftY = Vector.subAndNormalize(curX, curY, curShadow.vertices[7], curShadow.vertices[8])
-                                    local curFromShadowRightX, curFromShadowRightY = Vector.subAndNormalize(curX, curY, curShadow.vertices[5], curShadow.vertices[6])
+                                    local nextFromShadowLeftX, nextFromShadowLeftY = Utilities.Vector.subAndNormalize(nextX, nextY, curShadow.vertices[7], curShadow.vertices[8])
+                                    local nextFromShadowRightX, nextFromShadowRightY = Utilities.Vector.subAndNormalize(nextX, nextY, curShadow.vertices[5], curShadow.vertices[6])
+                                    local curFromShadowLeftX, curFromShadowLeftY = Utilities.Vector.subAndNormalize(curX, curY, curShadow.vertices[7], curShadow.vertices[8])
+                                    local curFromShadowRightX, curFromShadowRightY = Utilities.Vector.subAndNormalize(curX, curY, curShadow.vertices[5], curShadow.vertices[6])
 
-                                    local turnShadowLeftNext = Vector.getTurn(shadowVecLeftX, shadowVecLeftY,  nextFromShadowLeftX, nextFromShadowLeftY)
-                                    local turnShadowLeftCur = Vector.getTurn(shadowVecLeftX, shadowVecLeftY,  curFromShadowLeftX, curFromShadowLeftY)
-                                    local turnShadowRightNext = Vector.getTurn(shadowVecRightX, shadowVecRightY, nextFromShadowRightX, nextFromShadowRightY)
-                                    local turnShadowRightCur = Vector.getTurn(shadowVecRightX, shadowVecRightY, curFromShadowRightX, curFromShadowRightY)
+                                    local turnShadowLeftNext = Utilities.Vector.getTurn(shadowVecLeftX, shadowVecLeftY,  nextFromShadowLeftX, nextFromShadowLeftY)
+                                    local turnShadowLeftCur = Utilities.Vector.getTurn(shadowVecLeftX, shadowVecLeftY,  curFromShadowLeftX, curFromShadowLeftY)
+                                    local turnShadowRightNext = Utilities.Vector.getTurn(shadowVecRightX, shadowVecRightY, nextFromShadowRightX, nextFromShadowRightY)
+                                    local turnShadowRightCur = Utilities.Vector.getTurn(shadowVecRightX, shadowVecRightY, curFromShadowRightX, curFromShadowRightY)
 
                                     -- both points inside the shadow -> no reflection
                                     if  turnShadowRightNext == "left"  and turnShadowRightCur == "left" and

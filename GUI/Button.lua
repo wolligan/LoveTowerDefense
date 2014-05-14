@@ -1,10 +1,9 @@
 --- Button Widget
 
-require "OO"
 require "GUI.Label"
 
 GUI.Button = {}
-OO.createDerivedClass(GUI.Button, GUI.Label)
+Utilities.OO.createDerivedClass(GUI.Button, GUI.Label)
 
 --- Constructor
 -- @param name label text

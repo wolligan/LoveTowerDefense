@@ -50,4 +50,5 @@ require "Testing.Intersection"
 require "Testing.Lighting"
 require "Testing.Vector"
 require "Testing.GUI"
+require "Testing.SlicedSprite"
 

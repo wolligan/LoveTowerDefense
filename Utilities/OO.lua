@@ -1,8 +1,8 @@
 --- create classes and derived classes
-OO = {}
+Utilities.OO = {}
 
 ---
-function OO.createClass(ClassTable)
+function Utilities.OO.createClass(ClassTable)
 	ClassTable.__index = ClassTable
 
 	setmetatable(ClassTable, { __call = function (cls, ...)
@@ -14,7 +14,7 @@ function OO.createClass(ClassTable)
 end
 
 ---
-function OO.createDerivedClass(ClassTable, toInheritFrom)
+function Utilities.OO.createDerivedClass(ClassTable, toInheritFrom)
 	ClassTable.__index = ClassTable
 	ClassTable.base = toInheritFrom
 

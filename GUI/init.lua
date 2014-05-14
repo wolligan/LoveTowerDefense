@@ -1,7 +1,5 @@
 --- Simple GUI-Toolkit
 
-require "Color"
-
 GUI = {}
 
 GUI.Root = {}

@@ -1,7 +1,7 @@
 --- Container that holds a list of widgets
 
 GUI.Container = {}
-OO.createClass(GUI.Container)
+Utilities.OO.createClass(GUI.Container)
 
 --- Constructor
 -- @param font
@@ -13,13 +13,14 @@ OO.createClass(GUI.Container)
 -- @param fontColor
 function GUI.Container:new(font, backgroundColor, foregroundColor, hoverColor, clickedColor, borderColor, fontColor )
     self.widgets = {}
-    self.font = font or Game.getFont("assets/fonts/DejaVuSans-ExtraLight.ttf")
+    self.font = font or Game.getFont("assets/fonts/comic.ttf")
+    --self.font = font or Game.getFont("assets/fonts/DejaVuSans-ExtraLight.ttf")
     self.backgroundColor = bgColor or {100,100,100}
     self.foregroundColor = fgColor or {150,150,150}
     self.hoverColor = hoverColor or {80,80,80}
     self.clickedColor = clickedColor or {50,50,50}
-    self.borderColor = borderColor or Color.white
-    self.fontColor = fontColor or Color.white
+    self.borderColor = borderColor or Utilities.Color.white
+    self.fontColor = fontColor or Utilities.Color.white
 
     GUI.activeContainer = self
 end

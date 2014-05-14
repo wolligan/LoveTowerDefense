@@ -1,10 +1,9 @@
 --- Label Widget
 
-require "OO"
 require "GUI.Widget"
 
 GUI.Label = {}
-OO.createDerivedClass(GUI.Label, GUI.Widget)
+Utilities.OO.createDerivedClass(GUI.Label, GUI.Widget)
 
 --- Constructor of Label
 -- @param text Text of Label

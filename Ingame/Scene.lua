@@ -1,10 +1,9 @@
 --- ADD ME
 Ingame.Scene = {}
 
-require "OO"
 require "Ingame.Character"
 
-OO.createClass(Ingame.Scene)
+Utilities.OO.createClass(Ingame.Scene)
 
 ---
 function Ingame.Scene:new()

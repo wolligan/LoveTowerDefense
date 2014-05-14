@@ -1,8 +1,7 @@
 --- ADD ME
-require "OO"
 
 Lighting.Reflection = {}
-OO.createClass(Lighting.Reflection)
+Utilities.OO.createClass(Lighting.Reflection)
 
 Lighting.Reflection.maxBounces = 3
 Lighting.Reflection.reflectionLength = math.sqrt(math.pow(love.graphics.getWidth(), 2) + math.pow(love.graphics.getHeight(), 2))*20
@@ -102,31 +101,31 @@ end
 
 --- recalculates reflection polygon, left point converges to right point
 function Lighting.Reflection:updateLeftSide(lightSource, shadowVecLeftX, shadowVecLeftY)
-    local newLeft = Intersection.LineLineseg(lightSource.position[1], lightSource.position[2], shadowVecLeftX, shadowVecLeftY, self.vertices[1], self.vertices[2], self.vertices[3], self.vertices[4])
+    local newLeft = Utilities.Intersection.LineLineseg(lightSource.position[1], lightSource.position[2], shadowVecLeftX, shadowVecLeftY, self.vertices[1], self.vertices[2], self.vertices[3], self.vertices[4])
 
     if newLeft then
         self.vertices[1] = newLeft[1]
         self.vertices[2] = newLeft[2]
 
-        local newRefDirX, newRefDirY = Vector.subAndNormalize(newLeft[1], newLeft[2], self.position[1], self.position[2])
-        newRefDirX, newRefDirY = Vector.mul(newRefDirX, newRefDirY, Lighting.Reflection.reflectionLength, Lighting.Reflection.reflectionLength)
+        local newRefDirX, newRefDirY = Utilities.Vector.subAndNormalize(newLeft[1], newLeft[2], self.position[1], self.position[2])
+        newRefDirX, newRefDirY = Utilities.Vector.mul(newRefDirX, newRefDirY, Lighting.Reflection.reflectionLength, Lighting.Reflection.reflectionLength)
 
-        self.vertices[7], self.vertices[8] = Vector.add(newLeft[1], newLeft[2], newRefDirX, newRefDirY)
+        self.vertices[7], self.vertices[8] = Utilities.Vector.add(newLeft[1], newLeft[2], newRefDirX, newRefDirY)
     end
 end
 
 --- recalculates reflection polygon, left point converges to right point
 function Lighting.Reflection:updateRightSide(lightSource, shadowVecRightX, shadowVecRightY)
-    local newRight = Intersection.LineLineseg(lightSource.position[1], lightSource.position[2], shadowVecRightX, shadowVecRightY, self.vertices[1], self.vertices[2], self.vertices[3], self.vertices[4])
+    local newRight = Utilities.Intersection.LineLineseg(lightSource.position[1], lightSource.position[2], shadowVecRightX, shadowVecRightY, self.vertices[1], self.vertices[2], self.vertices[3], self.vertices[4])
 
     if newRight then
         self.vertices[3] = newRight[1]
         self.vertices[4] = newRight[2]
 
-        local newRefDirX, newRefDirY = Vector.subAndNormalize(newRight[1], newRight[2], self.position[1], self.position[2])
-        newRefDirX, newRefDirY = Vector.mul(newRefDirX, newRefDirY, Lighting.Reflection.reflectionLength, Lighting.Reflection.reflectionLength)
+        local newRefDirX, newRefDirY = Utilities.Vector.subAndNormalize(newRight[1], newRight[2], self.position[1], self.position[2])
+        newRefDirX, newRefDirY = Utilities.Vector.mul(newRefDirX, newRefDirY, Lighting.Reflection.reflectionLength, Lighting.Reflection.reflectionLength)
 
-        self.vertices[5], self.vertices[6] = Vector.add(newRight[1], newRight[2], newRefDirX, newRefDirY)
+        self.vertices[5], self.vertices[6] = Utilities.Vector.add(newRight[1], newRight[2], newRefDirX, newRefDirY)
     end
 end
 
@@ -149,7 +148,7 @@ end
 -- @param leftY y-coordinate of left point that shall be reflected
 function Lighting.Reflection:calculateVertices(lightSource, rightX, rightY, leftX, leftY)
 -- calculate normal
-    local rightToLeftX, rightToLeftY = Vector.subAndNormalize(leftX, leftY, rightX, rightY)
+    local rightToLeftX, rightToLeftY = Utilities.Vector.subAndNormalize(leftX, leftY, rightX, rightY)
 
     local normalX = -rightToLeftY
     local normalY = rightToLeftX
@@ -157,15 +156,15 @@ function Lighting.Reflection:calculateVertices(lightSource, rightX, rightY, left
 -- calculate reflection vectors
 
 -- calculate reflection vectors
-    local lightVecToRightX, lightVecToRightY = Vector.subAndNormalize(rightX, rightY, lightSource.position[1],lightSource.position[2])
-    local lightVecToLeftX, lightVecToLeftY = Vector.subAndNormalize(leftX, leftY, lightSource.position[1],lightSource.position[2])
-    self.reflectionVecRightX, self.reflectionVecRightY = Vector.reflect(lightVecToRightX, lightVecToRightY, normalX, normalY)
-    self.reflectionVecLeftX,  self.reflectionVecLeftY  = Vector.reflect(lightVecToLeftX, lightVecToLeftY, normalX, normalY)
+    local lightVecToRightX, lightVecToRightY = Utilities.Vector.subAndNormalize(rightX, rightY, lightSource.position[1],lightSource.position[2])
+    local lightVecToLeftX, lightVecToLeftY = Utilities.Vector.subAndNormalize(leftX, leftY, lightSource.position[1],lightSource.position[2])
+    self.reflectionVecRightX, self.reflectionVecRightY = Utilities.Vector.reflect(lightVecToRightX, lightVecToRightY, normalX, normalY)
+    self.reflectionVecLeftX,  self.reflectionVecLeftY  = Utilities.Vector.reflect(lightVecToLeftX, lightVecToLeftY, normalX, normalY)
 
 
 -- check if lightsource is in front of reflection
-    local dotWithRight = Vector.dot(lightVecToRightX, lightVecToRightY, normalX, normalY)
-    local dotWithLeft = Vector.dot(lightVecToLeftX, lightVecToLeftY, normalX, normalY)
+    local dotWithRight = Utilities.Vector.dot(lightVecToRightX, lightVecToRightY, normalX, normalY)
+    local dotWithLeft = Utilities.Vector.dot(lightVecToLeftX, lightVecToLeftY, normalX, normalY)
 
     self.isAReflection = (dotWithRight < 0 and dotWithLeft < 0)
 
@@ -185,14 +184,14 @@ end
 
 ---
 function Lighting.Reflection:calculateOrigin()
-    self.position = Intersection.LineLine(  self.vertices[1], self.vertices[2],
+    self.position = Utilities.Intersection.LineLine(  self.vertices[1], self.vertices[2],
                                             self.reflectionVecLeftX, self.reflectionVecLeftY,
 
                                             self.vertices[3], self.vertices[4],
                                             self.reflectionVecRightX, self.reflectionVecRightY)
     if self.position then
         self.positionBorderCenter  = {(self.vertices[1] + self.vertices[3])/2, (self.vertices[2] + self.vertices[4])/2}
-        self.distancePositionToBorderCenter = Vector.length(self.position[1] - self.positionBorderCenter[1], self.position[2] - self.positionBorderCenter[2])
+        self.distancePositionToBorderCenter = Utilities.Vector.length(self.position[1] - self.positionBorderCenter[1], self.position[2] - self.positionBorderCenter[2])
     else
         self.isAReflection = false
     end

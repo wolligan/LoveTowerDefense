@@ -1,9 +1,7 @@
 --- ADD ME
-require "OO"
-require "Color"
 
 Geometry.Mesh = {}
-OO.createClass(Geometry.Mesh)
+Utilities.OO.createClass(Geometry.Mesh)
 
 ---
 function Geometry.Mesh:new(x,y, vertices, color, reflectorSides)

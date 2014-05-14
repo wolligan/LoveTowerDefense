@@ -1,8 +1,7 @@
 --- ADD ME
-require "OO"
 
 Lighting.AmbientLight = {}
-OO.createClass(Lighting.AmbientLight)
+Utilities.OO.createClass(Lighting.AmbientLight)
 
 ---
 function Lighting.AmbientLight:new(r,g,b)

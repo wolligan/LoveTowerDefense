@@ -1,15 +1,13 @@
 --- ADD ME
 Game = {}
 
+require "Utilities"
 require "Keys"
-require "TextOutput"
 require "Ingame"
 require "MainMenu"
 require "Networking"
-require "GUI"
 require "SplashScreen"
 require "GUI"
-require "Tables"
 require "Testing"
 
 Game.spritePool = {}
@@ -20,7 +18,7 @@ Game.state = nil
 ---
 function Game.init()
 	math.randomseed(os.time())
-    Game.changeState(Testing.GUI)
+    Game.changeState(Testing.SlicedSprite)
 end
 
 ---
@@ -28,7 +26,7 @@ function Game.render()
     if Game.state.render then
         Game.state.render()
     end
-	TextOutput.draw()
+	Utilities.TextOutput.draw()
 end
 
 ---

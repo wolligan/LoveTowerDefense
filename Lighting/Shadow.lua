@@ -1,9 +1,10 @@
 --- ADD ME
-require "OO"
+
+require "Utilities"
 
 Lighting.Shadow = {}
 Lighting.Shadow.shadowLength = math.sqrt(math.pow(love.graphics.getWidth(), 2) + math.pow(love.graphics.getHeight(), 2))*20
-OO.createClass(Lighting.Shadow)
+Utilities.OO.createClass(Lighting.Shadow)
 
 ---
 function Lighting.Shadow:new(lightSource, mesh)
@@ -30,14 +31,14 @@ end
 ---
 function Lighting.Shadow:calculateOrigin()
     if not self.isInMesh then
-        self.position = Intersection.LineLine(  self.vertices[1], self.vertices[2],
+        self.position = Utilities.Intersection.LineLine(  self.vertices[1], self.vertices[2],
                                                 self.directionLeftX, self.directionLeftY,
 
                                                 self.vertices[3], self.vertices[4],
                                                 self.directionRightX, self.directionRightY)
 
         self.positionBorderCenter  = {(self.vertices[1] + self.vertices[3])/2, (self.vertices[2] + self.vertices[4])/2}
-        self.distancePositionToBorderCenter = Vector.length(self.position[1] - self.positionBorderCenter[1], self.position[2] - self.positionBorderCenter[2])
+        self.distancePositionToBorderCenter = Utilities.Vector.length(self.position[1] - self.positionBorderCenter[1], self.position[2] - self.positionBorderCenter[2])
 
     end
 end
@@ -48,8 +49,8 @@ end
 function Lighting.Shadow:calculateVertices(lightSource, mesh)
     local volumeStartPoints = self:getVolumeStartPoints(lightSource, mesh)
     if not self.isInMesh then
-        self.directionLeftX, self.directionLeftY = Vector.subAndNormalize(volumeStartPoints[3], volumeStartPoints[4], lightSource.position[1], lightSource.position[2])
-        self.directionRightX, self.directionRightY = Vector.subAndNormalize(volumeStartPoints[1], volumeStartPoints[2], lightSource.position[1], lightSource.position[2])
+        self.directionLeftX, self.directionLeftY = Utilities.Vector.subAndNormalize(volumeStartPoints[3], volumeStartPoints[4], lightSource.position[1], lightSource.position[2])
+        self.directionRightX, self.directionRightY = Utilities.Vector.subAndNormalize(volumeStartPoints[1], volumeStartPoints[2], lightSource.position[1], lightSource.position[2])
 
         self.vertices = {   volumeStartPoints[1], volumeStartPoints[2],
                             volumeStartPoints[3], volumeStartPoints[4],
@@ -91,21 +92,21 @@ function Lighting.Shadow:getVolumeStartPoints(lightSource, mesh)
         local nextX = meshWorldVertices[indexNextX]
         local nextY = meshWorldVertices[indexNextY]
 
-        local lightVecX, lightVecY = Vector.subAndNormalize(curX, curY, lightSource.position[1], lightSource.position[2])
+        local lightVecX, lightVecY = Utilities.Vector.subAndNormalize(curX, curY, lightSource.position[1], lightSource.position[2])
 
-        local lineBeforeCurPointX, lineBeforeCurPointY = Vector.sub(curX, curY, prevX, prevY)
-        local lineAfterCurPointX, lineAfterCurPointY = Vector.sub(nextX, nextY, curX, curY)
+        local lineBeforeCurPointX, lineBeforeCurPointY = Utilities.Vector.sub(curX, curY, prevX, prevY)
+        local lineAfterCurPointX, lineAfterCurPointY = Utilities.Vector.sub(nextX, nextY, curX, curY)
 
         local normalBeforeCurX =  lineBeforeCurPointY
         local normalBeforeCurY = -lineBeforeCurPointX
-        normalBeforeCurX, normalBeforeCurY = Vector.normalize(normalBeforeCurX, normalBeforeCurY)
+        normalBeforeCurX, normalBeforeCurY = Utilities.Vector.normalize(normalBeforeCurX, normalBeforeCurY)
 
         local normalAfterCurX =  lineAfterCurPointY
         local normalAfterCurY = -lineAfterCurPointX
-        normalAfterCurX, normalAfterCurY = Vector.normalize(normalAfterCurX, normalAfterCurY)
+        normalAfterCurX, normalAfterCurY = Utilities.Vector.normalize(normalAfterCurX, normalAfterCurY)
 
-        local dotBefore = Vector.dot(normalBeforeCurX, normalBeforeCurY, lightVecX, lightVecY)
-        local dotAfter  = Vector.dot(normalAfterCurX,  normalAfterCurY,  lightVecX, lightVecY)
+        local dotBefore = Utilities.Vector.dot(normalBeforeCurX, normalBeforeCurY, lightVecX, lightVecY)
+        local dotAfter  = Utilities.Vector.dot(normalAfterCurX,  normalAfterCurY,  lightVecX, lightVecY)
 
         if (dotBefore > 0 and dotAfter < 0) then
             volumeStartPoints[3] = curX
@@ -126,6 +127,6 @@ end
 ---
 function Lighting.Shadow:calculateDirection()
     if not self.isInMesh then
-        self.directionX, self.directionY = Vector.addAndNormalize(self.directionLeftX, self.directionLeftY, self.directionRightX, self.directionRightY)
+        self.directionX, self.directionY = Utilities.Vector.addAndNormalize(self.directionLeftX, self.directionLeftY, self.directionRightX, self.directionRightY)
     end
 end

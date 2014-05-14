@@ -1,8 +1,7 @@
 --- ADD ME
-require "OO"
 
 Ingame.Character = {}
-OO.createClass(Ingame.Character)
+Utilities.OO.createClass(Ingame.Character)
 
 ---
 function Ingame.Character:new(appropriateScene,x,y)

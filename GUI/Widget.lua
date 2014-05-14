@@ -1,12 +1,9 @@
 --- Basic Widget Class - every Widget needs to inherit from this class
 
 
-require "Intersection"
-
-require "OO"
 GUI.Widget = {}
 GUI.Widget.counter = 0
-OO.createClass(GUI.Widget)
+Utilities.OO.createClass(GUI.Widget)
 
 --- Constructor
 function GUI.Widget:new()
@@ -94,7 +91,7 @@ end
 --- updates Widget
 -- @param dt delta time
 function GUI.Widget:update(dt)
-    if Intersection.checkPointRectangle(love.mouse.getX(), love.mouse.getY(), self:getLeftAnchor(),self:getRightAnchor(), self:getTopAnchor(), self:getBottomAnchor()) then
+    if Utilities.Intersection.checkPointRectangle(love.mouse.getX(), love.mouse.getY(), self:getLeftAnchor(),self:getRightAnchor(), self:getTopAnchor(), self:getBottomAnchor()) then
         if not self.isHovered then
            self:onHover()
         end

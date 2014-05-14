@@ -1,6 +1,4 @@
 --- ADD ME
-require "Intersection"
-require "TextOutput"
 
 Testing.Intersection = {}
 Testing.Intersection.activeKeyBinding = {}
@@ -71,8 +69,8 @@ end
 
 function Testing.Intersection.update(dt)
 
-    Testing.Intersection.intersection =  Intersection.LineLineseg(  Testing.Intersection.line1.point[1], Testing.Intersection.line1.point[2], Testing.Intersection.line1.direction[1], Testing.Intersection.line1.direction[2],
-                                                                    Testing.Intersection.lineseg1.point1[1], Testing.Intersection.lineseg1.point1[2], Testing.Intersection.lineseg1.point2[1], Testing.Intersection.lineseg1.point2[2])
+    Testing.Intersection.intersection =  Utilities.Intersection.LineLineseg(    Testing.Intersection.line1.point[1], Testing.Intersection.line1.point[2], Testing.Intersection.line1.direction[1], Testing.Intersection.line1.direction[2],
+                                                                                Testing.Intersection.lineseg1.point1[1], Testing.Intersection.lineseg1.point1[2], Testing.Intersection.lineseg1.point2[1], Testing.Intersection.lineseg1.point2[2])
 end
 
 function Testing.Intersection.drawLine(line)
