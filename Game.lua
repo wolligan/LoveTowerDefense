@@ -18,7 +18,7 @@ Game.state = nil
 ---
 function Game.init()
 	math.randomseed(os.time())
-    Game.changeState(Testing.SlicedSprite)
+    Game.changeState(Testing.Menu)
 end
 
 ---

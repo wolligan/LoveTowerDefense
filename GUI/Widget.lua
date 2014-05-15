@@ -22,6 +22,8 @@ function GUI.Widget:new()
     self.isActive = false
     self.isClicked = false
 
+    self.image = nil
+
     self.apparentContainer = nil
 
     self.name = name or "Widget#"..GUI.Widget.counter
@@ -30,8 +32,16 @@ end
 
 --- renders background
 function GUI.Widget:renderBackground()
-    love.graphics.setColor(unpack(self.apparentContainer.backgroundColor))
-    love.graphics.rectangle("fill", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
+    if self.isImaged then
+        love.graphics.setColor(unpack(self.apparentContainer.backgroundColor))
+        self.backgroundImage.position = {self:getLeftAnchor(), self:getTopAnchor()}
+        self.backgroundImage.width = self:getWidth()
+        self.backgroundImage.height = self:getHeight()
+        self.backgroundImage:render()
+    else
+        love.graphics.setColor(unpack(self.apparentContainer.backgroundColor))
+        love.graphics.rectangle("fill", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
+    end
 end
 
 --- Anchor functions
@@ -67,6 +77,58 @@ function GUI.Widget:getCenterVerAnchor()
     return (self:topAnchor() + self.topAnchorOffset + self:bottomAnchor() + self.bottomAnchorOffset) / 2
 end
 
+--- sets top anchor position
+-- @param widget Widget where topAnchor shall snap
+-- @param anchorPos {"bottom", "top", "center"} - anchor pos of widget
+function GUI.Widget:setTopAnchor(widget, anchorPos)
+    if anchorPos == "bottom" then
+        self.topAnchor = function() return widget:getBottomAnchor() end
+    elseif anchorPos == "top" then
+        self.topAnchor = function() return widget:getTopAnchor() end
+    elseif anchorPos == "center" then
+        self.topAnchor = function() return widget:getCenterVerAnchor() end
+    end
+end
+
+--- sets bottom anchor position
+-- @param widget Widget where bottomAnchor shall snap
+-- @param anchorPos {"bottom", "top", "center"} - anchor pos of widget
+function GUI.Widget:setBottomAnchor(widget, anchorPos)
+    if anchorPos == "bottom" then
+        self.bottomAnchor = function() return widget:getBottomAnchor() end
+    elseif anchorPos == "top" then
+        self.bottomAnchor = function() return widget:getTopAnchor() end
+    elseif anchorPos == "center" then
+        self.bottomAnchor = function() return widget:getCenterVerAnchor() end
+    end
+end
+
+--- sets left anchor position
+-- @param widget Widget where leftAnchor shall snap
+-- @param anchorPos {"left", "right", "center"} - anchor pos of widget
+function GUI.Widget:setLeftAnchor(widget, anchorPos)
+    if anchorPos == "left" then
+        self.leftAnchor = function() return widget:getLeftAnchor() end
+    elseif anchorPos == "right" then
+        self.leftAnchor = function() return widget:getRightAnchor() end
+    elseif anchorPos == "center" then
+        self.leftAnchor = function() return widget:getCenterHorAnchor() end
+    end
+end
+
+--- sets right anchor position
+-- @param widget Widget where rightAnchor shall snap
+-- @param anchorPos {"left", "right", "center"} - anchor pos of widget
+function GUI.Widget:setRightAnchor(widget, anchorPos)
+    if anchorPos == "left" then
+        self.rightAnchor = function() return widget:getLeftAnchor() end
+    elseif anchorPos == "right" then
+        self.rightAnchor = function() return widget:getRightAnchor() end
+    elseif anchorPos == "center" then
+        self.rightAnchor = function() return widget:getCenterHorAnchor() end
+    end
+end
+
 --- Functions related to size
 -- @section size
 
@@ -91,27 +153,58 @@ end
 --- updates Widget
 -- @param dt delta time
 function GUI.Widget:update(dt)
-    if Utilities.Intersection.checkPointRectangle(love.mouse.getX(), love.mouse.getY(), self:getLeftAnchor(),self:getRightAnchor(), self:getTopAnchor(), self:getBottomAnchor()) then
-        if not self.isHovered then
-           self:onHover()
-        end
-        self.isHovered = true
-    else
-        self.isHovered = false
-    end
+
+end
+
+function GUI.Widget:isCursorOverWidget()
+    return Utilities.Intersection.checkPointRectangle(love.mouse.getX(), love.mouse.getY(), self:getLeftAnchor(),self:getRightAnchor(), self:getTopAnchor(), self:getBottomAnchor())
 end
 
 --- gets called when mouse cursor hovers
 function GUI.Widget:onHover()
-    --TextOutput.print("hovered "..self.name)
+    --Utilities.TextOutput.print("hovered "..self.name)
 end
 
 --- gets called when clicked on widget
 function GUI.Widget:onClick()
-    --TextOutput.print("clicked "..self.name)
+    --Utilities.TextOutput.print("clicked "..self.name)
 end
 
 --- gets called when was click and now released
 function GUI.Widget:onRelease()
-    --TextOutput.print("released "..self.name)
+    --Utilities.TextOutput.print("released "..self.name)
+end
+
+function GUI.Widget:attachImage(slicedBackgroundSprite, slicedClickedSprite, slicedHoveredSprite)
+    self.isImaged = true
+    self.backgroundImage = slicedBackgroundSprite
+    self.clickedImage = slicedClickedSprite or slicedBackgroundSprite
+    self.hoveredImage = slicedHoveredSprite or slicedBackgroundSprite
+end
+
+function GUI.Widget:visualizeAnchors()
+-- left anchor
+    love.graphics.setColor(150,150,0)
+    love.graphics.setPointSize(10)
+    love.graphics.point(self:getLeftAnchor(), (self:getTopAnchor() + self:getBottomAnchor()) / 2)
+    love.graphics.point(self:leftAnchor(), (self:getTopAnchor() + self:getBottomAnchor()) / 2)
+    love.graphics.line(self:getLeftAnchor(), (self:getTopAnchor() + self:getBottomAnchor()) / 2, self:leftAnchor(), (self:getTopAnchor() + self:getBottomAnchor()) / 2)
+
+-- right anchor
+    love.graphics.setPointSize(10)
+    love.graphics.point(self:getRightAnchor(), (self:getTopAnchor() + self:getBottomAnchor()) / 2)
+    love.graphics.point(self:rightAnchor(), (self:getTopAnchor() + self:getBottomAnchor()) / 2)
+    love.graphics.line(self:getRightAnchor(), (self:getTopAnchor() + self:getBottomAnchor()) / 2, self:rightAnchor(), ((self:getTopAnchor() + self:getBottomAnchor()) / 2))
+
+-- top anchor
+    love.graphics.setPointSize(10)
+    love.graphics.point((self:getLeftAnchor() + self:getRightAnchor()) / 2, self:getTopAnchor())
+    love.graphics.point((self:getLeftAnchor() + self:getRightAnchor()) / 2, self:topAnchor())
+    love.graphics.line((self:getLeftAnchor() + self:getRightAnchor()) / 2, self:topAnchor(), (self:getLeftAnchor() + self:getRightAnchor()) / 2, self:getTopAnchor())
+
+-- bottom anchor
+    love.graphics.setPointSize(10)
+    love.graphics.point((self:getLeftAnchor() + self:getRightAnchor()) / 2, self:getBottomAnchor())
+    love.graphics.point((self:getLeftAnchor() + self:getRightAnchor()) / 2, self:bottomAnchor())
+    love.graphics.line((self:getLeftAnchor() + self:getRightAnchor()) / 2, self:bottomAnchor(), (self:getLeftAnchor() + self:getRightAnchor()) / 2, self:getBottomAnchor())
 end

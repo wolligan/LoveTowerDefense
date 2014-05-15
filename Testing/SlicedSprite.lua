@@ -4,7 +4,7 @@ function Testing.SlicedSprite.init()
     slicedSprite1 = Utilities.SlicedSprite( "assets/sprites/GUI/slicedShadedBackground_20_20_20_20.png",
                                             100, 100,
                                             300, 400,
-                                            20, 30, 40, 50 )
+                                            0, 30, 0, 50 )
 end
 
 function Testing.SlicedSprite.render()

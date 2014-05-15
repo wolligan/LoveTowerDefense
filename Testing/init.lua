@@ -51,4 +51,5 @@ require "Testing.Lighting"
 require "Testing.Vector"
 require "Testing.GUI"
 require "Testing.SlicedSprite"
+require "Testing.Menu"
 

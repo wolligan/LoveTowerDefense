@@ -13,10 +13,10 @@ Utilities.OO.createClass(GUI.Container)
 -- @param fontColor
 function GUI.Container:new(font, backgroundColor, foregroundColor, hoverColor, clickedColor, borderColor, fontColor )
     self.widgets = {}
-    self.font = font or Game.getFont("assets/fonts/comic.ttf")
-    --self.font = font or Game.getFont("assets/fonts/DejaVuSans-ExtraLight.ttf")
-    self.backgroundColor = bgColor or {100,100,100}
-    self.foregroundColor = fgColor or {150,150,150}
+    --self.font = font or Game.getFont("assets/fonts/comic.ttf")
+    self.font = font or Game.getFont("assets/fonts/DejaVuSans.ttf")
+    self.backgroundColor = backgroundColor or {100,100,100}
+    self.foregroundColor = foregroundColor or {150,150,150}
     self.hoverColor = hoverColor or {80,80,80}
     self.clickedColor = clickedColor or {50,50,50}
     self.borderColor = borderColor or Utilities.Color.white
@@ -29,13 +29,30 @@ end
 function GUI.Container:render()
     for i,curWidget in pairs(self.widgets) do
         curWidget:render()
+        if self.visualizeAnchors then
+            curWidget:visualizeAnchors()
+        end
     end
 end
 
 --- updates current GUI container
 function GUI.Container:update(dt)
     for i,curWidget in pairs(self.widgets) do
+        if curWidget:isCursorOverWidget() then
+            if not curWidget.isHovered then
+               curWidget:onHover()
+            end
+            curWidget.isHovered = true
+        else
+            curWidget.isHovered = false
+        end
+
         curWidget:update(dt)
+        if curWidget.isClicked then
+            if love.timer.getTime() - curWidget.timeWhenClicked > GUI.clickTimeDelay and curWidget:isCursorOverWidget() then
+               curWidget:onRelease()
+            end
+        end
     end
 end
 
@@ -45,6 +62,7 @@ function GUI.Container:notifyClick()
         if curWidget.isHovered then
             curWidget.isClicked = true
             curWidget:onClick()
+            curWidget.timeWhenClicked = love.timer.getTime()
         end
     end
 end
@@ -54,7 +72,9 @@ function GUI.Container:notifyRelease()
     for i,curWidget in pairs(self.widgets) do
         if curWidget.isClicked then
             curWidget.isClicked = false
-            curWidget:onRelease()
+            if curWidget:isCursorOverWidget() then
+                curWidget:onRelease()
+            end
         end
     end
 end

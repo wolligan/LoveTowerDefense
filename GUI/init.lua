@@ -4,6 +4,7 @@ GUI = {}
 
 GUI.Root = {}
 GUI.activeContainer = nil
+GUI.clickTimeDelay = 0.5 -- in seconds
 
 --- Left Anchor Point of Screen
 function GUI.Root.getLeftAnchor()
