@@ -3,7 +3,7 @@ require "Game"
 
 ---
 function love.load()
-	love.window.setMode( 800, 600, { fullscreen = false } )
+	love.window.setMode( 1920, 1080, { fullscreen = true } )
     Game.init()
 end
 

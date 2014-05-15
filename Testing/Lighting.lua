@@ -7,11 +7,12 @@ Testing.Lighting.activeKeyBinding = {}
 Testing.Lighting.activeKeyBinding["escape"] = {
     mode = "single",
     fun = function()
-        love.event.push("quit")
+        Game.changeState(Testing.Menu)
     end
 }
 
 function Testing.Lighting.init()
+    Lighting.init()
     Lighting.lights =  {Lighting.LightSource(0,0, 30,30,30)}
     Lighting.ambient = Lighting.AmbientLight(50,50,50)
 

@@ -10,8 +10,11 @@ require "Lighting.Shadow"
 Lighting.lights = {}
 Lighting.curShadowCasters = {}
 Lighting.ambient = Lighting.AmbientLight(255,255,255)
-Lighting.unlitSceneCanvas = love.graphics.newCanvas()
-Lighting.sceneLitByCurReflection = love.graphics.newCanvas()
+
+function Lighting.init()
+    Lighting.unlitSceneCanvas = love.graphics.newCanvas()
+    Lighting.sceneLitByCurReflection = love.graphics.newCanvas()
+end
 
 ---
 function Lighting.renderShadedScene()
