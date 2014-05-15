@@ -1,0 +1,468 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>löve! Tower Defense!</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/Game.html">Game</a></li>
+  <li><a href="../modules/Geometry.html">Geometry</a></li>
+  <li><a href="../modules/Geometry.Mesh.html">Geometry.Mesh</a></li>
+  <li><a href="../modules/GUI.Button.html">GUI.Button</a></li>
+  <li><a href="../modules/GUI.Container.html">GUI.Container</a></li>
+  <li><a href="../modules/GUI.html">GUI</a></li>
+  <li><a href="../modules/GUI.Label.html">GUI.Label</a></li>
+  <li><a href="../modules/GUI.Widget.html">GUI.Widget</a></li>
+  <li><a href="../modules/Ingame.html">Ingame</a></li>
+  <li><a href="../modules/Keybindings.html">Keybindings</a></li>
+  <li><a href="../modules/Keybindings.TilemapTestKeyBinding.html">Keybindings.TilemapTestKeyBinding</a></li>
+  <li><a href="../modules/Keys.html">Keys</a></li>
+  <li><a href="../modules/Lighting.AmbientLight.html">Lighting.AmbientLight</a></li>
+  <li><a href="../modules/Lighting.html">Lighting</a></li>
+  <li><a href="../modules/Lighting.LightSource.html">Lighting.LightSource</a></li>
+  <li><a href="../modules/Lighting.Reflection.html">Lighting.Reflection</a></li>
+  <li><a href="../modules/Lighting.Shadow.html">Lighting.Shadow</a></li>
+  <li><a href="../modules/main.html">main</a></li>
+  <li><a href="../modules/MainMenu.html">MainMenu</a></li>
+  <li><a href="../modules/Networking.html">Networking</a></li>
+  <li><a href="../modules/SplashScreen.html">SplashScreen</a></li>
+  <li><a href="../modules/Testing.GUI.html">Testing.GUI</a></li>
+  <li><a href="../modules/Testing.html">Testing</a></li>
+  <li><a href="../modules/Testing.Intersection.html">Testing.Intersection</a></li>
+  <li><a href="../modules/Testing.Lighting.html">Testing.Lighting</a></li>
+  <li><a href="../modules/Testing.Vector.html">Testing.Vector</a></li>
+  <li><a href="../modules/Tilemap.Camera.html">Tilemap.Camera</a></li>
+  <li><a href="../modules/Tilemap.Character.html">Tilemap.Character</a></li>
+  <li><a href="../modules/Tilemap.html">Tilemap</a></li>
+  <li><a href="../modules/Tilemap.Scene.html">Tilemap.Scene</a></li>
+  <li><a href="../modules/Tilemap.Settings.html">Tilemap.Settings</a></li>
+  <li><a href="../modules/Tilemap.TileDict.html">Tilemap.TileDict</a></li>
+  <li><a href="../modules/Utilities.Color.html">Utilities.Color</a></li>
+  <li><a href="../modules/Utilities.html">Utilities</a></li>
+  <li><a href="../modules/Utilities.Intersection.html">Utilities.Intersection</a></li>
+  <li><a href="../modules/Utilities.OO.html">Utilities.OO</a></li>
+  <li><a href="../modules/Utilities.SlicedSprite.html">Utilities.SlicedSprite</a></li>
+  <li><a href="../modules/Utilities.Tables.html">Utilities.Tables</a></li>
+  <li><a href="../modules/Utilities.TextOutput.html">Utilities.TextOutput</a></li>
+  <li><strong>Utilities.Vector</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Utilities.Vector</code></h1>
+<p>Implements several functions for 2D Vector operations</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Vector.dot">Utilities.Vector.dot (x1, y1, x2, y2)</a></td>
+	<td class="summary">Dot Product</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Vector.length">Utilities.Vector.length (x, y)</a></td>
+	<td class="summary">Calculates length of vector</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Vector.normalize">Utilities.Vector.normalize (x, y)</a></td>
+	<td class="summary">Dot Product</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Vector.reflect">Utilities.Vector.reflect (vx, vy, nx, ny)</a></td>
+	<td class="summary">Reflects a Vector on a normal</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Vector.getTurn">Utilities.Vector.getTurn (x1, y1, x2, y2)</a></td>
+	<td class="summary">Calculates direction of vector2 dependant of vector1</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Vector.add">Utilities.Vector.add (x1, y1, x2, y2)</a></td>
+	<td class="summary">Componentwise Addition</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Vector.addAndNormalize">Utilities.Vector.addAndNormalize (x1, y1, x2, y2)</a></td>
+	<td class="summary">Componentwise Addition with normalization of Sum</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Vector.sub">Utilities.Vector.sub (x1, y1, x2, y2)</a></td>
+	<td class="summary">Componentwise Subtraction</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Vector.subAndNormalize">Utilities.Vector.subAndNormalize (x1, y1, x2, y2)</a></td>
+	<td class="summary">Componentwise Addition with normalization of difference</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Vector.mul">Utilities.Vector.mul (x1, y1, x2, y2)</a></td>
+	<td class="summary">Componentwise Multiplication</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Vector.div">Utilities.Vector.div (x1, y1, x2, y2)</a></td>
+	<td class="summary">Componentwise Division</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "Utilities.Vector.dot"></a>
+    <strong>Utilities.Vector.dot (x1, y1, x2, y2)</strong>
+    </dt>
+    <dd>
+    Dot Product
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x1</span>
+         x-component of vector1
+        </li>
+        <li><span class="parameter">y1</span>
+         y-component of vector1
+        </li>
+        <li><span class="parameter">x2</span>
+         x-component of vector2
+        </li>
+        <li><span class="parameter">y2</span>
+         y-component of vector2
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Vector.length"></a>
+    <strong>Utilities.Vector.length (x, y)</strong>
+    </dt>
+    <dd>
+    Calculates length of vector
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         x-component of vector
+        </li>
+        <li><span class="parameter">y</span>
+         y-component of vector
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Vector.normalize"></a>
+    <strong>Utilities.Vector.normalize (x, y)</strong>
+    </dt>
+    <dd>
+    Dot Product
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         x-component of vector
+        </li>
+        <li><span class="parameter">y</span>
+         y-component of vector
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Vector.reflect"></a>
+    <strong>Utilities.Vector.reflect (vx, vy, nx, ny)</strong>
+    </dt>
+    <dd>
+    Reflects a Vector on a normal
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vx</span>
+         x-component of vector to be reflected
+        </li>
+        <li><span class="parameter">vy</span>
+         y-component of vector to be reflected
+        </li>
+        <li><span class="parameter">nx</span>
+         x-component of normal where vector will be reflected
+        </li>
+        <li><span class="parameter">ny</span>
+         y-component of normal where vector will be reflected
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Vector.getTurn"></a>
+    <strong>Utilities.Vector.getTurn (x1, y1, x2, y2)</strong>
+    </dt>
+    <dd>
+    Calculates direction of vector2 dependant of vector1
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x1</span>
+         x-component of vector1
+        </li>
+        <li><span class="parameter">y1</span>
+         y-component of vector1
+        </li>
+        <li><span class="parameter">x2</span>
+         x-component of vector2
+        </li>
+        <li><span class="parameter">y2</span>
+         y-component of vector2
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        direction of vector2 dependant of vector1
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Vector.add"></a>
+    <strong>Utilities.Vector.add (x1, y1, x2, y2)</strong>
+    </dt>
+    <dd>
+    Componentwise Addition
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x1</span>
+         x-component of vector1
+        </li>
+        <li><span class="parameter">y1</span>
+         y-component of vector1
+        </li>
+        <li><span class="parameter">x2</span>
+         x-component of vector2
+        </li>
+        <li><span class="parameter">y2</span>
+         y-component of vector2
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Vector.addAndNormalize"></a>
+    <strong>Utilities.Vector.addAndNormalize (x1, y1, x2, y2)</strong>
+    </dt>
+    <dd>
+    Componentwise Addition with normalization of Sum
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x1</span>
+         x-component of vector1
+        </li>
+        <li><span class="parameter">y1</span>
+         y-component of vector1
+        </li>
+        <li><span class="parameter">x2</span>
+         x-component of vector2
+        </li>
+        <li><span class="parameter">y2</span>
+         y-component of vector2
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Vector.sub"></a>
+    <strong>Utilities.Vector.sub (x1, y1, x2, y2)</strong>
+    </dt>
+    <dd>
+    Componentwise Subtraction
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x1</span>
+         x-component of vector1
+        </li>
+        <li><span class="parameter">y1</span>
+         y-component of vector1
+        </li>
+        <li><span class="parameter">x2</span>
+         x-component of vector2
+        </li>
+        <li><span class="parameter">y2</span>
+         y-component of vector2
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Vector.subAndNormalize"></a>
+    <strong>Utilities.Vector.subAndNormalize (x1, y1, x2, y2)</strong>
+    </dt>
+    <dd>
+    Componentwise Addition with normalization of difference
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x1</span>
+         x-component of vector1
+        </li>
+        <li><span class="parameter">y1</span>
+         y-component of vector1
+        </li>
+        <li><span class="parameter">x2</span>
+         x-component of vector2
+        </li>
+        <li><span class="parameter">y2</span>
+         y-component of vector2
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Vector.mul"></a>
+    <strong>Utilities.Vector.mul (x1, y1, x2, y2)</strong>
+    </dt>
+    <dd>
+    Componentwise Multiplication
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x1</span>
+         x-component of vector1
+        </li>
+        <li><span class="parameter">y1</span>
+         y-component of vector1
+        </li>
+        <li><span class="parameter">x2</span>
+         x-component of vector2
+        </li>
+        <li><span class="parameter">y2</span>
+         y-component of vector2
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Vector.div"></a>
+    <strong>Utilities.Vector.div (x1, y1, x2, y2)</strong>
+    </dt>
+    <dd>
+    Componentwise Division
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x1</span>
+         x-component of vector1
+        </li>
+        <li><span class="parameter">y1</span>
+         y-component of vector1
+        </li>
+        <li><span class="parameter">x2</span>
+         x-component of vector2
+        </li>
+        <li><span class="parameter">y2</span>
+         y-component of vector2
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

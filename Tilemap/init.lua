@@ -1,2 +1,0 @@
---- ADD ME
-Tilemap = {}
