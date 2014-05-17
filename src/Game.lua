@@ -20,7 +20,7 @@ Game.state = nil
 function Game.init()
 	love.window.setMode( 1920, 1080, { fullscreen = true } )
 	math.randomseed(os.time())
-    Game.changeState(Testing.Menu)
+    Game.changeState(SplashScreen)
 end
 
 --- renders current game state, gui and textoutput

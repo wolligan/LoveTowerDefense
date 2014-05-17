@@ -1,4 +1,10 @@
 Testing.SlicedSprite = {}
+Testing.SlicedSprite.activeKeyBinding = {}
+Testing.SlicedSprite.activeKeyBinding["escape"] = {
+    pressed = function()
+        Game.changeState(Testing.Menu)
+    end
+}
 
 function Testing.SlicedSprite.init()
     slicedSprite1 = Utilities.SlicedSprite( "assets/sprites/GUI/slicedShadedBackground_20_20_20_20.png",

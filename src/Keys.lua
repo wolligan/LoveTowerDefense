@@ -10,8 +10,8 @@ function love.keypressed(key)
 	Keys.activeKeys[key] = true
     if Game.state.activeKeyBinding then
         if Game.state.activeKeyBinding[key] then
-            if Game.state.activeKeyBinding[key].mode == "single" then
-                Game.state.activeKeyBinding[key].fun()
+            if Game.state.activeKeyBinding[key].pressed then
+                Game.state.activeKeyBinding[key].pressed()
             end
         end
     end
@@ -21,6 +21,13 @@ end
 -- @param key key that is currently released
 function love.keyreleased(key)
 	Keys.activeKeys[key] = false
+    if Game.state.activeKeyBinding then
+        if Game.state.activeKeyBinding[key] then
+            if Game.state.activeKeyBinding[key].released then
+                Game.state.activeKeyBinding[key].released()
+            end
+        end
+    end
 end
 
 --- love callback - updates keymap and calls function of single button setting (mouse)
@@ -32,8 +39,8 @@ function love.mousepressed(x, y, button)
 	Keys.activeKeys[key] = true
     if Game.state.activeKeyBinding then
         if Game.state.activeKeyBinding[key] then
-            if Game.state.activeKeyBinding[key].mode == "single" then
-                Game.state.activeKeyBinding[key].fun()
+            if Game.state.activeKeyBinding[key].pressed then
+                Game.state.activeKeyBinding[key].pressed()
             end
         end
     end
@@ -47,6 +54,13 @@ end
 function love.mousereleased(x, y, button)
     local key = Keys.mouseButtonToKey(button)
 	Keys.activeKeys[key] = false
+    if Game.state.activeKeyBinding then
+        if Game.state.activeKeyBinding[key] then
+            if Game.state.activeKeyBinding[key].released then
+                Game.state.activeKeyBinding[key].released()
+            end
+        end
+    end
     GUI.notifyRelease()
 end
 
@@ -65,8 +79,8 @@ end
 function Keys.handleKeyBindings(dt)
     if Game.state.activeKeyBinding then
         for key,keyBinding in pairs(Game.state.activeKeyBinding) do
-            if Keys.isKeyDown(key) and keyBinding.mode == "repeat" then
-                keyBinding.fun(dt)
+            if Keys.isKeyDown(key) and keyBinding.repeated then
+                keyBinding.repeated(dt)
             end
         end
     end

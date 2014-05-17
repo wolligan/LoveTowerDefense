@@ -5,19 +5,14 @@ Utilities.Intersection = {}
 --- Calculates the intersection point of two lines
 -- line1 = p1 + r * v1
 -- line2 = p2 + s * v2
-
 -- @param p1x x-coordinate of p1
 -- @param p1y y-coordinate of p1
-
 -- @param v1x x-coordinate of v1
 -- @param v1y y-coordinate of v1
-
 -- @param p2x x-coordinate of p2
 -- @param p2y y-coordinate of p2
-
 -- @param v2x x-coordinate of v2
 -- @param v2y y-coordinate of v2
-
 -- @return if there is an intersection point: function returns {intersecX, intersecY} otherwise it returns nil
 function Utilities.Intersection.LineLine(p1x, p1y, v1x, v1y, p2x, p2y, v2x, v2y)
     local ps1x = p1x
@@ -52,19 +47,14 @@ end
 --- returns intersection point of a line and a line segment
 -- line = p1 + r * v1
 -- line segment = from p2 to p3
-
 -- @param p1x x-coordinate of p1
 -- @param p1y y-coordinate of p1
-
 -- @param v1x x-coordinate of v1
 -- @param v1y y-coordinate of v1
-
 -- @param p2x x-coordinate of p2
 -- @param p2y y-coordinate of p2
-
 -- @param p3x x-coordinate of p3
 -- @param p3y y-coordinate of p3
-
 -- @return if there is an intersection point: function returns {intersecX, intersecY} otherwise it returns nil
 function Utilities.Intersection.LineLineseg(p1x, p1y, v1x, v1y, p2x, p2y, p3x, p3y)
     local v2x = p3x-p2x
@@ -92,5 +82,16 @@ end
 -- @param top top coordinate of rectangle
 -- @param bottom bottom coordinate of rectangle
 function Utilities.Intersection.checkPointRectangle(x,y,left,right,top,bottom)
+    return left <= x and right >= x and top <= y and bottom >= y
+end
+
+--- Checks if a point is in a rectangle
+-- @param x x-coordinate of point
+-- @param y y-coordinate of point
+-- @param left left coordinate of rectangle
+-- @param right right coordinate of rectangle
+-- @param top top coordinate of rectangle
+-- @param bottom bottom coordinate of rectangle
+function Utilities.Intersection.checkRectanlgeRectangle(left1,right1,top1,bottom1, left2,right2,top2,bottom2)
     return left <= x and right >= x and top <= y and bottom >= y
 end

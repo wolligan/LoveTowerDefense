@@ -5,16 +5,35 @@ Testing.Lighting = {}
 
 Testing.Lighting.activeKeyBinding = {}
 Testing.Lighting.activeKeyBinding["escape"] = {
-    mode = "single",
-    fun = function()
+    pressed = function()
         Game.changeState(Testing.Menu)
+    end
+}
+
+
+Testing.Lighting.activeKeyBinding["mouse_left"] = {
+    pressed = function()
+        local mX = love.mouse.getX()
+        local mY = love.mouse.getY()
+
+        for i,curLight in pairs(Lighting.lights) do
+            if math.abs(mX - curLight.position[1]) < 7 and math.abs(mY - curLight.position[2]) < 7 then
+                Testing.Lighting.clickedLightSource = curLight
+            end
+        end
+    end,
+
+    released = function()
+        Testing.Lighting.clickedLightSource = nil
     end
 }
 
 function Testing.Lighting.init()
     Lighting.init()
-    Lighting.lights =  {Lighting.LightSource(0,0, 30,30,30)}
-    Lighting.ambient = Lighting.AmbientLight(50,50,50)
+    Lighting.lights =  {Lighting.LightSource(love.graphics.getWidth()/3, love.graphics.getHeight()/2, 50,50,50),
+                        Lighting.LightSource(love.graphics.getWidth()*2/3, love.graphics.getHeight()/2, 50,50,50)}
+    Lighting.ambient = Lighting.AmbientLight(100,100,100)
+    --Lighting.ambient = Lighting.AmbientLight(255,255,255)
 
     Testing.Lighting.background = Game.getSprite("assets/sprites/lighttest/background.png")
     Lighting.drawUnlitBackground = function() love.graphics.draw(Testing.Lighting.background) end
@@ -27,10 +46,9 @@ function Testing.Lighting.render()
 end
 
 function Testing.Lighting.update(dt)
-
-    --Testing.Lighting.lights[1].position  = {love.mouse.getX(), love.mouse.getY()}
-    Lighting.lights[1].position  = {love.graphics.getWidth()/2 + math.sin(love.timer.getTime()/4)*300, love.graphics.getHeight()/2 + math.cos(love.timer.getTime()/4)*300}
-
+    if Testing.Lighting.clickedLightSource then
+        Testing.Lighting.clickedLightSource.position = {love.mouse.getX(), love.mouse.getY()}
+    end
     Lighting.update(dt, Testing.Lighting.shadowCasters)
 end
 

@@ -147,7 +147,7 @@ end
 
 --- renders widget
 function GUI.Widget:render()
-    self:renderBackground()
+    --self:renderBackground()
 end
 
 --- updates Widget
@@ -157,7 +157,7 @@ function GUI.Widget:update(dt)
 end
 
 function GUI.Widget:isCursorOverWidget()
-    return Utilities.Intersection.checkPointRectangle(love.mouse.getX(), love.mouse.getY(), self:getLeftAnchor(),self:getRightAnchor(), self:getTopAnchor(), self:getBottomAnchor())
+    return Utilities.Intersection.checkPointRectangle(love.mouse.getX(), love.mouse.getY(), self:getLeftAnchor(), self:getRightAnchor(), self:getTopAnchor(), self:getBottomAnchor())
 end
 
 --- gets called when mouse cursor hovers

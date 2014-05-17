@@ -11,6 +11,8 @@ function Lighting.Shadow:new(lightSource, mesh)
     self.lightSource = lightSource
     self.mesh = mesh
 
+    self.color = {10,10,10}
+
     self.vertices  = {}
     self:calculateVertices(lightSource, mesh)
     self:calculateDirection()
@@ -22,8 +24,7 @@ end
 ---
 function Lighting.Shadow:render()
     if not self.isInMesh then
-        love.graphics.setBlendMode("alpha")
-        love.graphics.setColor(255,255,255)
+        --love.graphics.setColor(unpack(self.color))
         love.graphics.polygon("fill", unpack(self.vertices))
     end
 end

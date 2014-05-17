@@ -21,19 +21,10 @@ end
 
 --- renders light without shadows and reflections
 function Lighting.LightSource:render()
+    love.graphics.setBlendMode("additive")
     self:drawLight()
 
     self:drawReflections()
-end
-
----
-function Lighting.LightSource:renderCircle()
-    love.graphics.setColor(unpack(self.color))
-    love.graphics.circle( "fill", self.position[1], self.position[2], 10 )
-
-    love.graphics.setColor(0,0,0)
-    love.graphics.setLineWidth(1)
-    love.graphics.circle( "line", self.position[1], self.position[2], 10 )
 end
 
 --- renders a fullscreen quad with inverted stencil with shadows
@@ -41,11 +32,11 @@ function Lighting.LightSource:drawLight()
 
     love.graphics.setInvertedStencil(function() self:drawShadows() end)
     love.graphics.setColor(unpack(self.color))
-    love.graphics.setBlendMode("additive")
-    --love.graphics.rectangle("fill", 0,0,love.graphics.getWidth(), love.graphics.getHeight())
-    love.graphics.draw(Lighting.unlitSceneCanvas)
+    love.graphics.draw(Lighting.unlitBackground)
+    love.graphics.setInvertedStencil()
+    --love.graphics.rectangle("fill",0,0,love.graphics.getWidth(),love.graphics.getHeight())
 
-    love.graphics.setInvertedStencil(nil)
+    --love.graphics.setInvertedStencil(nil)
 end
 
 --- draws all shadow polygons of lightsource
@@ -62,6 +53,16 @@ function Lighting.LightSource:drawReflections()
             curReflection:render()
         end
     end
+end
+
+---
+function Lighting.LightSource:renderCircle()
+    love.graphics.setColor(unpack(self.color))
+    love.graphics.circle( "fill", self.position[1], self.position[2], 10 )
+
+    love.graphics.setColor(0,0,0)
+    love.graphics.setLineWidth(1)
+    love.graphics.circle( "line", self.position[1], self.position[2], 10 )
 end
 
 ---

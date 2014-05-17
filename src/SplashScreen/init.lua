@@ -41,7 +41,7 @@ function SplashScreen.update(dt)
     end
 
     if timePassed > SplashScreen.timeToDisplay then
-        Game.changeState(Ingame)
+        Game.changeState(Testing.Menu)
     end
 
 end

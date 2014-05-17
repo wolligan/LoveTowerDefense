@@ -9,35 +9,52 @@ require "Lighting.Shadow"
 
 Lighting.lights = {}
 Lighting.curShadowCasters = {}
-Lighting.ambient = Lighting.AmbientLight(255,255,255)
+Lighting.ambient = nil
 
 function Lighting.init()
-    Lighting.unlitSceneCanvas = love.graphics.newCanvas()
-    Lighting.sceneLitByCurReflection = love.graphics.newCanvas()
+    Lighting.unlitBackground = love.graphics.newCanvas()
+
+    Lighting.shadercode = [[
+        vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
+        {
+            vec4 texcolor = Texel(texture, texture_coords);
+            return texcolor * color;//vec4(1.0f, 0.0f, 0.0f, 1.0f);
+        }
+
+        vec4 position( mat4 transform_projection, vec4 vertex_position )
+        {
+            return transform_projection * vertex_position;
+        }
+    ]]
+
+    Lighting.shader = love.graphics.newShader(Lighting.shadercode)
+
 end
 
 ---
 function Lighting.renderShadedScene()
-    Lighting.unlitSceneCanvas:clear(255,255,255)
+    Lighting.unlitBackground:clear(0,0,0)
 
     -- render background
-    love.graphics.setColor(255, 255, 255)
-    love.graphics.setCanvas(Lighting.unlitSceneCanvas)
+    love.graphics.setCanvas(Lighting.unlitBackground)
     Lighting.drawUnlitBackground()
-
-    -- render ambient
     love.graphics.setCanvas()
 
+    -- render ambient
+    --love.graphics.setShader(Lighting.shader)
+
+    love.graphics.setBlendMode("additive")
     if Lighting.ambient then
         Lighting.ambient:render()
     end
 
     -- render lights
-    love.graphics.setBlendMode("additive")
-    for lightIndex=1,#Lighting.lights do
-        Lighting.lights[lightIndex]:render()
-
+    for i,curLight in pairs(Lighting.lights) do
+        if curLight.enabled then
+            curLight:render()
+        end
     end
+
     love.graphics.setBlendMode("alpha")
 
     -- draw ShadowCasters over shaded Scene
@@ -48,7 +65,9 @@ function Lighting.renderShadedScene()
 
     -- draw lights
     for i,curLight in pairs(Lighting.lights) do
-        curLight:renderCircle()
+        if curLight.enabled then
+            curLight:renderCircle()
+        end
     end
 end
 

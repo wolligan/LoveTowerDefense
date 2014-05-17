@@ -6,8 +6,7 @@ Testing.GUI = {}
 
 Testing.GUI.activeKeyBinding = {}
 Testing.GUI.activeKeyBinding["escape"] = {
-    mode = "single",
-    fun = function()
+    pressed = function()
         Game.changeState(Testing.Menu)
     end
 }
@@ -228,7 +227,28 @@ function Testing.GUI.fillContainer2()
     l2_cont2.topAnchorOffset = 20
     l2_cont2.bottomAnchorOffset = 50
 
+    -- create list
+    local list_cont2 = GUI.List("vertical", 200, 20)
+
+    list_cont2:setLeftAnchor(GUI.Root, "left")
+    list_cont2:setRightAnchor(GUI.Root, "left")
+    list_cont2:setTopAnchor(GUI.Root, "top")
+    list_cont2:setBottomAnchor(b2_cont2, "top")
+
+    list_cont2.leftAnchorOffset = 20
+    list_cont2.rightAnchorOffset = 520
+    list_cont2.topAnchorOffset = 20
+    list_cont2.bottomAnchorOffset = -20
+
+    list_cont2:add(GUI.Label("test1"))
+    list_cont2:add(GUI.Label("test2"))
+    list_cont2:add(GUI.Label("test3"))
+    list_cont2:add(GUI.Label("test4"))
+    list_cont2:addWidgetsToContainer(guicont2)
+
+
     -- add button and label to container
     guicont2:addWidget(b2_cont2)
     guicont2:addWidget(l2_cont2)
+    guicont2:addWidget(list_cont2)
 end

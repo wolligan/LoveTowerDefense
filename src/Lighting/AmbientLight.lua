@@ -11,7 +11,8 @@ end
 ---
 function Lighting.AmbientLight:render()
     love.graphics.setColor(self.color[1], self.color[2], self.color[3])
-    love.graphics.draw(Lighting.unlitSceneCanvas)
+    love.graphics.draw(Lighting.unlitBackground)
+    --love.graphics.rectangle("fill", 0,0,love.graphics.getWidth(),love.graphics.getHeight())
 end
 
 ---

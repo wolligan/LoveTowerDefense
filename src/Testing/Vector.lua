@@ -3,23 +3,20 @@ Testing.Vector = {}
 
 Testing.Vector.activeKeyBinding = {}
 Testing.Vector.activeKeyBinding["escape"] = {
-    mode = "single",
-    fun = function()
-        love.event.push("quit")
+    pressed = function()
+        Game.changeState(Testing.Menu)
     end
 }
 
 Testing.Vector.activeKeyBinding["mouse_left"] = {
-    mode = "repeat",
-    fun = function()
+    repeated = function()
         local mX, mY = Testing.CoordinateSystem.getMouseCoordinates()
         Testing.Vector.vec1 = {mX, mY}
     end
 }
 
 Testing.Vector.activeKeyBinding["mouse_right"] = {
-    mode = "repeat",
-    fun = function()
+    repeated = function()
         local mX, mY = Testing.CoordinateSystem.getMouseCoordinates()
         Testing.Vector.vec2 = {mX, mY}
     end

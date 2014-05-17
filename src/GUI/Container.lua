@@ -22,17 +22,20 @@ function GUI.Container:new(font, backgroundColor, foregroundColor, hoverColor, c
     self.borderColor = borderColor or Utilities.Color.white
     self.fontColor = fontColor or Utilities.Color.white
 
+    self.stencil = function() love.graphics.rectangle("fill", 0,0,love.graphics.getWidth()/2, love.graphics.getHeight()/2) end
     GUI.activeContainer = self
 end
 
 --- renders all widgets in current GUI container
 function GUI.Container:render()
     for i,curWidget in pairs(self.widgets) do
+        love.graphics.setStencil(self.stencil)
         curWidget:render()
         if self.visualizeAnchors then
             curWidget:visualizeAnchors()
         end
     end
+    love.graphics.setStencil()
 end
 
 --- updates current GUI container

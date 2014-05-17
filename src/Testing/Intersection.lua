@@ -2,32 +2,27 @@
 
 Testing.Intersection = {}
 Testing.Intersection.activeKeyBinding = {}
-
 Testing.Intersection.activeKeyBinding["escape"] = {
-    mode = "single",
-    fun = function()
-        love.event.push("quit")
+    pressed = function()
+        Game.changeState(Testing.Menu)
     end
 }
 
 Testing.Intersection.activeKeyBinding["mouse_left"] = {
-    mode = "repeat",
-    fun = function()
+    repeated = function()
         Testing.Intersection.line1.point = {Testing.CoordinateSystem.getMouseCoordinates()}
     end
 }
 
 Testing.Intersection.activeKeyBinding["mouse_right"] = {
-    mode = "repeat",
-    fun = function()
+    repeated = function()
         Testing.Intersection.lineseg1.point1 = {Testing.CoordinateSystem.getMouseCoordinates()}
     end
 }
 
 
 Testing.Intersection.activeKeyBinding["mouse_middle"] = {
-    mode = "repeat",
-    fun = function()
+    repeated = function()
         Testing.Intersection.lineseg1.point2 = {Testing.CoordinateSystem.getMouseCoordinates()}
     end
 }
