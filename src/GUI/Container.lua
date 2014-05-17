@@ -22,7 +22,7 @@ function GUI.Container:new(font, backgroundColor, foregroundColor, hoverColor, c
     self.borderColor = borderColor or Utilities.Color.white
     self.fontColor = fontColor or Utilities.Color.white
 
-    self.stencil = function() love.graphics.rectangle("fill", 0,0,love.graphics.getWidth()/2, love.graphics.getHeight()/2) end
+    self.stencil = function() love.graphics.rectangle("fill", 0,0,love.graphics.getWidth(), love.graphics.getHeight()) end
     GUI.activeContainer = self
 end
 
