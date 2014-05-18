@@ -26,6 +26,7 @@ function Testing.Menu.createMenuGUI()
     list:add(GUI.Button("Load SlicedSprite Test", function() Game.changeState(Testing.SlicedSprite) end))
     list:add(GUI.Button("Load Tilemap Test", function() Game.changeState(Testing.Tilemap) end))
     list:add(GUI.Button("Load Networking Test", function() Game.changeState(Testing.Networking) end))
+    list:add(GUI.Button("Load Threading Test", function() Game.changeState(Testing.Threading) end))
     list:addWidgetsToContainer(Testing.Menu.GUIContainer)
 
     local buttonAnchorVisToggle = GUI.Button("Toggle Anchor Visualization", function() Testing.Menu.GUIContainer.visualizeAnchors = not Testing.Menu.GUIContainer.visualizeAnchors end)
