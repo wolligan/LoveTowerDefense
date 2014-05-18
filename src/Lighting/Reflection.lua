@@ -26,23 +26,14 @@ end
 function Lighting.Reflection:render()
     self:drawLight()
     self:drawReflections()
-    --love.graphics.setColor(255,0,255)
-    --self:drawShadows()
 end
 
 --- renders a fullscreen quad with inverted stencil with shadows
 function Lighting.Reflection:drawLight()
-
-    --love.graphics.setInvertedStencil(function() self:drawShadows() end)
     love.graphics.setStencil(function() love.graphics.polygon("fill", unpack(self.vertices)) end)
     love.graphics.setColor(unpack(self.color))
     love.graphics.draw(Lighting.unlitBackground)
-    --love.graphics.polygon("fill", unpack(self.vertices))
-    love.graphics.setInvertedStencil()
     love.graphics.setStencil()
-
-    --love.graphics.polygon("fill", unpack(self.vertices))
-
 end
 
 --- draws all shadow polygons of Reflection

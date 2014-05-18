@@ -27,8 +27,6 @@ function Lighting.init()
         }
     ]]
 
-    Lighting.shader = love.graphics.newShader(Lighting.shadercode)
-
 end
 
 ---

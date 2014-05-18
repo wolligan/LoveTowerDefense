@@ -17,11 +17,11 @@ function Lighting.LightSource:new(x,y, r,g,b)
     self.enabled = true
 
     self.color = {r or 255, g or 255, b or 255}
+    self.canvas = love.graphics.newCanvas()
 end
 
 --- renders light without shadows and reflections
 function Lighting.LightSource:render()
-    love.graphics.setBlendMode("additive")
     self:drawLight()
 
     self:drawReflections()
@@ -30,6 +30,7 @@ end
 --- renders a fullscreen quad with inverted stencil with shadows
 function Lighting.LightSource:drawLight()
 
+    love.graphics.setBlendMode("additive")
     love.graphics.setInvertedStencil(function() self:drawShadows() end)
     love.graphics.setColor(unpack(self.color))
     love.graphics.draw(Lighting.unlitBackground)
@@ -48,9 +49,19 @@ end
 
 ---
 function Lighting.LightSource:drawReflections()
+
     for i,curMeshReflections in pairs(self.reflections) do
         for j,curReflection in pairs(curMeshReflections) do
-            curReflection:render()
+            self.canvas:clear()
+            love.graphics.setBlendMode("alpha")
+            love.graphics.setCanvas(self.canvas)
+            curReflection:drawLight()
+
+            love.graphics.setCanvas()
+            love.graphics.setInvertedStencil(function() curReflection:drawShadows() end)
+            love.graphics.setBlendMode("additive")
+            love.graphics.draw(self.canvas)
+            love.graphics.setInvertedStencil()
         end
     end
 end

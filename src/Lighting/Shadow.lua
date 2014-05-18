@@ -24,7 +24,7 @@ end
 ---
 function Lighting.Shadow:render()
     if not self.isInMesh then
-        --love.graphics.setColor(unpack(self.color))
+        love.graphics.setColor(255,255,255)
         love.graphics.polygon("fill", unpack(self.vertices))
     end
 end
@@ -40,7 +40,6 @@ function Lighting.Shadow:calculateOrigin()
 
         self.positionBorderCenter  = {(self.vertices[1] + self.vertices[3])/2, (self.vertices[2] + self.vertices[4])/2}
         self.distancePositionToBorderCenter = Utilities.Vector.length(self.position[1] - self.positionBorderCenter[1], self.position[2] - self.positionBorderCenter[2])
-
     end
 end
 

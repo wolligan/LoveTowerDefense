@@ -36,7 +36,7 @@ function Testing.Menu.createMenuGUI()
     buttonAnchorVisToggle.bottomAnchorOffset = -20
     buttonAnchorVisToggle.topAnchorOffset = -60
     buttonAnchorVisToggle.rightAnchorOffset = -20
-    buttonAnchorVisToggle.leftAnchorOffset = -20
+    buttonAnchorVisToggle.leftAnchorOffset = 20
 
 
     local buttonQuit = GUI.Button("Quit", function() love.event.push("quit") end)
@@ -46,6 +46,6 @@ function Testing.Menu.createMenuGUI()
     buttonQuit:setLeftAnchor(GUI.Root, "center")
     buttonQuit.bottomAnchorOffset = -20
     buttonQuit.topAnchorOffset = -60
-    buttonAnchorVisToggle.rightAnchorOffset = -20
-    buttonAnchorVisToggle.leftAnchorOffset = -20
+    buttonQuit.rightAnchorOffset = -20
+    buttonQuit.leftAnchorOffset = 20
 end

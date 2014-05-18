@@ -31,7 +31,7 @@ Testing.Lighting.activeKeyBinding["mouse_left"] = {
 function Testing.Lighting.init()
     Lighting.init()
     Lighting.lights =  {Lighting.LightSource(love.graphics.getWidth()/3, love.graphics.getHeight()/2, 50,50,50),
-                        Lighting.LightSource(love.graphics.getWidth()*2/3, love.graphics.getHeight()/2, 50,50,50)}
+                        --[[Lighting.LightSource(love.graphics.getWidth()*2/3, love.graphics.getHeight()/2, 50,50,50)]]}
     Lighting.ambient = Lighting.AmbientLight(100,100,100)
     --Lighting.ambient = Lighting.AmbientLight(255,255,255)
 
