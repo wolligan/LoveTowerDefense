@@ -8,7 +8,7 @@ Utilities.TextOutput.counter = 0
 -- @param text string that shall be printed
 function Utilities.TextOutput.print(text)
     Utilities.TextOutput.counter = Utilities.TextOutput.counter + 1
-	table.insert(Utilities.TextOutput.buffer, 1, text)
+	table.insert(Utilities.TextOutput.buffer, 1, tostring(text))
     Utilities.TextOutput.buffer[Utilities.TextOutput.maxLines] = nil
 end
 

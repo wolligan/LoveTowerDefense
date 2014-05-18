@@ -85,13 +85,51 @@ function Utilities.Intersection.checkPointRectangle(x,y,left,right,top,bottom)
     return left <= x and right >= x and top <= y and bottom >= y
 end
 
---- Checks if a point is in a rectangle
+--- Checks if two rectangles collide
+-- @param left1 left coordinate of rectangle1
+-- @param right1 right coordinate of rectangle1
+-- @param top1 top coordinate of rectangle1
+-- @param bottom1 bottom coordinate of rectangle1
+-- @param left2 left coordinate of rectangle2
+-- @param right2 right coordinate of rectangle2
+-- @param top2 top coordinate of rectangle2
+-- @param bottom2 bottom coordinate of rectangle2
+function Utilities.Intersection.checkRectangleRectangle(left1,right1,top1,bottom1, left2,right2,top2,bottom2)
+    return left1 <= right2 and right1 >= left2 and top1 <= bottom2 and bottom1 >= top2
+end
+
+--- Checks if a point is in a convex polygon
 -- @param x x-coordinate of point
 -- @param y y-coordinate of point
--- @param left left coordinate of rectangle
--- @param right right coordinate of rectangle
--- @param top top coordinate of rectangle
--- @param bottom bottom coordinate of rectangle
-function Utilities.Intersection.checkRectanlgeRectangle(left1,right1,top1,bottom1, left2,right2,top2,bottom2)
-    return left <= x and right >= x and top <= y and bottom >= y
+-- @param polygon {x1, y1, x2, y2, ..., xn, yn}
+function Utilities.Intersection.checkPointPolygon(x,y, polygon)
+    for i = 1,#polygon,2 do
+        local curIndexX, curIndexY, nextIndexX, nextIndexY
+        local curX, curY, nextX, nextY
+        local curLineX, curLineY
+        local pointFromLineX, pointFromLineY
+
+        curIndexX = i
+        curIndexY = i+1
+        nextIndexX = (i+2) % #polygon; if nextIndexX == 0 then nextIndexX = #polygon end
+        nextIndexY = (i+3) % #polygon; if nextIndexY == 0 then nextIndexY = #polygon end
+
+        curX = polygon[curIndexX]
+        curY = polygon[curIndexY]
+
+        nextX = polygon[nextIndexX]
+        nextY = polygon[nextIndexY]
+
+        curLineX = nextX - curX
+        curLineY = nextY - curY
+
+        pointFromLineX = x - nextX
+        pointFromLineY = y - nextY
+
+        if Utilities.Vector.getTurn(curLineX, curLineY, pointFromLineX, pointFromLineY) == "right" then
+           return false
+        end
+    end
+
+    return true
 end
