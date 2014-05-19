@@ -91,22 +91,6 @@ function Testing.Threading.createGUI()
     button_sendMessageToThread1.bottomAnchorOffset = -20
 
 
--- create a button to start test server
-    local button_startServer = GUI.Button("Start Test Server", function()
-        Testing.Threading.serverThread = love.thread.newThread("Networking/examples/server/main.lua")
-        Testing.Threading.serverThread:start()
-    end)
--- set anchors
-    button_startServer:setTopAnchor(button_sendMessageToThread1, "top")
-    button_startServer:setBottomAnchor(button_sendMessageToThread1, "top")
-    button_startServer:setRightAnchor(GUI.Root, "center")
--- set offsets
-    button_startServer.leftAnchorOffset   = 20
-    button_startServer.rightAnchorOffset  = -20
-    button_startServer.topAnchorOffset    = -60
-    button_startServer.bottomAnchorOffset = -20
-
-
 -- create a button to kill thread2
     local button_sendKillToThread2 = GUI.Button("Send kill to Thread2", function()
         if Testing.Threading.thread2 then
@@ -128,5 +112,4 @@ function Testing.Threading.createGUI()
     Testing.Threading.GUI:addWidget(button_startThread2)
     Testing.Threading.GUI:addWidget(button_sendMessageToThread1)
     Testing.Threading.GUI:addWidget(button_sendKillToThread2)
-    Testing.Threading.GUI:addWidget(button_startServer)
 end

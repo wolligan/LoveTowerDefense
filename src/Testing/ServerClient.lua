@@ -196,8 +196,10 @@ function Testing.ServerClient.createGUI()
 
 -- create a button to start thread1
     local button_startServer = GUI.Button("Start Server", function()
-        Testing.ServerClient.serverThread = love.thread.newThread("Networking/examples/server/main.lua")
-        Testing.ServerClient.serverThread:start()
+            if not Testing.ServerClient.serverThread then
+                Testing.ServerClient.serverThread = love.thread.newThread("Networking/examples/server/main.lua")
+                Testing.ServerClient.serverThread:start()
+            end
     end)
 -- set anchors
     button_startServer:setTopAnchor(GUI.Root, "bottom")
@@ -211,7 +213,9 @@ function Testing.ServerClient.createGUI()
 
 -- create a button to start thread2
     local button_startClient = GUI.Button("Start Client", function()
-        Testing.ServerClient.startClient()
+            if not Testing.ServerClient.clientStarted then
+                Testing.ServerClient.startClient()
+            end
     end)
 -- set anchors
     button_startClient:setTopAnchor(GUI.Root, "bottom")
