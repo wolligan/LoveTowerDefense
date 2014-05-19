@@ -18,7 +18,7 @@ Game.state = nil
 
 --- initializes the engine
 function Game.init()
-	love.window.setMode( 1920, 1080, { fullscreen = true } )
+	love.window.setMode( 800, 600, { fullscreen = false } )
 	math.randomseed(os.time())
     Game.changeState(SplashScreen)
 end

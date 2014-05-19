@@ -1,15 +1,19 @@
-Thread= {}
+require "love.filesystem"
+require "love.timer"
+
+Thread = {}
 function Thread.run()
     Thread.init()
     while Thread.isRunning do
         Thread.handleMessages()
-        Thread.update()
+        Thread.update(Thread.getDeltaTime())
     end
 end
 
 function Thread.init()
     Thread.isRunning = true
     Thread.channel = love.thread.getChannel("Thread2")
+    Thread.lastTime = love.timer.getTime()
 end
 
 function Thread.handleMessages()
@@ -24,7 +28,16 @@ function Thread.handleMessages()
 end
 
 function Thread.update(dt)
-    print("ich komme von Thread2")
+    print("ich komme von Thread2 - dt = " .. dt)
+end
+
+
+
+
+function Thread.getDeltaTime()
+    local dt = love.timer.getTime() - Thread.lastTime
+    Thread.lastTime = love.timer.getTime()
+    return dt
 end
 
 Thread.run()

@@ -1,16 +1,26 @@
---require "Utilities"
-Thread= {}
+require "love.filesystem"
+require "love.timer"
+require "Utilities"
+
+Thread = {}
 function Thread.run()
     Thread.init()
     while Thread.isRunning do
         Thread.handleMessages()
-        Thread.update()
+        Thread.update(Thread.getDeltaTime())
     end
 end
 
 function Thread.init()
     Thread.isRunning = true
     Thread.channel = love.thread.getChannel("Thread1")
+    Thread.lastTime = love.timer.getTime()
+end
+
+function Thread.getDeltaTime()
+    local dt = love.timer.getTime() - Thread.lastTime
+    Thread.lastTime = love.timer.getTime()
+    return dt
 end
 
 function Thread.handleMessages()
@@ -20,10 +30,8 @@ function Thread.handleMessages()
     end
 end
 
-function Thread.update()
-    if Thread.Utilities then
-        Thread.Utilities.TextOutput.print("ich komme von Thread1")
-    end
+function Thread.update(dt)
+    --print(dt)
 end
 
 Thread.run()

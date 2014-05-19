@@ -45,71 +45,88 @@ function Testing.Threading.createGUI()
 
 
 -- create a button to start thread1
-    local button1 = GUI.Button("Start Thread1", function()
-            Testing.Threading.thread1 = love.thread.newThread("Utilities/thread.lua")
+    local button_startThread1 = GUI.Button("Start Thread1", function()
+            Testing.Threading.thread1 = love.thread.newThread("Testing/Threads/thread1.lua")
             Testing.Threading.thread1:start()
     end)
 -- set anchors
-    button1:setTopAnchor(GUI.Root, "bottom")
-    button1:setRightAnchor(GUI.Root, "center")
+    button_startThread1:setTopAnchor(GUI.Root, "bottom")
+    button_startThread1:setRightAnchor(GUI.Root, "center")
 -- set offsets
-    button1.leftAnchorOffset   = 20
-    button1.rightAnchorOffset  = -20
-    button1.topAnchorOffset    = -60
-    button1.bottomAnchorOffset = -20
+    button_startThread1.leftAnchorOffset   = 20
+    button_startThread1.rightAnchorOffset  = -20
+    button_startThread1.topAnchorOffset    = -60
+    button_startThread1.bottomAnchorOffset = -20
 
 
 -- create a button to start thread2
-    local button2 = GUI.Button("Start Thread2", function()
+    local button_startThread2 = GUI.Button("Start Thread2", function()
             Testing.Threading.thread2 = love.thread.newThread("Testing/Threads/thread2.lua")
             Testing.Threading.thread2:start()
     end)
 -- set anchors
-    button2:setTopAnchor(GUI.Root, "bottom")
-    button2:setLeftAnchor(GUI.Root, "center")
+    button_startThread2:setTopAnchor(GUI.Root, "bottom")
+    button_startThread2:setLeftAnchor(GUI.Root, "center")
 -- set offsets
-    button2.leftAnchorOffset   = 20
-    button2.rightAnchorOffset  = -20
-    button2.topAnchorOffset    = -60
-    button2.bottomAnchorOffset = -20
+    button_startThread2.leftAnchorOffset   = 20
+    button_startThread2.rightAnchorOffset  = -20
+    button_startThread2.topAnchorOffset    = -60
+    button_startThread2.bottomAnchorOffset = -20
 
 
--- create a button to pause thread1
-    local button3 = GUI.Button("Send Message to Thread1", function()
+-- create a button to send message thread1
+    local button_sendMessageToThread1 = GUI.Button("Send Message to Thread1", function()
         if Testing.Threading.thread1 then
             Testing.Threading.channelThread1:push("hallo!")
         end
     end)
 -- set anchors
-    button3:setTopAnchor(button1, "top")
-    button3:setBottomAnchor(button1, "top")
-    button3:setRightAnchor(GUI.Root, "center")
+    button_sendMessageToThread1:setTopAnchor(button_startThread1, "top")
+    button_sendMessageToThread1:setBottomAnchor(button_startThread1, "top")
+    button_sendMessageToThread1:setRightAnchor(GUI.Root, "center")
 -- set offsets
-    button3.leftAnchorOffset   = 20
-    button3.rightAnchorOffset  = -20
-    button3.topAnchorOffset    = -60
-    button3.bottomAnchorOffset = -20
+    button_sendMessageToThread1.leftAnchorOffset   = 20
+    button_sendMessageToThread1.rightAnchorOffset  = -20
+    button_sendMessageToThread1.topAnchorOffset    = -60
+    button_sendMessageToThread1.bottomAnchorOffset = -20
 
 
--- create a button to pause thread1
-    local button4 = GUI.Button("Send kill to Thread2", function()
+-- create a button to start test server
+    local button_startServer = GUI.Button("Start Test Server", function()
+        Testing.Threading.serverThread = love.thread.newThread("Networking/examples/server/main.lua")
+        Testing.Threading.serverThread:start()
+    end)
+-- set anchors
+    button_startServer:setTopAnchor(button_sendMessageToThread1, "top")
+    button_startServer:setBottomAnchor(button_sendMessageToThread1, "top")
+    button_startServer:setRightAnchor(GUI.Root, "center")
+-- set offsets
+    button_startServer.leftAnchorOffset   = 20
+    button_startServer.rightAnchorOffset  = -20
+    button_startServer.topAnchorOffset    = -60
+    button_startServer.bottomAnchorOffset = -20
+
+
+-- create a button to kill thread2
+    local button_sendKillToThread2 = GUI.Button("Send kill to Thread2", function()
         if Testing.Threading.thread2 then
             Testing.Threading.channelThread2:push("kill")
         end
     end)
 -- set anchors
-    button4:setTopAnchor(button2, "top")
-    button4:setBottomAnchor(button2, "top")
-    button4:setLeftAnchor(GUI.Root, "center")
+    button_sendKillToThread2:setTopAnchor(button_startThread2, "top")
+    button_sendKillToThread2:setBottomAnchor(button_startThread2, "top")
+    button_sendKillToThread2:setLeftAnchor(GUI.Root, "center")
 -- set offsets
-    button4.leftAnchorOffset   = 20
-    button4.rightAnchorOffset  = -20
-    button4.topAnchorOffset    = -60
-    button4.bottomAnchorOffset = -20
+    button_sendKillToThread2.leftAnchorOffset   = 20
+    button_sendKillToThread2.rightAnchorOffset  = -20
+    button_sendKillToThread2.topAnchorOffset    = -60
+    button_sendKillToThread2.bottomAnchorOffset = -20
 
     Testing.Threading.GUI:addWidget(label)
-    Testing.Threading.GUI:addWidget(button1)
-    Testing.Threading.GUI:addWidget(button2)
-    Testing.Threading.GUI:addWidget(button3)
-    Testing.Threading.GUI:addWidget(button4)
+    Testing.Threading.GUI:addWidget(button_startThread1)
+    Testing.Threading.GUI:addWidget(button_startThread2)
+    Testing.Threading.GUI:addWidget(button_sendMessageToThread1)
+    Testing.Threading.GUI:addWidget(button_sendKillToThread2)
+    Testing.Threading.GUI:addWidget(button_startServer)
 end
