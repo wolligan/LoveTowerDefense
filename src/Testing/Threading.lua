@@ -13,11 +13,6 @@ function Testing.Threading.init()
     Testing.Threading.channelThread2 = love.thread.getChannel("Thread2")
 end
 
-
-function love.threaderror(thread, errortext)
-    error(errortext) -- Makes sure any errors that happen in the thread are displayed onscreen.
-end
-
 function Testing.Threading.render()
 
 end

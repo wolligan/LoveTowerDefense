@@ -29,7 +29,7 @@ Tilemap.tileDict[3] 	= 	{	love.graphics.rectangle,					-- draw function
 						false										-- is obstacle
 					}
 --
-Tilemap.tileNames[4]	= "simple obstacle"
+Tilemap.tileNames[4]	= "obstacle"
 Tilemap.tileDict[4] 	= 	{	love.graphics.rectangle,					-- draw function
 						{"fill", 0, 0, Tilemap.Settings.tileSize, Tilemap.Settings.tileSize},			-- function parameters
 						{0,0,0},									-- color

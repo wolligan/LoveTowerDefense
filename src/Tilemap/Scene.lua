@@ -24,6 +24,8 @@ function Tilemap.Scene:new()
     self.maxTilesOnScreen = {}
     self.maxTilesOnScreen[1] = math.floor(love.graphics.getWidth()  / Tilemap.Settings.tileSize)+2
     self.maxTilesOnScreen[2] = math.floor(love.graphics.getHeight() / Tilemap.Settings.tileSize)
+
+    self:createEmptyLevel(20,20)
 end
 
 ---
@@ -50,6 +52,25 @@ function Tilemap.Scene:createRandomLevel()
 			self.characters[#self.characters]:AI_calculatePathToGoal()
 		end
 	end
+    Tilemap.Camera.target = self.characters[1]
+end
+
+function Tilemap.Scene:createEmptyLevel(levelWidth, levelHeight)
+
+	self.playerIndex = 1
+    self.tiles = {}
+
+	for x = 1,levelWidth do
+		self.tiles[x] = {}
+		for y = 1,levelWidth do
+			self.tiles[x][y] = 1
+		end
+	end
+
+	self.characters = {}
+    self.characters[#self.characters+1] = Tilemap.Character(self, math.random(0,levelWidth -1) * Tilemap.Settings.tileSize + Tilemap.Settings.tileSize*0.5,
+                                                                  math.random(0,levelHeight-1) * Tilemap.Settings.tileSize + Tilemap.Settings.tileSize*0.5)
+    Tilemap.Camera.target = self.characters[1]
 end
 
 ---
@@ -64,7 +85,7 @@ function Tilemap.Scene:render()
 			if Tilemap.tileDict[self.tiles[x][y]] then
 				love.graphics.push()
 				love.graphics.translate((x-1)*Tilemap.Settings.tileSize, (y-1)*Tilemap.Settings.tileSize)
-				if (Tilemap.tileDict[self.tiles[y][x]][3]) then
+				if (Tilemap.tileDict[self.tiles[x][y]][3]) then
 					love.graphics.setColor(unpack(Tilemap.tileDict[self.tiles[x][y]][3]))
 				end
 
@@ -116,6 +137,11 @@ end
 ---
 function Tilemap.Scene:getTileCoordinatesUnderPlayer()
 	return self:getTileCoordinatesUnderCharacter(self.characters[self.playerIndex])
+end
+
+---
+function Tilemap.Scene:getTileCoordinatesByCamera(mx, my)
+	return self:getTileCoordinatesAtPosition(Tilemap.Camera.x + mx - love.graphics.getWidth() * 0.5, Tilemap.Camera.y + my - love.graphics.getHeight() * 0.5)
 end
 
 ---
@@ -262,4 +288,49 @@ function Tilemap.Scene:Route_isOpenEmpty(open)
 	end
 
 	return true
+end
+
+function Tilemap.Scene:saveMap(filePath)
+    local file = ""
+    for y = 1,self:getLevelHeight() do
+        for x = 1,self:getLevelWidth() do
+            file = file .. self.tiles[x][y]
+            if x < self:getLevelWidth() then file = file .. "," end
+        end
+        file = file .. ";"
+    end
+
+    love.filesystem.write   (filePath, file)
+end
+
+function Tilemap.Scene:loadMap(filePath)
+    local file = love.filesystem.read(filePath)
+    local tiles = {{}}
+    local yIndex = 1
+    local xIndex = 1
+    local curTileIndexString = ""
+
+    for i = 1, #file do
+        local c = file:sub(i,i)
+        if c == ";" then
+            tiles[xIndex][yIndex] = tonumber(curTileIndexString)
+            curTileIndexString = ""
+
+            xIndex = 1
+            yIndex = yIndex + 1
+
+
+        elseif c == "," then
+            tiles[xIndex][yIndex] = tonumber(curTileIndexString)
+            curTileIndexString = ""
+            xIndex = xIndex + 1
+            if not tiles[xIndex] then print("blub");tiles[xIndex] = {} end
+
+        else
+            curTileIndexString = curTileIndexString .. c
+
+        end
+    end
+
+    Tilemap.getActiveScene().tiles = tiles
 end

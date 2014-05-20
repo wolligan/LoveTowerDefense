@@ -1,12 +1,20 @@
 --- ADD ME
 Tilemap = {}
-Tilemap.activeSceneIndex = 0
+
+require "Tilemap.Camera"
+require "Tilemap.Character"
+require "Tilemap.Scene"
+require "Tilemap.Settings"
+require "Tilemap.TileDict"
+
+Tilemap.activeSceneIndex = 1
 Tilemap.loadedScenes = {}
 Tilemap.paused = false
 
 
 ---
 function Tilemap.init()
+    Tilemap.loadedScenes[#Tilemap.loadedScenes + 1] = Tilemap.Scene()
 end
 
 ---
@@ -47,9 +55,3 @@ end
 function Tilemap.togglePause()
     Tilemap.paused = not Tilemap.paused
 end
-
-require "Tilemap.Camera"
-require "Tilemap.Character"
-require "Tilemap.Scene"
-require "Tilemap.Settings"
-require "Tilemap.TileDict"

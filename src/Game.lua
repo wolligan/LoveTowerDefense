@@ -10,6 +10,7 @@ require "Networking"
 require "SplashScreen"
 require "GUI"
 require "Testing"
+require "LevelEditor"
 
 Game.spritePool = {}
 Game.soundPool = {}
@@ -20,7 +21,7 @@ Game.state = nil
 function Game.init()
 	love.window.setMode( 800, 600, { fullscreen = false } )
 	math.randomseed(os.time())
-    Game.changeState(SplashScreen)
+    Game.changeState(LevelEditor)
 end
 
 --- renders current game state, gui and textoutput

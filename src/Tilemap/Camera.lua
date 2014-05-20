@@ -4,13 +4,14 @@ Tilemap.Camera = {}
 Tilemap.Camera.x = love.graphics.getWidth()*0.5
 Tilemap.Camera.y = love.graphics.getHeight()*0.5
 Tilemap.Camera.rotation = 0
+Tilemap.Camera.target = nil
 
 ---
 function Tilemap.Camera.update()
-	if #Tilemap.getActiveScene().characters > 0 then
-		Tilemap.Camera.x = math.min(math.max(love.graphics.getWidth() * 0.5, Tilemap.getActiveScene().characters[Tilemap.getActiveScene().playerIndex].x),
+	if Tilemap.Camera.target then
+		Tilemap.Camera.x = math.min(math.max(love.graphics.getWidth() * 0.5, Tilemap.Camera.target.x),
                             #Tilemap.getActiveScene().tiles    *Tilemap.Settings.tileSize - love.graphics.getWidth() * 0.5 )
-		Tilemap.Camera.y = math.min(math.max(love.graphics.getHeight()* 0.5, Tilemap.getActiveScene().characters[Tilemap.getActiveScene().playerIndex].y),
+		Tilemap.Camera.y = math.min(math.max(love.graphics.getHeight()* 0.5, Tilemap.Camera.target.y),
                             #Tilemap.getActiveScene().tiles[1] *Tilemap.Settings.tileSize - love.graphics.getHeight()* 0.5 )
 		--camera.x = getActiveScene().characters[getActiveScene().playerIndex].x
 		--camera.y = getActiveScene().characters[getActiveScene().playerIndex].y
