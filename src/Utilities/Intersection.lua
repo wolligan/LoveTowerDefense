@@ -42,6 +42,7 @@ function Utilities.Intersection.LineLine(p1x, p1y, v1x, v1y, p2x, p2y, v2x, v2y)
 
         return {intersecX, intersecY}
     end
+    return {0,0}
 end
 
 --- returns intersection point of a line and a line segment

@@ -39,8 +39,11 @@ function GUI.Widget:renderBackground()
         self.backgroundImage.height = self:getHeight()
         self.backgroundImage:render()
     else
+        love.graphics.setLineWidth(0.5)
         love.graphics.setColor(unpack(self.apparentContainer.backgroundColor))
         love.graphics.rectangle("fill", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
+        love.graphics.setColor(unpack(self.apparentContainer.borderColor))
+        love.graphics.rectangle("line", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
     end
 end
 
@@ -173,6 +176,11 @@ end
 --- gets called when was click and now released
 function GUI.Widget:onRelease()
     --Utilities.TextOutput.print("released "..self.name)
+end
+
+--- notifies that a key has been pressed
+function GUI.Widget:notifyKey(key)
+
 end
 
 function GUI.Widget:attachImage(slicedBackgroundSprite, slicedClickedSprite, slicedHoveredSprite)

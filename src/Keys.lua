@@ -8,23 +8,48 @@ Keys.activeKeys = {}
 -- @param key key that is currently pressed
 function love.keypressed(key)
 	Keys.activeKeys[key] = true
-    if Game.state.activeKeyBinding then
-        if Game.state.activeKeyBinding[key] then
-            if Game.state.activeKeyBinding[key].pressed then
-                Game.state.activeKeyBinding[key].pressed()
+    if GUI.activeContainer then
+        if not GUI.activeContainer.stealKeys then
+            if Game.state.activeKeyBinding then
+                if Game.state.activeKeyBinding[key] then
+                    if Game.state.activeKeyBinding[key].pressed then
+                        Game.state.activeKeyBinding[key].pressed()
+                    end
+                end
+            end
+        end
+    else
+        if Game.state.activeKeyBinding then
+            if Game.state.activeKeyBinding[key] then
+                if Game.state.activeKeyBinding[key].pressed then
+                    Game.state.activeKeyBinding[key].pressed()
+                end
             end
         end
     end
+    GUI.notifyKey(key)
 end
 
 --- love callback - updates keymap
 -- @param key key that is currently released
 function love.keyreleased(key)
 	Keys.activeKeys[key] = false
-    if Game.state.activeKeyBinding then
-        if Game.state.activeKeyBinding[key] then
-            if Game.state.activeKeyBinding[key].released then
-                Game.state.activeKeyBinding[key].released()
+    if GUI.activeContainer then
+        if not GUI.activeContainer.stealKeys then
+            if Game.state.activeKeyBinding then
+                if Game.state.activeKeyBinding[key] then
+                    if Game.state.activeKeyBinding[key].released then
+                        Game.state.activeKeyBinding[key].released()
+                    end
+                end
+            end
+        end
+    else
+        if Game.state.activeKeyBinding then
+            if Game.state.activeKeyBinding[key] then
+                if Game.state.activeKeyBinding[key].released then
+                    Game.state.activeKeyBinding[key].released()
+                end
             end
         end
     end
@@ -37,10 +62,22 @@ end
 function love.mousepressed(x, y, button)
     local key = Keys.mouseButtonToKey(button)
 	Keys.activeKeys[key] = true
-    if Game.state.activeKeyBinding then
-        if Game.state.activeKeyBinding[key] then
-            if Game.state.activeKeyBinding[key].pressed then
-                Game.state.activeKeyBinding[key].pressed()
+    if GUI.activeContainer then
+        if not GUI.activeContainer.stealKeys then
+            if Game.state.activeKeyBinding then
+                if Game.state.activeKeyBinding[key] then
+                    if Game.state.activeKeyBinding[key].pressed then
+                        Game.state.activeKeyBinding[key].pressed()
+                    end
+                end
+            end
+        end
+    else
+        if Game.state.activeKeyBinding then
+            if Game.state.activeKeyBinding[key] then
+                if Game.state.activeKeyBinding[key].pressed then
+                    Game.state.activeKeyBinding[key].pressed()
+                end
             end
         end
     end
@@ -54,10 +91,22 @@ end
 function love.mousereleased(x, y, button)
     local key = Keys.mouseButtonToKey(button)
 	Keys.activeKeys[key] = false
-    if Game.state.activeKeyBinding then
-        if Game.state.activeKeyBinding[key] then
-            if Game.state.activeKeyBinding[key].released then
-                Game.state.activeKeyBinding[key].released()
+    if GUI.activeContainer then
+        if not GUI.activeContainer.stealKeys then
+            if Game.state.activeKeyBinding then
+                if Game.state.activeKeyBinding[key] then
+                    if Game.state.activeKeyBinding[key].released then
+                        Game.state.activeKeyBinding[key].released()
+                    end
+                end
+            end
+        end
+    else
+         if Game.state.activeKeyBinding then
+            if Game.state.activeKeyBinding[key] then
+                if Game.state.activeKeyBinding[key].released then
+                    Game.state.activeKeyBinding[key].released()
+                end
             end
         end
     end
@@ -77,10 +126,22 @@ end
 --- calls function of repeat button setting
 -- @param dt delta time
 function Keys.handleKeyBindings(dt)
-    if Game.state.activeKeyBinding then
-        for key,keyBinding in pairs(Game.state.activeKeyBinding) do
-            if Keys.isKeyDown(key) and keyBinding.repeated then
-                keyBinding.repeated(dt)
+    if GUI.activeContainer then
+        if not GUI.activeContainer.stealKeys then
+            if Game.state.activeKeyBinding then
+                for key,keyBinding in pairs(Game.state.activeKeyBinding) do
+                    if Keys.isKeyDown(key) and keyBinding.repeated then
+                        keyBinding.repeated(dt)
+                    end
+                end
+            end
+        end
+    else
+        if Game.state.activeKeyBinding then
+            for key,keyBinding in pairs(Game.state.activeKeyBinding) do
+                if Keys.isKeyDown(key) and keyBinding.repeated then
+                    keyBinding.repeated(dt)
+                end
             end
         end
     end

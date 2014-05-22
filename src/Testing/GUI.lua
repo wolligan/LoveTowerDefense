@@ -15,7 +15,7 @@ Testing.GUI.activeKeyBinding["escape"] = {
 function Testing.GUI.init()
 -- create containers
     Testing.GUI.createBackground()
-    guicont2 = GUI.Container(nil,Utilities.Color.green,nil,{0,200,0},nil,nil,Utilities.Color.black)
+    guicont2 = GUI.Container(nil,{230,230,230},nil,{0,200,0},nil,nil,Utilities.Color.black)
     guicont1 = GUI.Container(nil,Utilities.Color.white,nil,{255,255,255,200},{255,255,255,200},nil,Utilities.Color.black)
     Testing.GUI.fillContainer2()
     Testing.GUI.fillContainer1()
@@ -227,8 +227,18 @@ function Testing.GUI.fillContainer2()
     l2_cont2.topAnchorOffset = 20
     l2_cont2.bottomAnchorOffset = 50
 
+    -- create a textfield
+    local tf1_cont2 = GUI.Textfield("blubb")
+    tf1_cont2:setLeftAnchor(l2_cont2, "left")
+    tf1_cont2:setRightAnchor(l2_cont2, "right")
+    tf1_cont2:setTopAnchor(l2_cont2, "bottom")
+    tf1_cont2:setBottomAnchor(l2_cont2, "bottom")
+
+    tf1_cont2.topAnchorOffset = 20
+    tf1_cont2.bottomAnchorOffset = 60
+
     -- create list
-    local list_cont2 = GUI.List("vertical", 200, 20)
+    local list_cont2 = GUI.List("vertical", 20, 20)
 
     list_cont2:setLeftAnchor(GUI.Root, "left")
     list_cont2:setRightAnchor(GUI.Root, "left")
@@ -251,4 +261,5 @@ function Testing.GUI.fillContainer2()
     guicont2:addWidget(b2_cont2)
     guicont2:addWidget(l2_cont2)
     guicont2:addWidget(list_cont2)
+    guicont2:addWidget(tf1_cont2)
 end

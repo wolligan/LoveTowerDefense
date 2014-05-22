@@ -64,9 +64,17 @@ function GUI.notifyRelease()
     end
 end
 
+--- notifies that a key has been pressed
+function GUI.notifyKey(key)
+    if GUI.activeContainer then
+        GUI.activeContainer:notifyKey(key)
+    end
+end
+
 
 require "GUI.Container"
 require "GUI.Widget"
 require "GUI.Label"
 require "GUI.Button"
 require "GUI.List"
+require "GUI.Textfield"

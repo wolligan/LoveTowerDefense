@@ -12,7 +12,7 @@ function Testing.Menu.init()
 end
 
 function Testing.Menu.createMenuGUI()
-    Testing.Menu.GUIContainer = GUI.Container(nil,Utilities.Color.green,nil,{0,200,0},nil,nil,Utilities.Color.black)
+    Testing.Menu.GUIContainer = GUI.Container()
 
     local list = GUI.List("horizontal", 40, 20)
 
@@ -27,6 +27,7 @@ function Testing.Menu.createMenuGUI()
     list:add(GUI.Button("Load Networking Test", function() Game.changeState(Testing.Networking) end))
     list:add(GUI.Button("Load Threading Test", function() Game.changeState(Testing.Threading) end))
     list:add(GUI.Button("Load Server-Client Tutorial from Löve Wiki with Threads", function() Game.changeState(Testing.ServerClient) end))
+    list:add(GUI.Button("Start Level Editor", function() Game.changeState(LevelEditor) end))
     list:addWidgetsToContainer(Testing.Menu.GUIContainer)
 
     local buttonAnchorVisToggle = GUI.Button("Toggle Anchor Visualization", function() Testing.Menu.GUIContainer.visualizeAnchors = not Testing.Menu.GUIContainer.visualizeAnchors end)

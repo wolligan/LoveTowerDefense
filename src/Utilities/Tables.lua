@@ -19,3 +19,24 @@ function table.contains(t, item)
     end
     return false
 end
+
+function table.containsKey(t, key)
+    for i,_ in pairs(t) do
+       if key == i then
+            return true
+        end
+    end
+    return false
+end
+
+function table.containsValue(t, item)
+    return table.contains(t,item)
+end
+
+function table.indexOf(t, item)
+    for i,v in pairs(t) do
+       if item == v then
+            return i
+        end
+    end
+end

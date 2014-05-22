@@ -19,8 +19,19 @@ end
 function LevelEditor.createGUI()
     LevelEditor.GUI = GUI.Container(nil,{255,255,255,200},nil,{200,200,200,200},{255,255,255,200},{50,50,50,255},Utilities.Color.black)
 
--- TODO add function to save button
-    local button_saveMap = GUI.Button("Save Map", function() Tilemap.getActiveScene():saveMap("test.map") end)
+
+    -- create a textfield
+    local tf_mapName = GUI.Textfield("Map Name")
+    tf_mapName:setLeftAnchor(GUI.Root, "right")
+    tf_mapName:setBottomAnchor(GUI.Root, "top")
+
+    tf_mapName.topAnchorOffset = 10
+    tf_mapName.bottomAnchorOffset = 40
+    tf_mapName.leftAnchorOffset = -150
+    tf_mapName.rightAnchorOffset = -10
+
+
+    local button_saveMap = GUI.Button("Save Map", function() Tilemap.getActiveScene():saveMap(tf_mapName.text .. ".map") end)
     button_saveMap:setTopAnchor(GUI.Root, "bottom")
     button_saveMap:setRightAnchor(GUI.Root, "center")
     button_saveMap.topAnchorOffset = -50
@@ -28,8 +39,7 @@ function LevelEditor.createGUI()
     button_saveMap.leftAnchorOffset = 10
     button_saveMap.rightAnchorOffset = -5
 
--- TODO add function to load button
-    local button_loadMap = GUI.Button("Load Map", function() Tilemap.getActiveScene():loadMap("test.map") end)
+    local button_loadMap = GUI.Button("Load Map", function() Tilemap.getActiveScene():loadMap(tf_mapName.text .. ".map") end)
     button_loadMap:setTopAnchor(GUI.Root, "bottom")
     button_loadMap:setLeftAnchor(GUI.Root, "center")
     button_loadMap.topAnchorOffset = -50
@@ -39,10 +49,10 @@ function LevelEditor.createGUI()
 
 -- create tile button list
     local list_tiles = GUI.List("horizontal", 40, 1)
-    list_tiles:setLeftAnchor(GUI.Root, "right")
+    list_tiles:setLeftAnchor(tf_mapName, "left")
+    list_tiles:setRightAnchor(tf_mapName, "right")
     list_tiles:setBottomAnchor(button_loadMap, "top")
-    list_tiles.leftAnchorOffset = -100
-    list_tiles.rightAnchorOffset = -10
+    list_tiles:setTopAnchor(tf_mapName, "bottom")
     list_tiles.topAnchorOffset = 10
 
     for i,curTile in pairs(Tilemap.tileDict) do
@@ -59,6 +69,7 @@ function LevelEditor.createGUI()
     LevelEditor.GUI:addWidget(emptyField)
     LevelEditor.GUI:addWidget(button_saveMap)
     LevelEditor.GUI:addWidget(button_loadMap)
+    LevelEditor.GUI:addWidget(tf_mapName)
 end
 
 function LevelEditor.changeTile()
