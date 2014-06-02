@@ -23,7 +23,7 @@ function Tilemap.Scene:new()
 
     self.maxTilesOnScreen = {}
     self.maxTilesOnScreen[1] = math.floor(love.graphics.getWidth()  / Tilemap.Settings.tileSize)+2
-    self.maxTilesOnScreen[2] = math.floor(love.graphics.getHeight() / Tilemap.Settings.tileSize)
+    self.maxTilesOnScreen[2] = math.floor(love.graphics.getHeight() / Tilemap.Settings.tileSize)+2
 
     self:createEmptyLevel(20,20)
 end
@@ -78,8 +78,8 @@ function Tilemap.Scene:render()
 	-- draw level
 	--for y = 1,Tilemap.Settings.levelSize do
 	--	for x = 1,Tilemap.Settings.levelSize do
-    local beginAtX = math.floor(Tilemap.Camera.x/Tilemap.Settings.tileSize) - math.floor((love.graphics.getWidth()/2)/Tilemap.Settings.tileSize), Tilemap.Settings.levelSize
-    local beginAtY = math.floor(Tilemap.Camera.y/Tilemap.Settings.tileSize) - math.floor((love.graphics.getHeight()/2)/Tilemap.Settings.tileSize)+1,Tilemap.Settings.levelSize
+    local beginAtX = math.floor(Tilemap.Camera.x/Tilemap.Settings.tileSize) - math.floor((love.graphics.getWidth()/2)/Tilemap.Settings.tileSize)
+    local beginAtY = math.floor(Tilemap.Camera.y/Tilemap.Settings.tileSize) - math.floor((love.graphics.getHeight()/2)/Tilemap.Settings.tileSize)
 	for y = math.max(1,beginAtY), math.min(self:getLevelHeight(), beginAtY+self.maxTilesOnScreen[2])  do
 		for x = math.max(1,beginAtX),math.min(self:getLevelWidth(), beginAtX+self.maxTilesOnScreen[1]) do
 			if Tilemap.tileDict[self.tiles[x][y]] then

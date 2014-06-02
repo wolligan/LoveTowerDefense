@@ -13,10 +13,10 @@ function Tilemap.Character:new(appropriateScene,x,y)
 
     self.appropriateScene = appropriateScene
 
-	self.goalX = math.floor(Tilemap.Settings.levelSize/2)
-	self.goalY = math.floor(Tilemap.Settings.levelSize/2)
+	self.goalX = 2--math.floor(Tilemap.Settings.levelSize/2)
+	self.goalY = 2--math.floor(Tilemap.Settings.levelSize/2)
     self.pathToGoal = {}
-	--self:AI_calculatePathToGoal()
+	self:AI_calculatePathToGoal()
 end
 
 ---

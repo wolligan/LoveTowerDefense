@@ -9,10 +9,18 @@ Tilemap.Camera.target = nil
 ---
 function Tilemap.Camera.update()
 	if Tilemap.Camera.target then
-		Tilemap.Camera.x = math.min(math.max(love.graphics.getWidth() * 0.5, Tilemap.Camera.target.x),
-                            #Tilemap.getActiveScene().tiles    *Tilemap.Settings.tileSize - love.graphics.getWidth() * 0.5 )
-		Tilemap.Camera.y = math.min(math.max(love.graphics.getHeight()* 0.5, Tilemap.Camera.target.y),
-                            #Tilemap.getActiveScene().tiles[1] *Tilemap.Settings.tileSize - love.graphics.getHeight()* 0.5 )
+        if not (love.graphics.getWidth() > Tilemap.getActiveScene():getLevelWidth()*Tilemap.Settings.tileSize) then
+            Tilemap.Camera.x = math.min(math.max(love.graphics.getWidth() * 0.5, Tilemap.Camera.target.x),
+                                #Tilemap.getActiveScene().tiles    *Tilemap.Settings.tileSize - love.graphics.getWidth() * 0.5 )
+        else
+            Tilemap.Camera.x = Tilemap.getActiveScene():getLevelWidth()*Tilemap.Settings.tileSize/2
+        end
+        if not (love.graphics.getHeight() > Tilemap.getActiveScene():getLevelHeight()*Tilemap.Settings.tileSize) then
+            Tilemap.Camera.y = math.min(math.max(love.graphics.getHeight()* 0.5, Tilemap.Camera.target.y),
+                               #Tilemap.getActiveScene().tiles[1] *Tilemap.Settings.tileSize - love.graphics.getHeight()* 0.5 )
+        else
+            Tilemap.Camera.y = Tilemap.getActiveScene():getLevelHeight()*Tilemap.Settings.tileSize/2
+        end
 		--camera.x = getActiveScene().characters[getActiveScene().playerIndex].x
 		--camera.y = getActiveScene().characters[getActiveScene().playerIndex].y
 	end

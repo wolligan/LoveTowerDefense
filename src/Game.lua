@@ -19,7 +19,7 @@ Game.state = nil
 
 --- initializes the engine
 function Game.init()
-	love.window.setMode( 800, 600, { fullscreen = false } )
+	love.window.setMode( 1280, 800, { fullscreen = true } )
 	math.randomseed(os.time())
     Game.changeState(Testing.Menu)
 end
