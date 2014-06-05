@@ -36,7 +36,7 @@ end
 function Tilemap.Character:moveUp(dt)
 	self.oldY = self.y
 
-	local tileSpeed = Tilemap.tileDict[self:getTileIndex()][4]
+	local tileSpeed = Tilemap.tileDict[self:getTileIndex()].speed
 	self.y = self.y - Tilemap.Settings.playerMoveSpeed*dt*tileSpeed
 	if self.y < 0 then self.y = 0 end
 
@@ -47,7 +47,7 @@ end
 function Tilemap.Character:moveLeft(dt)
 	self.oldX = self.x
 
-	local tileSpeed = Tilemap.tileDict[self:getTileIndex()][4]
+	local tileSpeed = Tilemap.tileDict[self:getTileIndex()].speed
 	self.x = self.x - Tilemap.Settings.playerMoveSpeed*dt*tileSpeed
 	if self.x < 0 then self.x = 0 end
 
@@ -58,7 +58,7 @@ end
 function Tilemap.Character:moveDown(dt)
 	self.oldY = self.y
 
-	local tileSpeed = Tilemap.tileDict[self:getTileIndex()][4]
+	local tileSpeed = Tilemap.tileDict[self:getTileIndex()].speed
 	self.y = self.y + Tilemap.Settings.playerMoveSpeed*dt*tileSpeed
 	if self.y > #self.appropriateScene.tiles[1]*Tilemap.Settings.tileSize-0.1 then self.y = #self.appropriateScene.tiles[1]*Tilemap.Settings.tileSize-0.1 end
 
@@ -69,7 +69,7 @@ end
 function Tilemap.Character:moveRight(dt)
 	self.oldX = self.x
 
-	local tileSpeed = Tilemap.tileDict[self:getTileIndex()][4]
+	local tileSpeed = Tilemap.tileDict[self:getTileIndex()].speed
 	self.x = self.x + Tilemap.Settings.playerMoveSpeed*dt*tileSpeed
 	if self.x > #self.appropriateScene.tiles*Tilemap.Settings.tileSize-0.1 then self.x = #self.appropriateScene.tiles*Tilemap.Settings.tileSize-0.1 end
 
@@ -78,7 +78,7 @@ end
 
 ---
 function Tilemap.Character:checkObstacleX()
-	local newTileIsObstacle = Tilemap.tileDict[self:getTileIndex()][5]
+	local newTileIsObstacle = Tilemap.tileDict[self:getTileIndex()].isObstacle
 	if newTileIsObstacle then
 		self.x = self.oldX
 	end
@@ -86,7 +86,7 @@ end
 
 ---
 function Tilemap.Character:checkObstacleY()
-	local newTileIsObstacle = Tilemap.tileDict[self:getTileIndex()][5]
+	local newTileIsObstacle = Tilemap.tileDict[self:getTileIndex()].isObstacle
 	if newTileIsObstacle then
 		self.y = self.oldY
 	end
@@ -126,7 +126,7 @@ function Tilemap.Character:AI_walkToGoal(dt)
 			table.remove(self.pathToGoal,1)
 			if #self.pathToGoal > 0 then
 				tileToGo = self.pathToGoal[1]
-                if Tilemap.tileDict[self.appropriateScene.tiles[tileToGo[1]][tileToGo[2]]][5] then
+                if Tilemap.tileDict[self.appropriateScene.tiles[tileToGo[1]][tileToGo[2]]].isObstacle then
                     print("error")
                     self:AI_calculatePathToGoal()
                     if #self.pathToGoal > 0 then

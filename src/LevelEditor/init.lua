@@ -110,7 +110,7 @@ function LevelEditor.createGUI()
     list_tiles.topAnchorOffset = 10
 
     for i,curTile in pairs(Tilemap.tileDict) do
-        list_tiles:add(GUI.Button(Tilemap.tileNames[i], function() LevelEditor.currentTileIndex = i end))
+        list_tiles:add(GUI.Button(Tilemap.tileDict[i].name, function() LevelEditor.currentTileIndex = i end))
     end
 
     local emptyField = GUI.Widget()
@@ -210,7 +210,7 @@ LevelEditor.activeKeyBinding[" "] = {
 function LevelEditor.renderSelectedTileWidget(self)
     self:renderBackground()
     love.graphics.setColor(unpack(self.apparentContainer.fontColor))
-    love.graphics.print(Tilemap.tileNames[LevelEditor.currentTileIndex], self:getLeftAnchor() + 10, self:getTopAnchor()+self:getHeight()/2 - self.apparentContainer.font:getHeight(Tilemap.tileNames[LevelEditor.currentTileIndex])/2)
+    love.graphics.print(Tilemap.tileDict[LevelEditor.currentTileIndex].name, self:getLeftAnchor() + 10, self:getTopAnchor()+self:getHeight()/2 - self.apparentContainer.font:getHeight(Tilemap.tileDict[LevelEditor.currentTileIndex].name)/2)
 
     -- draw background circle
     love.graphics.setColor(0,0,0)
@@ -219,9 +219,9 @@ function LevelEditor.renderSelectedTileWidget(self)
 
     love.graphics.setStencil(function() love.graphics.circle("fill", self:getRightAnchor()-5-Tilemap.Settings.tileSize, self:getTopAnchor() + self:getHeight()/2, Tilemap.Settings.tileSize/2) end)
     love.graphics.push()
-    love.graphics.setColor(unpack(Tilemap.tileDict[LevelEditor.currentTileIndex][3]))
+    love.graphics.setColor(unpack(Tilemap.tileDict[LevelEditor.currentTileIndex].color))
     love.graphics.translate(self:getRightAnchor()-5-Tilemap.Settings.tileSize -Tilemap.Settings.tileSize/2, self:getTopAnchor() + self:getHeight()/2-Tilemap.Settings.tileSize/2)
-    Tilemap.tileDict[LevelEditor.currentTileIndex][1](unpack(Tilemap.tileDict[LevelEditor.currentTileIndex][2]))
+    Tilemap.tileDict[LevelEditor.currentTileIndex].draw(unpack(Tilemap.tileDict[LevelEditor.currentTileIndex].drawParams))
     love.graphics.pop()
     love.graphics.setStencil()
 end

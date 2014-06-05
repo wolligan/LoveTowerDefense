@@ -42,14 +42,14 @@ function Tilemap.Scene:createRandomLevel()
                                                                math.random(0,Tilemap.Settings.levelSize-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize*0.5,
                                                                math.random(0,Tilemap.Settings.levelSize-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize*0.5)
 
-		while Tilemap.tileDict[self.characters[#self.characters]:getTileIndex()][5] do
+		while Tilemap.tileDict[self.characters[#self.characters]:getTileIndex()].isObstacle do
 			self.characters[#self.characters].x = math.random(0,Tilemap.Settings.levelSize-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize*0.5
 			self.characters[#self.characters].y = math.random(0,Tilemap.Settings.levelSize-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize*0.5
 		end
 
         local goalX, goalY = math.random(1,Tilemap.Settings.levelSize), math.random(1,Tilemap.Settings.levelSize)
 
-        while Tilemap.tileDict[self.tiles[goalX][goalY]][5] do
+        while Tilemap.tileDict[self.tiles[goalX][goalY]].isObstacle do
 			goalX, goalY = math.random(1,Tilemap.Settings.levelSize), math.random(1,Tilemap.Settings.levelSize)
 		end
         self.characters[#self.characters]:AI_setGoal(goalX, goalY)
@@ -89,12 +89,12 @@ function Tilemap.Scene:renderTiles()
 			if Tilemap.tileDict[self.tiles[x][y]] then
 				love.graphics.push()
 				love.graphics.translate((x-1)*Tilemap.Settings.tileSize, (y-1)*Tilemap.Settings.tileSize)
-				if (Tilemap.tileDict[self.tiles[x][y]][3]) then
-					love.graphics.setColor(unpack(Tilemap.tileDict[self.tiles[x][y]][3]))
+				if (Tilemap.tileDict[self.tiles[x][y]].color) then
+					love.graphics.setColor(unpack(Tilemap.tileDict[self.tiles[x][y]].color))
 				end
 
-				if (Tilemap.tileDict[self.tiles[x][y]][1] and Tilemap.tileDict[self.tiles[x][y]][2]) then
-					Tilemap.tileDict[self.tiles[x][y]][1](unpack(Tilemap.tileDict[self.tiles[x][y]][2]))
+				if (Tilemap.tileDict[self.tiles[x][y]].draw and Tilemap.tileDict[self.tiles[x][y]].drawParams) then
+					Tilemap.tileDict[self.tiles[x][y]].draw(unpack(Tilemap.tileDict[self.tiles[x][y]].drawParams))
 				end
 
 				love.graphics.pop()
@@ -111,9 +111,8 @@ function Tilemap.Scene:getObstacleMeshes()
 	--	for x = math.max(1,beginAtX),math.min(self:getLevelWidth(), beginAtX+self.maxTilesOnScreen[1]) do
     for y = 1, self:getLevelHeight()  do
 		for x = 1,self:getLevelHeight() do
-			if Tilemap.tileDict[self.tiles[x][y]][5] then
-				meshes[#meshes+1] = Geometry.Mesh.createRectangle((x-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize/2, (y-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize/2, Tilemap.Settings.tileSize/2, Tilemap.tileDict[self.tiles[x][y]][3], {})
-                --meshes[#meshes+1] = Geometry.Mesh.createDiscoCircle((x-1)*Tilemap.Settings.tileSize,(y-1)*Tilemap.Settings.tileSize, Tilemap.Settings.tileSize/2, 40, Tilemap.tileDict[self.tiles[x][y]][3])
+			if Tilemap.tileDict[self.tiles[x][y]].isObstacle then
+				meshes[#meshes+1] = Geometry.Mesh.createRectangle((x-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize/2, (y-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize/2, Tilemap.Settings.tileSize/2, Tilemap.tileDict[self.tiles[x][y]].color, {})
 			end
 		end
 	end
@@ -243,7 +242,7 @@ function Tilemap.Scene:Route_getRoute(startX, startY, goalX, goalY)
 		for i,curNeighbor in pairs(neighbors) do
 			if closed[curNeighbor] == nil then
 				local tentative_g_score = g_score[current] + math.sqrt(math.pow(current[1] - curNeighbor[1], 2) + math.pow(current[2] - curNeighbor[2], 2))
-				tentative_g_score = tentative_g_score + math.pow(Tilemap.Settings.tileSize/Tilemap.tileDict[self.tiles[current[1]][current[2]]][4],2)
+				tentative_g_score = tentative_g_score + math.pow(Tilemap.Settings.tileSize/Tilemap.tileDict[self.tiles[current[1]][current[2]]].speed,2)
 				if not open[curNeighbor] or tentative_g_score < g_score[curNeighbor] then
 					cameFrom[curNeighbor] = current
 					g_score[curNeighbor] = tentative_g_score
@@ -282,7 +281,7 @@ function Tilemap.Scene:Route_getNeighbors(node, neighborTable)
 	for i=1,#neighbors do
 		if neighbors[i-correction][1] <= 0 or neighbors[i-correction][2] <= 0 or
 		   neighbors[i-correction][1] > self:getLevelWidth() or neighbors[i-correction][2] > self:getLevelHeight() or
-		   Tilemap.tileDict[self.tiles[neighbors[i-correction][1]][neighbors[i-correction][2]]][5]
+		   Tilemap.tileDict[self.tiles[neighbors[i-correction][1]][neighbors[i-correction][2]]].isObstacle
 		then
 			table.remove(neighbors, i-correction)
 			correction = correction + 1

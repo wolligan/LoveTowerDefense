@@ -1,4 +1,4 @@
---- ADD ME
+--- Renders and updates lighted tilemaps
 Tilemap = {}
 
 require "Tilemap.Camera"
@@ -43,8 +43,8 @@ function Tilemap.update(dt)
 
             for x = 1,Tilemap:getActiveScene():getLevelWidth() do
                 for y = 1,Tilemap:getActiveScene():getLevelHeight() do
-                    if Tilemap.tileDict[Tilemap:getActiveScene().tiles[x][y]][6] then
-                        Tilemap.tileDict[Tilemap:getActiveScene().tiles[x][y]][6](Tilemap:getActiveScene(),x,y, sendTick)
+                    if Tilemap.tileDict[Tilemap:getActiveScene().tiles[x][y]].update then
+                        Tilemap.tileDict[Tilemap:getActiveScene().tiles[x][y]].update(Tilemap:getActiveScene(),x,y, sendTick)
                     end
                 end
             end
