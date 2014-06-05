@@ -4,6 +4,7 @@ LevelEditor = {}
 
 function LevelEditor.init()
     Tilemap.init()
+    Tilemap.addScene(20, 20)
     LevelEditor.currentTileIndex = 1
     LevelEditor.createGUI()
 end
@@ -19,14 +20,57 @@ end
 function LevelEditor.createGUI()
     LevelEditor.GUI = GUI.Container(nil,{255,255,255,200},nil,{200,200,200,200},{255,255,255,200},{50,50,50,255},Utilities.Color.black)
 
+    -- create play, pause and clear button
+    local button_pause = GUI.Button("pause", function() Tilemap.pause() end)
+    local button_play  = GUI.Button("play", function() Tilemap.resume() end)
+    local button_clear = GUI.Button("clear", function()
+        local x,y = Tilemap.getActiveScene().characters[1].x, Tilemap.getActiveScene().characters[1].y
+        Tilemap.getActiveScene().characters = {}
+        Tilemap.getActiveScene().characters[1] = Tilemap.Character( Tilemap.getActiveScene(), x,y)
+        Tilemap.getActiveScene().characters[1].pathToGoal = {}
+    end)
+
+    button_pause:attachLabelImage(Game.getSprite("LevelEditor/icons/pause.png"))
+    button_play:attachLabelImage(Game.getSprite("LevelEditor/icons/play.png"))
+    button_clear:attachLabelImage(Game.getSprite("LevelEditor/icons/clear.png"))
+
+    button_pause:setBottomAnchor(GUI.Root, "top")
+    button_play:setBottomAnchor(GUI.Root, "top")
+    button_clear:setBottomAnchor(GUI.Root, "top")
+
+    button_clear:setLeftAnchor(GUI.Root, "right")
+
+    button_pause:setRightAnchor(button_clear, "left")
+    button_pause:setLeftAnchor(button_clear, "left")
+
+    button_play:setRightAnchor(button_pause, "left")
+    button_play:setLeftAnchor(button_pause, "left")
+
+    button_pause.topAnchorOffset = 10
+    button_play.topAnchorOffset = 10
+    button_clear.topAnchorOffset = 10
+
+    button_pause.bottomAnchorOffset = 60
+    button_play.bottomAnchorOffset = 60
+    button_clear.bottomAnchorOffset = 60
+
+    button_play.rightAnchorOffset = -10
+    button_play.leftAnchorOffset = -60
+
+    button_pause.rightAnchorOffset = -10
+    button_pause.leftAnchorOffset = -60
+
+    button_clear.rightAnchorOffset = -10
+    button_clear.leftAnchorOffset = -60
+
     -- create a textfield
     local tf_mapName = GUI.Textfield("Map Name")
-    tf_mapName:setLeftAnchor(GUI.Root, "right")
-    tf_mapName:setBottomAnchor(GUI.Root, "top")
+    tf_mapName:setLeftAnchor(button_play, "left")
+    tf_mapName:setTopAnchor(button_play, "bottom")
+    tf_mapName:setBottomAnchor(button_play, "bottom")
 
     tf_mapName.topAnchorOffset = 10
     tf_mapName.bottomAnchorOffset = 40
-    tf_mapName.leftAnchorOffset = -150
     tf_mapName.rightAnchorOffset = -10
 
     local button_saveMap = GUI.Button("Save Map", function() Tilemap.getActiveScene():saveMap(tf_mapName.text .. ".map") end)
@@ -37,7 +81,10 @@ function LevelEditor.createGUI()
     button_saveMap.leftAnchorOffset = 10
     button_saveMap.rightAnchorOffset = -5
 
-    local button_loadMap = GUI.Button("Load Map", function() Tilemap.getActiveScene():loadMap(tf_mapName.text .. ".map") end)
+    local button_loadMap = GUI.Button("Load Map", function()
+            Tilemap.loadMap(tf_mapName.text .. ".map")
+            button_clear.onRelease()
+        end)
     button_loadMap:setTopAnchor(GUI.Root, "bottom")
     button_loadMap:setLeftAnchor(GUI.Root, "center")
     button_loadMap.topAnchorOffset = -50
@@ -78,6 +125,9 @@ function LevelEditor.createGUI()
     LevelEditor.GUI:addWidget(button_saveMap)
     LevelEditor.GUI:addWidget(button_loadMap)
     LevelEditor.GUI:addWidget(tf_mapName)
+    LevelEditor.GUI:addWidget(button_pause)
+    LevelEditor.GUI:addWidget(button_play)
+    LevelEditor.GUI:addWidget(button_clear)
 end
 
 function LevelEditor.changeTile()
@@ -122,38 +172,38 @@ LevelEditor.activeKeyBinding["d"] = {
 
 LevelEditor.activeKeyBinding["up"] = {
 	repeated = function(dt)
-        Tilemap.Camera.target = nil
-		Tilemap.Camera.y = Tilemap.Camera.y - 200*dt
+        Tilemap.getActiveScene().camera.target = nil
+		Tilemap.getActiveScene().camera.y = Tilemap.getActiveScene().camera.y - 200*dt
 	end
 }
 
 LevelEditor.activeKeyBinding["left"] = {
 	repeated = function(dt)
-        Tilemap.Camera.target = nil
-		Tilemap.Camera.x = Tilemap.Camera.x - 200*dt
+        Tilemap.getActiveScene().camera.target = nil
+		Tilemap.getActiveScene().camera.x = Tilemap.getActiveScene().camera.x - 200*dt
 	end
 }
 
 
 LevelEditor.activeKeyBinding["down"] = {
 	repeated = function(dt)
-        Tilemap.Camera.target = nil
-		Tilemap.Camera.y = Tilemap.Camera.y + 200*dt
+        Tilemap.getActiveScene().camera.target = nil
+		Tilemap.getActiveScene().camera.y = Tilemap.getActiveScene().camera.y + 200*dt
 	end
 }
 
 
 LevelEditor.activeKeyBinding["right"] = {
 	repeated = function(dt)
-        Tilemap.Camera.target = nil
-		Tilemap.Camera.x = Tilemap.Camera.x + 200*dt
+        Tilemap.getActiveScene().camera.target = nil
+		Tilemap.getActiveScene().camera.x = Tilemap.getActiveScene().camera.x + 200*dt
 	end
 }
 
 
 LevelEditor.activeKeyBinding[" "] = {
 	repeated = function(dt)
-		Tilemap.Camera.target = Tilemap.getActiveScene().characters[1]
+		Tilemap.getActiveScene().camera.target = Tilemap.getActiveScene().characters[1]
 	end
 }
 

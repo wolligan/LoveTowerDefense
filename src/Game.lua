@@ -19,9 +19,10 @@ Game.state = nil
 
 --- initializes the engine
 function Game.init()
-	love.window.setMode( 1280, 800, { fullscreen = true } )
+	love.window.setMode( 1920, 1080, { fullscreen = true } )
 	math.randomseed(os.time())
-    Game.changeState(Testing.Menu)
+    --Game.changeState(Testing.Menu)
+    Game.changeState(Ingame)
 end
 
 --- renders current game state, gui and textoutput

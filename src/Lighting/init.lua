@@ -58,7 +58,7 @@ function Lighting.renderShadedScene()
     -- draw ShadowCasters over shaded Scene
     love.graphics.setColor(255,255,255)
     for i,curShadowCaster in pairs(Lighting.curShadowCasters) do
-        curShadowCaster:render()
+        --curShadowCaster:render()
     end
 
     -- draw lights
@@ -69,12 +69,12 @@ function Lighting.renderShadedScene()
     end
 end
 
----
+--- This function needs to be overwritten
 function Lighting.drawUnlitBackground()
 
 end
 
----
+--- updates lightsources
 function Lighting.update(dt, shadowCasters)
     for lightIndex=1,#Lighting.lights do
         Lighting.lights[lightIndex]:update(shadowCasters)

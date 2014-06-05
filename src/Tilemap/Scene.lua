@@ -2,18 +2,14 @@
 Tilemap.Scene = {}
 
 require "Tilemap.Character"
+require "Tilemap.Camera"
 
 Utilities.OO.createClass(Tilemap.Scene)
 
 ---
 function Tilemap.Scene:new()
     self.tiles = {}
-    for x = 1,Tilemap.Settings.levelSize do
-		self.tiles[x] = {}
-		for y = 1,Tilemap.Settings.levelSize do
-			self.tiles[x][y] = 1
-		end
-	end
+    self.camera = Tilemap.Camera(self)
 
     self.characters = {}
     self.playerIndex = 0
@@ -25,7 +21,7 @@ function Tilemap.Scene:new()
     self.maxTilesOnScreen[1] = math.floor(love.graphics.getWidth()  / Tilemap.Settings.tileSize)+2
     self.maxTilesOnScreen[2] = math.floor(love.graphics.getHeight() / Tilemap.Settings.tileSize)+2
 
-    self:createEmptyLevel(20,20)
+    self:createEmptyLevel(Tilemap.Settings.levelSize, Tilemap.Settings.levelSize)
 end
 
 ---
@@ -49,10 +45,18 @@ function Tilemap.Scene:createRandomLevel()
 		while Tilemap.tileDict[self.characters[#self.characters]:getTileIndex()][5] do
 			self.characters[#self.characters].x = math.random(0,Tilemap.Settings.levelSize-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize*0.5
 			self.characters[#self.characters].y = math.random(0,Tilemap.Settings.levelSize-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize*0.5
-			self.characters[#self.characters]:AI_calculatePathToGoal()
 		end
+
+        local goalX, goalY = math.random(1,Tilemap.Settings.levelSize), math.random(1,Tilemap.Settings.levelSize)
+
+        while Tilemap.tileDict[self.tiles[goalX][goalY]][5] do
+			goalX, goalY = math.random(1,Tilemap.Settings.levelSize), math.random(1,Tilemap.Settings.levelSize)
+		end
+        self.characters[#self.characters]:AI_setGoal(goalX, goalY)
+        self.characters[#self.characters]:AI_calculatePathToGoal()
+
 	end
-    Tilemap.Camera.target = self.characters[1]
+    self.camera.target = self.characters[1]
 end
 
 function Tilemap.Scene:createEmptyLevel(levelWidth, levelHeight)
@@ -68,18 +72,18 @@ function Tilemap.Scene:createEmptyLevel(levelWidth, levelHeight)
 	end
 
 	self.characters = {}
-    self.characters[#self.characters+1] = Tilemap.Character(self, math.random(0,levelWidth -1) * Tilemap.Settings.tileSize + Tilemap.Settings.tileSize*0.5,
-                                                                  math.random(0,levelHeight-1) * Tilemap.Settings.tileSize + Tilemap.Settings.tileSize*0.5)
-    Tilemap.Camera.target = self.characters[1]
+    self.characters[#self.characters+1] = Tilemap.Character(self, Tilemap.Settings.tileSize/2, Tilemap.Settings.tileSize/2)
+    self.camera.target = self.characters[1]
 end
 
 ---
-function Tilemap.Scene:render()
+function Tilemap.Scene:renderTiles()
+    self.camera:begin()
 	-- draw level
 	--for y = 1,Tilemap.Settings.levelSize do
 	--	for x = 1,Tilemap.Settings.levelSize do
-    local beginAtX = math.floor(Tilemap.Camera.x/Tilemap.Settings.tileSize) - math.floor((love.graphics.getWidth()/2)/Tilemap.Settings.tileSize)
-    local beginAtY = math.floor(Tilemap.Camera.y/Tilemap.Settings.tileSize) - math.floor((love.graphics.getHeight()/2)/Tilemap.Settings.tileSize)
+    local beginAtX = math.floor(self.camera.x/Tilemap.Settings.tileSize) - math.floor((love.graphics.getWidth()/2)/Tilemap.Settings.tileSize)
+    local beginAtY = math.floor(self.camera.y/Tilemap.Settings.tileSize) - math.floor((love.graphics.getHeight()/2)/Tilemap.Settings.tileSize)
 	for y = math.max(1,beginAtY), math.min(self:getLevelHeight(), beginAtY+self.maxTilesOnScreen[2])  do
 		for x = math.max(1,beginAtX),math.min(self:getLevelWidth(), beginAtX+self.maxTilesOnScreen[1]) do
 			if Tilemap.tileDict[self.tiles[x][y]] then
@@ -98,39 +102,48 @@ function Tilemap.Scene:render()
 		end
 	end
 
-	-- DEBUG: highlight tile under player
-	--[[
-	local playerTileX, playerTileY = self:getTileCoordinatesUnderPlayer()
-	love.graphics.setColor(255,255,0)
-	love.graphics.push()
-	love.graphics.translate((playerTileX-1)*Tilemap.Settings.tileSize, (playerTileY-1)*Tilemap.Settings.tileSize)
-	love.graphics.rectangle("fill", 0,0, Tilemap.Settings.tileSize, Tilemap.Settings.tileSize)
-	love.graphics.pop()
-	]]
+    self.camera:stop()
+end
 
+function Tilemap.Scene:getObstacleMeshes()
+    local meshes = {}
+    --for y = math.max(1,beginAtY), math.min(self:getLevelHeight(), beginAtY+self.maxTilesOnScreen[2])  do
+	--	for x = math.max(1,beginAtX),math.min(self:getLevelWidth(), beginAtX+self.maxTilesOnScreen[1]) do
+    for y = 1, self:getLevelHeight()  do
+		for x = 1,self:getLevelHeight() do
+			if Tilemap.tileDict[self.tiles[x][y]][5] then
+				meshes[#meshes+1] = Geometry.Mesh.createRectangle((x-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize/2, (y-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize/2, Tilemap.Settings.tileSize/2, Tilemap.tileDict[self.tiles[x][y]][3], {})
+                --meshes[#meshes+1] = Geometry.Mesh.createDiscoCircle((x-1)*Tilemap.Settings.tileSize,(y-1)*Tilemap.Settings.tileSize, Tilemap.Settings.tileSize/2, 40, Tilemap.tileDict[self.tiles[x][y]][3])
+			end
+		end
+	end
+    return meshes
+end
+
+function Tilemap.Scene:renderCharacters()
+    self.camera:begin()
 
 	-- draw npcs
 	for key,value in pairs(self.characters) do
 		if value ~= self.characters[self.playerIndex] then
-			love.graphics.setColor(0,127,0)
-			love.graphics.rectangle("fill", value.x-Tilemap.Settings.playerSize*0.5, value.y-Tilemap.Settings.playerSize*0.5, Tilemap.Settings.playerSize, Tilemap.Settings.playerSize)
+            value:render()
 		end
 	end
 
-
-	-- DEBUG: draw player's path
-    if #self.characters > 0 then
-        for i,v in pairs(self.characters[self.playerIndex].pathToGoal) do
-            love.graphics.setColor(0,127,0,100)
-            love.graphics.rectangle("fill",(v[1]-1)*Tilemap.Settings.tileSize, (v[2]-1)*Tilemap.Settings.tileSize, Tilemap.Settings.tileSize, Tilemap.Settings.tileSize)
-        end
-    end
-
 	-- draw player
     if #self.characters > 0 then
-        love.graphics.setColor(0,255,0)
-        love.graphics.rectangle("fill", self.characters[self.playerIndex].x-Tilemap.Settings.playerSize*0.5, self.characters[self.playerIndex].y-Tilemap.Settings.playerSize*0.5,
-                                        Tilemap.Settings.playerSize, Tilemap.Settings.playerSize)
+        self.characters[self.playerIndex]:render()
+    end
+
+    self.camera:stop()
+end
+
+function Tilemap.Scene:update(dt)
+    self.camera:update(dt)
+    for i,curChar in pairs(self.characters) do
+        --if i ~= Tilemap.getActiveScene().playerIndex then
+            curChar:update(dt)
+        --end
     end
 end
 
@@ -141,7 +154,7 @@ end
 
 ---
 function Tilemap.Scene:getTileCoordinatesByCamera(mx, my)
-	return self:getTileCoordinatesAtPosition(Tilemap.Camera.x + mx - love.graphics.getWidth() * 0.5, Tilemap.Camera.y + my - love.graphics.getHeight() * 0.5)
+	return self:getTileCoordinatesAtPosition(self.camera.x + mx - love.graphics.getWidth() * 0.5, self.camera.y + my - love.graphics.getHeight() * 0.5)
 end
 
 ---
@@ -324,11 +337,10 @@ function Tilemap.Scene:loadMap(filePath)
             tiles[xIndex][yIndex] = tonumber(curTileIndexString)
             curTileIndexString = ""
             xIndex = xIndex + 1
-            if not tiles[xIndex] then print("blub");tiles[xIndex] = {} end
+            if not tiles[xIndex] then tiles[xIndex] = {} end
 
         else
             curTileIndexString = curTileIndexString .. c
-
         end
     end
 

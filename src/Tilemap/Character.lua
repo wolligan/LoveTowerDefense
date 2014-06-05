@@ -8,15 +8,28 @@ function Tilemap.Character:new(appropriateScene,x,y)
 	self.x = x
 	self.y = y
 
+    self.mesh = Geometry.Mesh.createDiscoCircle(x,y, Tilemap.Settings.playerSize/2, 10, {0,127,0})
+    self.mesh.reflectorSides = {}
+
 	self.oldX = x
 	self.oldY = y
 
     self.appropriateScene = appropriateScene
 
-	self.goalX = 2--math.floor(Tilemap.Settings.levelSize/2)
-	self.goalY = 2--math.floor(Tilemap.Settings.levelSize/2)
     self.pathToGoal = {}
+    self.goalX = 1
+    self.goalY = 1
 	self:AI_calculatePathToGoal()
+end
+
+function Tilemap.Character:render()
+    self.mesh.position[1] = self.x
+    self.mesh.position[2] = self.y
+    self.mesh:render()
+end
+
+function Tilemap.Character:update(dt)
+    self:AI_think(dt)
 end
 
 ---
@@ -113,6 +126,15 @@ function Tilemap.Character:AI_walkToGoal(dt)
 			table.remove(self.pathToGoal,1)
 			if #self.pathToGoal > 0 then
 				tileToGo = self.pathToGoal[1]
+                if Tilemap.tileDict[self.appropriateScene.tiles[tileToGo[1]][tileToGo[2]]][5] then
+                    print("error")
+                    self:AI_calculatePathToGoal()
+                    if #self.pathToGoal > 0 then
+                        tileToGo = self.pathToGoal[1]
+                    else
+                        return nil
+                    end
+                end
 			else
 				return nil
 			end
@@ -143,6 +165,15 @@ end
 
 ---
 function Tilemap.Character:AI_calculatePathToGoal()
-	local tileX,tileY = self.appropriateScene:getTileCoordinatesUnderCharacter(self)
-	self.pathToGoal = self.appropriateScene:Route_getRoute(tileX, tileY, self.goalX, self.goalY)
+    if self.goalX and self.goalY then
+        local tileX,tileY = self.appropriateScene:getTileCoordinatesUnderCharacter(self)
+        self.pathToGoal = self.appropriateScene:Route_getRoute(tileX, tileY, self.goalX, self.goalY)
+    else
+        self.pathToGoal = {}
+    end
+end
+
+function Tilemap.Character:AI_setGoal(tileX, tileY)
+    self.goalX = tileX
+    self.goalY = tileY
 end

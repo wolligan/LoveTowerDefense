@@ -17,12 +17,12 @@ end
 --- renders button
 function GUI.Button:render()
     self:renderButton()
-    self:renderCenteredText()
+    self:renderLabel()
 end
 
 --- renders the background
 function GUI.Button:renderButton()
-    if self.isImaged then
+    if self.backgroundIsImaged then
 
         if self.isClicked then
             love.graphics.setColor(unpack(self.apparentContainer.clickedColor))

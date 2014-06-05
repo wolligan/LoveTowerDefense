@@ -32,7 +32,6 @@ KeyBindings.TilemapTestKeyBinding["d"] = {
 KeyBindings.TilemapTestKeyBinding["up"] = {
 	pressed = function(dt)
 		Tilemap.getActiveScene().playerIndex = math.min(#Tilemap.getActiveScene().characters, Tilemap.getActiveScene().playerIndex + 1)
-		--camera.rotation = camera.rotation + 10*dt
 	end
 }
 
@@ -40,7 +39,6 @@ KeyBindings.TilemapTestKeyBinding["up"] = {
 KeyBindings.TilemapTestKeyBinding["down"] = {
 	pressed = function(dt)
 		Tilemap.getActiveScene().playerIndex = math.max(1, Tilemap.getActiveScene().playerIndex - 1)
-		--camera.rotation = camera.rotation - 10*dt
 	end
 }
 

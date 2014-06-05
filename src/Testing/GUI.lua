@@ -70,7 +70,7 @@ function Testing.GUI.fillContainer1()
 
 
 -- attach images to button
-    b1_cont1:attachImage(Utilities.SlicedSprite( "assets/sprites/GUI/slicedShadedBackground_20_20_20_20.png",
+    b1_cont1:attachBackgroundImage(Utilities.SlicedSprite( "assets/sprites/GUI/slicedShadedBackground_20_20_20_20.png",
                                             nil,nil,nil,nil,
                                             20, 20, 20, 20 ),
                          Utilities.SlicedSprite( "assets/sprites/GUI/slicedShadedBackgroundPressed_20_20_20_20.png",
@@ -98,7 +98,7 @@ function Testing.GUI.fillContainer1()
 
 
 -- attach images to button
-    b_toggleAnchors:attachImage(Utilities.SlicedSprite( "assets/sprites/GUI/slicedShadedBackground_20_20_20_20.png",
+    b_toggleAnchors:attachBackgroundImage(Utilities.SlicedSprite( "assets/sprites/GUI/slicedShadedBackground_20_20_20_20.png",
                                             nil,nil,nil,nil,
                                             20, 20, 20, 20 ),
                          Utilities.SlicedSprite( "assets/sprites/GUI/slicedShadedBackgroundPressed_20_20_20_20.png",
@@ -124,7 +124,7 @@ function Testing.GUI.fillContainer1()
     l1_cont1.bottomAnchorOffset = 60
 
 -- attach background image
-    l1_cont1:attachImage(Utilities.SlicedSprite( "assets/sprites/GUI/slicedShadedBackground_20_20_20_20.png",
+    l1_cont1:attachBackgroundImage(Utilities.SlicedSprite( "assets/sprites/GUI/slicedShadedBackground_20_20_20_20.png",
                                             nil,nil,nil,nil,
                                             20, 20, 20, 20 ))
 

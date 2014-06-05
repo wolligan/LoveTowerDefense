@@ -32,7 +32,7 @@ end
 
 --- renders background
 function GUI.Widget:renderBackground()
-    if self.isImaged then
+    if self.backgroundIsImaged then
         love.graphics.setColor(unpack(self.apparentContainer.backgroundColor))
         self.backgroundImage.position = {self:getLeftAnchor(), self:getTopAnchor()}
         self.backgroundImage.width = self:getWidth()
@@ -44,6 +44,29 @@ function GUI.Widget:renderBackground()
         love.graphics.rectangle("fill", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
         love.graphics.setColor(unpack(self.apparentContainer.borderColor))
         love.graphics.rectangle("line", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
+    end
+end
+
+
+--- renders text at center of label
+function GUI.Widget:renderLabel()
+    if self.labelIsImaged then
+        local imageWidth = self.labelImage:getWidth()
+        local imageHeight = self.labelImage:getHeight()
+        local imagePosX = math.floor(self:getLeftAnchor() + self:getWidth()/2 - imageWidth/2)
+        local imagePosY = math.floor(self:getTopAnchor() + self:getHeight()/2 - imageHeight/2)
+
+        love.graphics.setColor(255,255,255)
+        love.graphics.draw(self.labelImage, imagePosX, imagePosY)
+    else
+        local textWidth = self.apparentContainer.font:getWidth(self.text)
+        local textHeight = self.apparentContainer.font:getHeight(self.text)
+        local textPosX = math.floor(self:getLeftAnchor() + self:getWidth()/2 - textWidth/2)
+        local textPosY = math.floor(self:getTopAnchor() + self:getHeight()/2 - textHeight/2)
+
+        love.graphics.setFont(self.apparentContainer.font)
+        love.graphics.setColor(unpack(self.apparentContainer.fontColor))
+        love.graphics.print(self.text, textPosX, textPosY)
     end
 end
 
@@ -183,11 +206,16 @@ function GUI.Widget:notifyKey(key)
 
 end
 
-function GUI.Widget:attachImage(slicedBackgroundSprite, slicedClickedSprite, slicedHoveredSprite)
-    self.isImaged = true
+function GUI.Widget:attachBackgroundImage(slicedBackgroundSprite, slicedClickedSprite, slicedHoveredSprite)
+    self.backgroundIsImaged = true
     self.backgroundImage = slicedBackgroundSprite
     self.clickedImage = slicedClickedSprite or slicedBackgroundSprite
     self.hoveredImage = slicedHoveredSprite or slicedBackgroundSprite
+end
+
+function GUI.Widget:attachLabelImage(labelImage)
+    self.labelIsImaged = true
+    self.labelImage = labelImage
 end
 
 function GUI.Widget:visualizeAnchors()

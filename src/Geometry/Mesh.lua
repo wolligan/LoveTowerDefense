@@ -19,8 +19,8 @@ function Geometry.Mesh.createDiscoCircle(x,y, size, slices, color)
     for i = 0,(slices-1) do
         local percentage = i/slices
 
-        local curVertX =  math.cos(percentage * math.pi * 2)*size
-        local curVertY = -math.sin(percentage * math.pi * 2)*size
+        local curVertX =   math.cos(percentage * math.pi * 2)*size
+        local curVertY = - math.sin(percentage * math.pi * 2)*size
 
         vertices[i*2 + 1] = curVertX
         vertices[i*2 + 2] = curVertY

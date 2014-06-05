@@ -57,3 +57,20 @@ Tilemap.tileDict[5] 	= 	{	love.graphics.rectangle,					-- draw function
                         end
 					}
 --
+Tilemap.tileNames[6]	= "waypoint1"
+Tilemap.tileDict[6] 	= {	love.graphics.rectangle,					-- draw function
+						{"fill", 0, 0, Tilemap.Settings.tileSize, Tilemap.Settings.tileSize},			-- function parameters
+						{255,0,0},								-- color
+						1,											-- speed multiplicator
+						false,										-- is obstacle
+                        nil                                         -- update function
+                      }
+--
+Tilemap.tileNames[7]	= "waypoint2"
+Tilemap.tileDict[7] 	= {	love.graphics.rectangle,					-- draw function
+						{"fill", 0, 0, Tilemap.Settings.tileSize, Tilemap.Settings.tileSize},			-- function parameters
+						{0,255,255},								-- color
+						1,											-- speed multiplicator
+						false,										-- is obstacle
+                        nil                                         -- update function
+                      }
