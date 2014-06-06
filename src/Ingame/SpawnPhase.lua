@@ -46,11 +46,10 @@ function Ingame.SpawnPhase.createGUI()
     phaseLabel.rightAnchorOffset = 100
 
     Ingame.SpawnPhasemobCounterLabel = GUI.Label(Ingame.SpawnPhase.survivedMobs .. " / " .. Ingame.SpawnPhase.maxSurvivedMobs)
-    Ingame.SpawnPhasemobCounterLabel:setTopAnchor(GUI.Root, "top")
-    Ingame.SpawnPhasemobCounterLabel:setLeftAnchor(GUI.Root, "right")
+    Ingame.SpawnPhasemobCounterLabel:setTopAnchor(GUI.Root, "bottom")
     Ingame.SpawnPhasemobCounterLabel.bottomAnchorOffset = -10
     Ingame.SpawnPhasemobCounterLabel.topAnchorOffset = -50
-    Ingame.SpawnPhasemobCounterLabel.leftAnchorOffset = -50
+    Ingame.SpawnPhasemobCounterLabel.leftAnchorOffset = 10
     Ingame.SpawnPhasemobCounterLabel.rightAnchorOffset = -10
 
     Ingame.SpawnPhase.GUI:addWidget(phaseLabel)

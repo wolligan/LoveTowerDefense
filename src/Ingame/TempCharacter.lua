@@ -7,7 +7,7 @@ Utilities.OO.createDerivedClass(Ingame.TempCharacter, Ingame.Character)
 function Ingame.TempCharacter:new(appropriateScene, x, y)
     Ingame.Character.new(self,appropriateScene,x,y, {0,0,0})
     self.timeAtCreation = love.timer.getTime()
-    self.maxLifeTime = math.random(3,6) --seconds
+    self.maxLifeTime = math.random(3,8) --seconds
     self.lifeTime = 0
 end
 
