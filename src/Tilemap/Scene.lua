@@ -9,7 +9,6 @@ Utilities.OO.createClass(Tilemap.Scene)
 ---
 function Tilemap.Scene:new()
     self.tiles = {}
-    self.camera = Tilemap.Camera(self)
 
     self.characters = {}
     self.playerIndex = 0
@@ -22,6 +21,7 @@ function Tilemap.Scene:new()
     self.maxTilesOnScreen[2] = math.floor(love.graphics.getHeight() / Tilemap.Settings.tileSize)+2
 
     self:createEmptyLevel(Tilemap.Settings.levelSize, Tilemap.Settings.levelSize)
+    self.camera = Tilemap.Camera(self)
 end
 
 ---
@@ -72,8 +72,8 @@ function Tilemap.Scene:createEmptyLevel(levelWidth, levelHeight)
 	end
 
 	self.characters = {}
-    self.characters[#self.characters+1] = Tilemap.Character(self, Tilemap.Settings.tileSize/2, Tilemap.Settings.tileSize/2)
-    self.camera.target = self.characters[1]
+    --self.characters[#self.characters+1] = Tilemap.Character(self, Tilemap.Settings.tileSize/2, Tilemap.Settings.tileSize/2)
+    --self.camera.target = self.characters[1]
 end
 
 ---
@@ -138,7 +138,7 @@ function Tilemap.Scene:renderCharacters()
 end
 
 function Tilemap.Scene:update(dt)
-    self.camera:update(dt)
+    --self.camera:update(dt)
     for i,curChar in pairs(self.characters) do
         --if i ~= Tilemap.getActiveScene().playerIndex then
             curChar:update(dt)
@@ -242,7 +242,7 @@ function Tilemap.Scene:Route_getRoute(startX, startY, goalX, goalY)
 		for i,curNeighbor in pairs(neighbors) do
 			if closed[curNeighbor] == nil then
 				local tentative_g_score = g_score[current] + math.sqrt(math.pow(current[1] - curNeighbor[1], 2) + math.pow(current[2] - curNeighbor[2], 2))
-				tentative_g_score = tentative_g_score + math.pow(Tilemap.Settings.tileSize/Tilemap.tileDict[self.tiles[current[1]][current[2]]].speed,2)
+				tentative_g_score = tentative_g_score + math.pow(Tilemap.Settings.tileSize/Tilemap.tileDict[self.tiles[current[1]][current[2]]].speed, 2)
 				if not open[curNeighbor] or tentative_g_score < g_score[curNeighbor] then
 					cameFrom[curNeighbor] = current
 					g_score[curNeighbor] = tentative_g_score

@@ -16,13 +16,14 @@ Game.spritePool = {}
 Game.soundPool = {}
 Game.fontPool = {}
 Game.state = nil
+Game.coroutines = {}
 
 --- initializes the engine
 function Game.init()
-	love.window.setMode( 1920, 1080, { fullscreen = true } )
+	love.window.setMode( 1000, 600, { fullscreen = false } )
 	math.randomseed(os.time())
-    --Game.changeState(Testing.Menu)
-    Game.changeState(Ingame)
+    Game.changeState(Testing.Menu)
+    --Game.changeState(Ingame)
 end
 
 --- renders current game state, gui and textoutput
@@ -41,6 +42,14 @@ function Game.update(dt)
     GUI.update(dt)
     if Game.state.update then
         Game.state.update(dt)
+    end
+
+    for i=#Game.coroutines,1,-1 do
+        if coroutine.status(Game.coroutines[i]) == "dead" then
+            table.remove(Game.coroutines, i)
+        else
+            coroutine.resume(Game.coroutines[i])
+        end
     end
 end
 
@@ -76,6 +85,12 @@ function Game.changeState(state)
         -- set GUI container to GUI container of new state
         GUI.activeContainer = Game.state.GUI
     end
+end
+
+--- adds a coroutine to couroutine list
+-- @param coroutine coroutine to add
+function Game.startCoroutine(coroutine)
+    Game.coroutines[#Game.coroutines+1] = coroutine
 end
 
 --- loads sprites, if sprite is already loaded it returns a reference to this

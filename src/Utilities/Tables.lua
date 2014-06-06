@@ -40,3 +40,13 @@ function table.indexOf(t, item)
         end
     end
 end
+
+function table.removeValue(t, item)
+    if table.contains(t,item) then
+        for i = 1,#t do
+            if t[i] == item then
+                table.remove(t,i)
+            end
+        end
+    end
+end

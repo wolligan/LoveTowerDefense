@@ -34,6 +34,7 @@ end
 ---
 function Tilemap.update(dt)
     if #Tilemap.loadedScenes > 0 then
+        Tilemap.getActiveScene().camera:update(dt)
         if (not Tilemap.paused) then
             Tilemap.curTickTime = Tilemap.curTickTime + dt
             local sendTick = Tilemap.curTickTime >= Tilemap.tickTime

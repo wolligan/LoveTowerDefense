@@ -8,11 +8,13 @@ function Tilemap.Camera:new(scene,x,y)
     self.y = y or love.graphics.getHeight()*0.5
     self.rotation = 0
     self.target = nil
+    --self.x = self.appropriateScene:getLevelWidth()*Tilemap.Settings.tileSize/2
+    --self.y = self.appropriateScene:getLevelHeight()*Tilemap.Settings.tileSize/2
 end
 
 ---
 function Tilemap.Camera:update()
-	--[[if self.target then
+	if self.target then
         if not (love.graphics.getWidth() > self.appropriateScene:getLevelWidth()*Tilemap.Settings.tileSize) then
             self.x = math.min(math.max(love.graphics.getWidth() * 0.5, self.target.x),
                                 #self.appropriateScene.tiles    *Tilemap.Settings.tileSize - love.graphics.getWidth() * 0.5 )
@@ -28,7 +30,7 @@ function Tilemap.Camera:update()
         end
 		--camera.x = getActiveScene().characters[getActiveScene().playerIndex].x
 		--camera.y = getActiveScene().characters[getActiveScene().playerIndex].y
-	end]]
+	end
 end
 
 ---

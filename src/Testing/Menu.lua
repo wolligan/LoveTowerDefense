@@ -20,6 +20,7 @@ function Testing.Menu.createMenuGUI()
     list.rightAnchorOffset = -20
     list.topAnchorOffset = 20
 
+    list:add(GUI.Button("Start Ingame with test.map", function() Game.changeState(Ingame) end))
     list:add(GUI.Button("Load GUI Test", function() Game.changeState(Testing.GUI) end))
     list:add(GUI.Button("Load Intersection Test", function() Game.changeState(Testing.Intersection) end))
     list:add(GUI.Button("Load Lighting Test", function() Game.changeState(Testing.Lighting) end))

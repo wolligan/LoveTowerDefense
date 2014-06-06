@@ -17,18 +17,15 @@ function Tilemap.Character:new(appropriateScene,x,y)
     self.appropriateScene = appropriateScene
 
     self.pathToGoal = {}
-    self.goalX = 1
-    self.goalY = 1
-	self:AI_calculatePathToGoal()
 end
 
 function Tilemap.Character:render()
-    self.mesh.position[1] = self.x
-    self.mesh.position[2] = self.y
     self.mesh:render()
 end
 
 function Tilemap.Character:update(dt)
+    self.mesh.position[1] = self.x
+    self.mesh.position[2] = self.y
     self:AI_think(dt)
 end
 
@@ -164,16 +161,7 @@ function Tilemap.Character:AI_walkToGoal(dt)
 end
 
 ---
-function Tilemap.Character:AI_calculatePathToGoal()
-    if self.goalX and self.goalY then
-        local tileX,tileY = self.appropriateScene:getTileCoordinatesUnderCharacter(self)
-        self.pathToGoal = self.appropriateScene:Route_getRoute(tileX, tileY, self.goalX, self.goalY)
-    else
-        self.pathToGoal = {}
-    end
-end
-
-function Tilemap.Character:AI_setGoal(tileX, tileY)
-    self.goalX = tileX
-    self.goalY = tileY
+function Tilemap.Character:AI_calculatePathToGoal(goalX, goalY)
+    local tileX,tileY = self.appropriateScene:getTileCoordinatesUnderCharacter(self)
+    self.pathToGoal = self.appropriateScene:Route_getRoute(tileX, tileY, goalX, goalY)
 end
