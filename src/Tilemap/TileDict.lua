@@ -10,7 +10,7 @@
 
 Tilemap.tileDict = {}
 
-
+--1
 Tilemap.tileDict[#Tilemap.tileDict+1] = {
     name = "air1",
     draw = love.graphics.rectangle,
@@ -21,6 +21,7 @@ Tilemap.tileDict[#Tilemap.tileDict+1] = {
     update = nil
 }
 
+--2
 Tilemap.tileDict[#Tilemap.tileDict+1] = {
     name = "air2",
     draw = love.graphics.rectangle,
@@ -31,6 +32,7 @@ Tilemap.tileDict[#Tilemap.tileDict+1] = {
     update = nil
 }
 
+--3
 Tilemap.tileDict[#Tilemap.tileDict+1] = {
     name = "sand",
     draw = love.graphics.rectangle,
@@ -41,16 +43,18 @@ Tilemap.tileDict[#Tilemap.tileDict+1] = {
     update = nil
 }
 
+--4
 Tilemap.tileDict[#Tilemap.tileDict+1] = {
     name = "obstacle",
     draw = love.graphics.rectangle,
     drawParams = {"fill", 0, 0, Tilemap.Settings.tileSize, Tilemap.Settings.tileSize},
-    color = {0,0,0},
+    color = {20,20,20},
     speed = 1,
     isObstacle = true,
     update = nil
 }
 
+--5
 Tilemap.tileDict[#Tilemap.tileDict+1] = {
     name = "spawner",
     draw = love.graphics.rectangle,
@@ -70,16 +74,37 @@ Tilemap.tileDict[#Tilemap.tileDict+1] = {
     end
 }
 
+--6
 Tilemap.tileDict[#Tilemap.tileDict+1] = {
-    name = "waypoint for light",
+    name = "tower build point",
+    draw = function()
+        love.graphics.setColor(70,70,70)
+        love.graphics.rectangle("fill", 0, 0, Tilemap.Settings.tileSize, Tilemap.Settings.tileSize)
+        love.graphics.setColor(200,0,0)
+        love.graphics.draw( Game.getSprite("assets/sprites/Ingame/circle.png"), 2,2, 0,
+                            (Tilemap.Settings.tileSize-4)/Game.getSprite("assets/sprites/Ingame/circle.png"):getWidth(),
+                            (Tilemap.Settings.tileSize-4)/Game.getSprite("assets/sprites/Ingame/circle.png"):getHeight())
+        --love.graphics.circle("fill", Tilemap.Settings.tileSize/2, Tilemap.Settings.tileSize/2, Tilemap.Settings.tileSize/2-3)
+    end,
+    drawParams = {},
+    color = {255,0,0},
+    speed = 1,
+    isObstacle = true,
+    update = nil
+}
+
+--7
+Tilemap.tileDict[#Tilemap.tileDict+1] = {
+    name = "waypoint for lighting",
     draw = love.graphics.rectangle,
     drawParams = {"fill", 0, 0, Tilemap.Settings.tileSize, Tilemap.Settings.tileSize},
-    color = {255,0,0},
+    color = {0,255,255},
     speed = 1,
     isObstacle = false,
     update = nil
 }
 
+--8
 Tilemap.tileDict[#Tilemap.tileDict+1] = {
     name = "waypoint for darkness",
     draw = love.graphics.rectangle,

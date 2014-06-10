@@ -3,6 +3,7 @@ require "Tilemap"
 LevelEditor = {}
 
 function LevelEditor.init()
+    Ingame.init()
     Tilemap.init()
     Tilemap.addScene(20, 20)
     LevelEditor.currentTileIndex = 1
@@ -24,10 +25,7 @@ function LevelEditor.createGUI()
     local button_pause = GUI.Button("pause", function() Tilemap.pause() end)
     local button_play  = GUI.Button("play", function() Tilemap.resume() end)
     local button_clear = GUI.Button("clear", function()
-        local x,y = Tilemap.getActiveScene().characters[1].x, Tilemap.getActiveScene().characters[1].y
         Tilemap.getActiveScene().characters = {}
-        Tilemap.getActiveScene().characters[1] = Tilemap.Character( Tilemap.getActiveScene(), x,y)
-        Tilemap.getActiveScene().characters[1].pathToGoal = {}
     end)
 
     button_pause:attachLabelImage(Game.getSprite("LevelEditor/icons/pause.png"))
@@ -82,6 +80,7 @@ function LevelEditor.createGUI()
     button_saveMap.rightAnchorOffset = -5
 
     local button_loadMap = GUI.Button("Load Map", function()
+            print("loading " .. tf_mapName.text .. ".map")
             Tilemap.loadMap(tf_mapName.text .. ".map")
             button_clear.onRelease()
         end)

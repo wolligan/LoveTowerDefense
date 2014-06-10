@@ -8,8 +8,8 @@ function Tilemap.Camera:new(scene,x,y)
     self.y = y or love.graphics.getHeight()*0.5
     self.rotation = 0
     self.target = nil
-    --self.x = self.appropriateScene:getLevelWidth()*Tilemap.Settings.tileSize/2
-    --self.y = self.appropriateScene:getLevelHeight()*Tilemap.Settings.tileSize/2
+    self.x = self.appropriateScene:getLevelWidth()*Tilemap.Settings.tileSize/2
+    self.y = self.appropriateScene:getLevelHeight()*Tilemap.Settings.tileSize/2
 end
 
 ---
@@ -28,8 +28,8 @@ function Tilemap.Camera:update()
         else
             self.y = self.appropriateScene:getLevelHeight()*Tilemap.Settings.tileSize/2
         end
-		--camera.x = getActiveScene().characters[getActiveScene().playerIndex].x
-		--camera.y = getActiveScene().characters[getActiveScene().playerIndex].y
+		camera.x = getActiveScene().characters[getActiveScene().playerIndex].x
+		camera.y = getActiveScene().characters[getActiveScene().playerIndex].y
 	end
 end
 

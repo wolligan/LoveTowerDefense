@@ -20,7 +20,7 @@ Game.coroutines = {}
 
 --- initializes the engine
 function Game.init()
-	love.window.setMode( 1000, 600, { fullscreen = false } )
+	love.window.setMode( 1366, 768, { fullscreen = true } )
 	math.randomseed(os.time())
     Game.changeState(Testing.Menu)
     --Game.changeState(Ingame)
@@ -102,11 +102,11 @@ function Game.getSprite(path)
 end
 
 --- loads fonts, if font is already loaded it returns a reference to this
-function Game.getFont(path)
-    if not Game.fontPool[path] then
-        Game.fontPool[path] = love.graphics.newFont(path)
+function Game.getFont(path, size)
+    if not Game.fontPool[path.."_"..(size or 12)] then
+        Game.fontPool[path.."_"..(size or 12)] = love.graphics.newFont(path, (size or 12))
     end
-    return Game.fontPool[path]
+    return Game.fontPool[path.."_"..(size or 12)]
 end
 
 --- loads sounds, if sound is already loaded it returns a reference to this

@@ -14,6 +14,6 @@ end
 
 --- Renders widget with a text field on top of it
 function GUI.Label:render()
-    self:renderBackground()
+    --self:renderBackground()
     self:renderLabel()
 end

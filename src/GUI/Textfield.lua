@@ -27,12 +27,12 @@ end
 function GUI.Textfield:render()
     love.graphics.setColor(255,255,255)
     love.graphics.rectangle("fill", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
-    love.graphics.setColor(unpack(self.apparentContainer.borderColor))
+    love.graphics.setColor(unpack(self.borderColor))
     love.graphics.rectangle("line", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
 
     love.graphics.setStencil(function() love.graphics.rectangle("fill", self:getLeftAnchor() + GUI.Textfield.safetyArea, self:getTopAnchor() + GUI.Textfield.safetyArea, self:getWidth() - GUI.Textfield.safetyArea*2, self:getHeight() - GUI.Textfield.safetyArea*2) end)
 
-    local curFont = self.apparentContainer.font
+    local curFont = self.font
     local left = self:getLeftAnchor() + GUI.Textfield.safetyArea
     local cursorX = left + curFont:getWidth(self.text:sub(1,self.cursorPos))
 
@@ -47,7 +47,7 @@ function GUI.Textfield:render()
         if self.translate > 0 then
             love.graphics.translate(-self.translate, 0)
         end
-        love.graphics.setColor(unpack(self.apparentContainer.fontColor))
+        love.graphics.setColor(unpack(self.fontColor))
         love.graphics.print(self.text, self:getLeftAnchor() + GUI.Textfield.safetyArea, self:getTopAnchor() + self:getHeight()/2 - curFont:getHeight(self.hintText)/2)
         love.graphics.pop()
     end
@@ -107,7 +107,7 @@ end
 -- TODO moving the the left does not work correctly
 function GUI.Textfield:moveCursorLeft()
 
-    local curFont = self.apparentContainer.font
+    local curFont = self.font
     local left = self:getLeftAnchor() + GUI.Textfield.safetyArea
     local cursorX = curFont:getWidth(self.text:sub(1,self.cursorPos))
     if self.translate+GUI.Textfield.safetyArea > cursorX then
@@ -121,7 +121,7 @@ end
 function GUI.Textfield:moveCursorRight()
     self.cursorPos = math.min(#self.text,self.cursorPos+1)
 
-    local curFont = self.apparentContainer.font
+    local curFont = self.font
     local left = self:getLeftAnchor() + GUI.Textfield.safetyArea
     local right = self:getRightAnchor() - GUI.Textfield.safetyArea
     local cursorX = left + curFont:getWidth(self.text:sub(1,self.cursorPos+1))
@@ -135,11 +135,11 @@ function GUI.Textfield:onClick()
     local mxOnString = love.mouse.getX() - self:getLeftAnchor() - GUI.Textfield.safetyArea + self.translate
     if mxOnString <= 0 then
         self.cursorPos = 0
-    elseif mxOnString >= self.apparentContainer.font:getWidth(self.text) then
+    elseif mxOnString >= self.font:getWidth(self.text) then
         self.cursorPos = #self.text
     else
         for i=1,#self.text do
-            if (self.apparentContainer.font:getWidth(self.text:sub(1,i)) <= mxOnString and self.apparentContainer.font:getWidth(self.text:sub(1,i+1)) >= mxOnString) then
+            if (self.font:getWidth(self.text:sub(1,i)) <= mxOnString and self.font:getWidth(self.text:sub(1,i+1)) >= mxOnString) then
                 self.cursorPos = i
             end
         end

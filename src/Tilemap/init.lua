@@ -26,7 +26,9 @@ end
 
 ---
 function Tilemap.render()
-    Lighting.renderShadedScene()
+    Lighting.renderShadedScene(love.graphics.getWidth()/2-Tilemap.getActiveScene().camera.x, love.graphics.getHeight()/2 - Tilemap.getActiveScene().camera.y)
+    Tilemap.getActiveScene():renderObstacleTiles()
+    Tilemap.getActiveScene():renderShading()
     Tilemap.getActiveScene():renderCharacters()
     --Tilemap.renderActiveSceneTiles()
 end

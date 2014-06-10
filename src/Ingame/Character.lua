@@ -3,13 +3,15 @@ require "Tilemap"
 Ingame.Character = {}
 Utilities.OO.createDerivedClass(Ingame.Character, Tilemap.Character)
 
-function Ingame.Character:new(appropriateScene,x,y, color, goalX, goalY)
-    Tilemap.Character.new(self,appropriateScene,x,y)
+function Ingame.Character:new(apparentScene,x,y, color, goalX, goalY)
+    Tilemap.Character.new(self,apparentScene,x,y)
     self.mesh.color = color
 
     self.goalX = goalX
     self.goalY = goalY
-    self:AI_calculatePathToGoal(1,1)
+    --self:AI_calculatePathToGoal(1,1)
+
+    Ingame.mobs[#Ingame.mobs+1] = self
 end
 
 function Ingame.Character:update(dt)
@@ -32,9 +34,14 @@ function Ingame.Character:render()
     end
 
     love.graphics.setColor(255,255,255)
-    love.graphics.circle("fill", 0, 0, Tilemap.Settings.playerSize/2+2)
+    --love.graphics.circle("fill", 0, 0, Tilemap.Settings.playerSize/2+2)
+    love.graphics.draw( Game.getSprite("assets/sprites/Ingame/circle.png"), -Tilemap.Settings.playerSize/2-1,-Tilemap.Settings.playerSize/2-1, 0,
+                        (Tilemap.Settings.playerSize+2)/Game.getSprite("assets/sprites/Ingame/circle.png"):getWidth(),
+                        (Tilemap.Settings.playerSize+2)/Game.getSprite("assets/sprites/Ingame/circle.png"):getHeight())
     love.graphics.setColor(unpack(self.mesh.color))
-    love.graphics.circle("fill", 0, 0, Tilemap.Settings.playerSize/2)
+    love.graphics.draw( Game.getSprite("assets/sprites/Ingame/circle.png"), -Tilemap.Settings.playerSize/2,-Tilemap.Settings.playerSize/2, 0,
+                        (Tilemap.Settings.playerSize)/Game.getSprite("assets/sprites/Ingame/circle.png"):getWidth(),
+                        (Tilemap.Settings.playerSize)/Game.getSprite("assets/sprites/Ingame/circle.png"):getHeight())
     --self.mesh:render()
 
     if self.deadScaleX and self.deadScaleX then love.graphics.pop() end
@@ -53,7 +60,8 @@ function Ingame.Character:destroy()
                     coroutine.yield()
                 end
 
-                table.removeValue(self.appropriateScene.characters, self)
+                table.removeValue(self.apparentScene.characters, self)
+                table.removeValue(Ingame.mobs, self)
             end
         )
     )

@@ -94,5 +94,5 @@ end
 -- @param widget widget that shall be added to container
 function GUI.Container:addWidget(widget)
     self.widgets[#self.widgets + 1] = widget
-    widget.apparentContainer = self
+    widget:setApparentContainer(self)
 end

@@ -6,6 +6,8 @@ require "Ingame.SpawnPhase"
 
 require "Ingame.Character"
 require "Ingame.TempCharacter"
+require "Ingame.Tower"
+require "Ingame.LightEmitterTower"
 
 Ingame.mode = ""
 Ingame.ambientColor = {255,255,255}
@@ -15,30 +17,60 @@ Ingame.coroutines = {}
 
 --- Initializer
 function Ingame.init()
-    Tilemap.init()
-    Tilemap.addScene():loadMap("test.map")
-    Lighting.ambient = Lighting.AmbientLight(255,255,255)
-    Lighting.lights =  {Lighting.LightSource(love.graphics.getWidth()/3, love.graphics.getHeight()/2, 50,50,50)}
+    Ingame.lightEmitterTowers = {}
+    Ingame.mobs = {}
 
+    Tilemap.init()
 
     Ingame.BuildPhase.createGUI()
     Ingame.SpawnPhase.createGUI()
+end
 
+function Ingame.startLevel(filePath)
+    Ingame.lightEmitterTowers = {}
+    Ingame.mobs = {}
+
+    Lighting.lights = {}
+    Lighting.curShadowCasters = {}
+
+    Tilemap.addScene():loadMap(filePath)
+    Lighting.ambient = Lighting.AmbientLight(255,255,255)
+    Ingame.wayPointsForLighting = {}
+    Ingame.wayPointsForDarkness = {}
+
+    for x = 1,Tilemap.getActiveScene():getLevelWidth() do
+        for y = 1,Tilemap.getActiveScene():getLevelHeight() do
+            if Tilemap.tileDict[Tilemap.getActiveScene().tiles[x][y]].name == "waypoint for lighting" then
+                Ingame.wayPointsForLighting[#Ingame.wayPointsForLighting+1] = {x,y}
+            elseif Tilemap.tileDict[Tilemap.getActiveScene().tiles[x][y]].name == "waypoint for darkness" then
+                Ingame.wayPointsForDarkness[#Ingame.wayPointsForDarkness+1] = {x,y}
+            end
+        end
+    end
+
+    Ingame.activePhaseIndex = 0
     Ingame.activateNextPhase()
 end
 
 --- Renderer
 function Ingame.render()
-    Tilemap.render()
+    if Ingame.activePhaseIndex > 0 then
+        Tilemap.render()
+    end
 end
 
 --- updater
 -- @param dt delta time
 function Ingame.update(dt)
-    Ingame.PhaseOrder[Ingame.activePhaseIndex].update(dt)
+    if Ingame.activePhaseIndex > 0 then
+        for i,curTower in pairs(Ingame.lightEmitterTowers) do
+            curTower:shake(dt)
+        end
 
-    Lighting.lights[1].position = {love.mouse.getX()+0.00001, love.mouse.getY()+0.00001}
-    Tilemap.update(dt)
+        Ingame.PhaseOrder[Ingame.activePhaseIndex].update(dt)
+
+        Tilemap.update(dt)
+    end
 end
 
 function Ingame.activateNextPhase()

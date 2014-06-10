@@ -6,7 +6,7 @@ Lighting.LightSource = {}
 Utilities.OO.createClass(Lighting.LightSource)
 
 ---
-function Lighting.LightSource:new(x,y, r,g,b)
+function Lighting.LightSource:new(x,y, r,g,b, range)
     self.position = {}
     self.position[1] = x or 0
     self.position[2] = y or 0
@@ -16,22 +16,24 @@ function Lighting.LightSource:new(x,y, r,g,b)
 
     self.enabled = true
 
+    self.range = range
+
     self.color = {r or 255, g or 255, b or 255}
     self.canvas = love.graphics.newCanvas()
 end
 
 --- renders light without shadows and reflections
-function Lighting.LightSource:render()
-    self:drawLight()
+function Lighting.LightSource:render(translateX, translateY)
+    self:drawLight(translateX, translateY)
 
-    self:drawReflections()
+    self:drawReflections(translateX, translateY)
 end
 
 --- renders a fullscreen quad with inverted stencil with shadows
-function Lighting.LightSource:drawLight()
+function Lighting.LightSource:drawLight(translateX, translateY)
 
     love.graphics.setBlendMode("additive")
-    love.graphics.setInvertedStencil(function() self:drawShadows() end)
+    love.graphics.setInvertedStencil(function() self:drawShadows(translateX, translateY) end)
     love.graphics.setColor(unpack(self.color))
     love.graphics.draw(Lighting.unlitBackground)
     love.graphics.setInvertedStencil()
@@ -41,15 +43,20 @@ function Lighting.LightSource:drawLight()
 end
 
 --- draws all shadow polygons of lightsource
-function Lighting.LightSource:drawShadows()
+function Lighting.LightSource:drawShadows(translateX, translateY)
+    love.graphics.push()
+    love.graphics.translate(translateX, translateY)
     for i,curShadow in pairs(self.shadows) do
-        curShadow:render()
+        curShadow:render(translateX, translateY)
     end
+    love.graphics.pop()
 end
 
 ---
-function Lighting.LightSource:drawReflections()
+function Lighting.LightSource:drawReflections(translateX, translateY)
 
+    love.graphics.push()
+    love.graphics.translate(translateX, translateY)
     for i,curMeshReflections in pairs(self.reflections) do
         for j,curReflection in pairs(curMeshReflections) do
             self.canvas:clear()
@@ -64,6 +71,7 @@ function Lighting.LightSource:drawReflections()
             love.graphics.setInvertedStencil()
         end
     end
+    love.graphics.pop()
 end
 
 ---

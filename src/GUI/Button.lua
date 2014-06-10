@@ -25,7 +25,7 @@ function GUI.Button:renderButton()
     if self.backgroundIsImaged then
 
         if self.isClicked then
-            love.graphics.setColor(unpack(self.apparentContainer.clickedColor))
+            love.graphics.setColor(unpack(self.clickedColor))
             self.clickedImage.position = {self:getLeftAnchor(), self:getTopAnchor()}
             self.clickedImage.width = self:getWidth()
             self.clickedImage.height = self:getHeight()
@@ -34,7 +34,7 @@ function GUI.Button:renderButton()
         end
 
         if self.isHovered then
-            love.graphics.setColor(unpack(self.apparentContainer.hoverColor))
+            love.graphics.setColor(unpack(self.hoverColor))
             self.hoveredImage.position = {self:getLeftAnchor(), self:getTopAnchor()}
             self.hoveredImage.width = self:getWidth()
             self.hoveredImage.height = self:getHeight()
@@ -42,20 +42,20 @@ function GUI.Button:renderButton()
             return
         end
 
-        love.graphics.setColor(unpack(self.apparentContainer.backgroundColor))
+        love.graphics.setColor(unpack(self.backgroundColor))
         self.backgroundImage.position = {self:getLeftAnchor(), self:getTopAnchor()}
         self.backgroundImage.width = self:getWidth()
         self.backgroundImage.height = self:getHeight()
         self.backgroundImage:render()
     else
-        love.graphics.setColor(unpack(self.apparentContainer.borderColor))
+        love.graphics.setColor(unpack(self.borderColor))
         love.graphics.rectangle("line", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
-        love.graphics.setColor(unpack(self.apparentContainer.backgroundColor))
+        love.graphics.setColor(unpack(self.backgroundColor))
         if self.isHovered then
-            love.graphics.setColor(unpack(self.apparentContainer.hoverColor))
+            love.graphics.setColor(unpack(self.hoverColor))
         end
         if self.isClicked then
-            love.graphics.setColor(unpack(self.apparentContainer.clickedColor))
+            love.graphics.setColor(unpack(self.clickedColor))
         end
         love.graphics.rectangle("fill", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
     end

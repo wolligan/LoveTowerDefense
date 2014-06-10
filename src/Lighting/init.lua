@@ -30,7 +30,7 @@ function Lighting.init()
 end
 
 ---
-function Lighting.renderShadedScene()
+function Lighting.renderShadedScene(translateX, translateY)
     Lighting.unlitBackground:clear(0,0,0)
 
     -- render background
@@ -40,7 +40,6 @@ function Lighting.renderShadedScene()
 
     -- render ambient
     --love.graphics.setShader(Lighting.shader)
-
     love.graphics.setBlendMode("additive")
     if Lighting.ambient then
         Lighting.ambient:render()
@@ -49,7 +48,7 @@ function Lighting.renderShadedScene()
     -- render lights
     for i,curLight in pairs(Lighting.lights) do
         if curLight.enabled then
-            curLight:render()
+            curLight:render(translateX or 0, translateY or 0)
         end
     end
 
@@ -62,11 +61,11 @@ function Lighting.renderShadedScene()
     end
 
     -- draw lights
-    for i,curLight in pairs(Lighting.lights) do
+    --[[for i,curLight in pairs(Lighting.lights) do
         if curLight.enabled then
             curLight:renderCircle()
         end
-    end
+    end]]
 end
 
 --- This function needs to be overwritten

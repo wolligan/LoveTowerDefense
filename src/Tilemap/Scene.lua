@@ -101,7 +101,56 @@ function Tilemap.Scene:renderTiles()
 			end
 		end
 	end
+    love.graphics.push()
+    love.graphics.scale((self:getLevelWidth()*Tilemap.Settings.tileSize)  / Game.getSprite("assets/sprites/Tilemap/shading.png"):getWidth(),
+                        (self:getLevelHeight()*Tilemap.Settings.tileSize) / Game.getSprite("assets/sprites/Tilemap/shading.png"):getHeight())
+    love.graphics.setBlendMode("multiplicative")
+    love.graphics.draw(Game.getSprite("assets/sprites/Tilemap/shading.png"))
+    love.graphics.setBlendMode("alpha")
+    love.graphics.pop()
 
+    self.camera:stop()
+end
+
+---
+function Tilemap.Scene:renderObstacleTiles()
+    self.camera:begin()
+	-- draw level
+	--for y = 1,Tilemap.Settings.levelSize do
+	--	for x = 1,Tilemap.Settings.levelSize do
+    local beginAtX = math.floor(self.camera.x/Tilemap.Settings.tileSize) - math.floor((love.graphics.getWidth()/2)/Tilemap.Settings.tileSize)
+    local beginAtY = math.floor(self.camera.y/Tilemap.Settings.tileSize) - math.floor((love.graphics.getHeight()/2)/Tilemap.Settings.tileSize)
+	for y = math.max(1,beginAtY), math.min(self:getLevelHeight(), beginAtY+self.maxTilesOnScreen[2])  do
+		for x = math.max(1,beginAtX),math.min(self:getLevelWidth(), beginAtX+self.maxTilesOnScreen[1]) do
+			if Tilemap.tileDict[self.tiles[x][y]].isObstacle then
+				love.graphics.push()
+				love.graphics.translate((x-1)*Tilemap.Settings.tileSize, (y-1)*Tilemap.Settings.tileSize)
+				if (Tilemap.tileDict[self.tiles[x][y]].color) then
+					love.graphics.setColor(unpack(Tilemap.tileDict[self.tiles[x][y]].color))
+				end
+
+				if (Tilemap.tileDict[self.tiles[x][y]].draw and Tilemap.tileDict[self.tiles[x][y]].drawParams) then
+					Tilemap.tileDict[self.tiles[x][y]].draw(unpack(Tilemap.tileDict[self.tiles[x][y]].drawParams))
+				end
+
+				love.graphics.pop()
+			end
+		end
+	end
+
+    self.camera:stop()
+end
+
+function Tilemap.Scene:renderShading()
+    self.camera:begin()
+    love.graphics.setColor(255,255,255)
+    love.graphics.push()
+    love.graphics.scale((self:getLevelWidth()*Tilemap.Settings.tileSize)  / Game.getSprite("assets/sprites/Tilemap/shading.png"):getWidth(),
+                        (self:getLevelHeight()*Tilemap.Settings.tileSize) / Game.getSprite("assets/sprites/Tilemap/shading.png"):getHeight())
+    love.graphics.setBlendMode("multiplicative")
+    love.graphics.draw(Game.getSprite("assets/sprites/Tilemap/shading.png"))
+    love.graphics.setBlendMode("alpha")
+    love.graphics.pop()
     self.camera:stop()
 end
 

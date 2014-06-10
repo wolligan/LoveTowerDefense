@@ -16,6 +16,7 @@ function Ingame.SpawnPhase.activate()
     Ingame.SpawnPhase.slideInGUI()
     Ingame.SpawnPhase.spawnedMobs = 0
     Ingame.SpawnPhase.survivedMobs = 0
+    Ingame.activeKeyBinding = Ingame.SpawnPhase.KeyBinding
 end
 
 function Ingame.SpawnPhase.update(dt)
@@ -24,7 +25,7 @@ function Ingame.SpawnPhase.update(dt)
     if Ingame.SpawnPhase.survivedMobs >= Ingame.SpawnPhase.maxSurvivedMobs then
         Ingame.activateNextPhase()
     elseif Ingame.SpawnPhase.spawnedMobs >= Ingame.SpawnPhase.maxSpawnedMobs then
-        for i,curChar in pairs(Tilemap.getActiveScene().characters) do
+        for i,curChar in pairs(Ingame.mobs) do
             curChar:destroy()
         end
         Ingame.activateNextPhase()
@@ -34,7 +35,7 @@ function Ingame.SpawnPhase.update(dt)
 end
 
 function Ingame.SpawnPhase.createGUI()
-    Ingame.SpawnPhase.GUI = GUI.Container()
+    Ingame.SpawnPhase.GUI = GUI.Container(Game.getFont("assets/fonts/nulshock bd.ttf", 30),nil,nil,nil,nil,nil,{255,255,255})
 
     local phaseLabel = GUI.Label("Gegnerischer Angriff")
     phaseLabel:setBottomAnchor(GUI.Root, "top")
@@ -63,3 +64,16 @@ end
 function Ingame.SpawnPhase.slideOutGUI()
 
 end
+
+Ingame.SpawnPhase.KeyBinding = {}
+Ingame.SpawnPhase.KeyBinding[" "] = {
+    pressed = function()
+        Utilities.TextOutput.print("Space at Spawning")
+    end
+}
+
+Ingame.SpawnPhase.KeyBinding["escape"] = {
+    pressed = function()
+        Game.changeState(Testing.Menu)
+    end
+}

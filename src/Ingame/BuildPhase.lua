@@ -10,6 +10,7 @@ function Ingame.BuildPhase.activate()
     Tilemap.pause()
     Ingame.fadeAmbientLight(Ingame.BuildPhase.ambientColor)
     Ingame.BuildPhase.slideInGUI()
+    Ingame.activeKeyBinding = Ingame.BuildPhase.KeyBinding
 end
 
 function Ingame.BuildPhase.update(dt)
@@ -19,7 +20,7 @@ function Ingame.BuildPhase.update(dt)
 end
 
 function Ingame.BuildPhase.createGUI()
-    Ingame.BuildPhase.GUI = GUI.Container()
+    Ingame.BuildPhase.GUI = GUI.Container(Game.getFont("assets/fonts/nulshock bd.ttf", 30),nil,nil,nil,nil,nil,{255,255,255})
 
     local phaseLabel = GUI.Label("Bauphase")
     phaseLabel:setBottomAnchor(GUI.Root, "top")
@@ -40,3 +41,28 @@ end
 function Ingame.BuildPhase.slideOutGUI()
 
 end
+
+Ingame.BuildPhase.KeyBinding = {}
+Ingame.BuildPhase.KeyBinding[" "] = {
+    pressed = function()
+        Utilities.TextOutput.print("Space at Building")
+    end
+}
+
+Ingame.BuildPhase.KeyBinding["mouse_left"] = {
+    pressed = function()
+        local x,y = Tilemap.getActiveScene():getTileCoordinatesByCamera(love.mouse.getX(), love.mouse.getY())
+        if x > 0 and y > 0 and x <= Tilemap.getActiveScene():getLevelWidth() and y <= Tilemap.getActiveScene():getLevelHeight() and Tilemap.tileDict[Tilemap.getActiveScene().tiles[x][y]].name == "tower build point" then
+            Tilemap.getActiveScene().characters[#Tilemap.getActiveScene().characters+1] = Ingame.LightEmitterTower( Tilemap.getActiveScene(),
+                                                                                                        x*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2,
+                                                                                                        y*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2)
+            Tilemap.getActiveScene().tiles[x][y] = 4
+        end
+    end
+}
+
+Ingame.BuildPhase.KeyBinding["escape"] = {
+    pressed = function()
+        Game.changeState(Testing.Menu)
+    end
+}
