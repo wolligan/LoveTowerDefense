@@ -1,6 +1,7 @@
 --- ADD ME
 
 require "Lighting.Shadow"
+require "Utilities.Intersection"
 
 Lighting.LightSource = {}
 Utilities.OO.createClass(Lighting.LightSource)
@@ -225,4 +226,16 @@ function Lighting.LightSource:getReflectionPolygons(mesh)
 
     end
     return allReflectionsOfPolygons
+end
+
+
+function Lighting.LightSource:isPointInLight(x,y)
+    for i, curShadow in pairs(self.shadows) do
+        if Utilities.Intersection.checkPointPolygon(x,y, curShadow.vertices) then
+            return false
+        end
+    end
+    return true
+    -- Utilities.Intersection.checkPointPolygon(x,y, polygon)
+
 end

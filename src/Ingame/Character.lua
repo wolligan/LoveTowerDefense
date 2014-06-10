@@ -48,6 +48,16 @@ function Ingame.Character:render()
     love.graphics.pop()
 end
 
+function Ingame.Character:takeDamage(r,g,b)
+    self.mesh.color = { self.mesh.color[1] + r,
+                        self.mesh.color[2] + g,
+                        self.mesh.color[3] + b}
+
+    if r >255 and b > 255 and g > 255 then
+        self:destroy()
+    end
+end
+
 function Ingame.Character:destroy()
     self.dead = true
     Game.startCoroutine(coroutine.create(function()

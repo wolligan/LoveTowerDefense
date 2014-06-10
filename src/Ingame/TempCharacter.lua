@@ -7,7 +7,7 @@ Utilities.OO.createDerivedClass(Ingame.TempCharacter, Ingame.Character)
 function Ingame.TempCharacter:new(apparentScene, x, y)
     Ingame.Character.new(self,apparentScene,x,y, {0,0,0})
     self.timeAtCreation = love.timer.getTime()
-    self.maxLifeTime = math.random(3,8) --seconds
+    self.maxLifeTime = math.random(20,100) --seconds
     self.lifeTime = 0
     if #Ingame.wayPointsForDarkness > 0 then
         self:AI_calculatePathToGoal(unpack(Ingame.wayPointsForDarkness[1]))

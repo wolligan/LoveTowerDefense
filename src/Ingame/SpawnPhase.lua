@@ -31,7 +31,13 @@ function Ingame.SpawnPhase.update(dt)
         Ingame.activateNextPhase()
     end
 
-
+    for i,curLightSource in pairs(Lighting.lights) do
+        for j,curMob in pairs(Ingame.mobs) do
+            if curLightSource:isPointInLight(curMob.x, curMob.y) then
+                curMob:takeDamage(curLightSource.color[1]*dt, curLightSource.color[2]*dt, curLightSource.color[3]*dt)
+            end
+        end
+    end
 end
 
 function Ingame.SpawnPhase.createGUI()
