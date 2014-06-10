@@ -77,3 +77,31 @@ Ingame.SpawnPhase.KeyBinding["escape"] = {
         Game.changeState(Testing.Menu)
     end
 }
+
+Ingame.SpawnPhase.KeyBinding["left"] = {
+    repeated = function(dt)
+        Tilemap.getActiveScene().camera.x = Tilemap.getActiveScene().camera.x - dt * Ingame.cameraSpeed
+    end
+}
+
+
+Ingame.SpawnPhase.KeyBinding["right"] = {
+    repeated = function(dt)
+        Tilemap.getActiveScene().camera.x = Tilemap.getActiveScene().camera.x + dt * Ingame.cameraSpeed
+    end
+}
+
+
+Ingame.SpawnPhase.KeyBinding["up"] = {
+    repeated = function(dt)
+        Tilemap.getActiveScene().camera.y = Tilemap.getActiveScene().camera.y - dt * Ingame.cameraSpeed
+    end
+}
+
+
+Ingame.SpawnPhase.KeyBinding["down"] = {
+    repeated = function(dt)
+        Tilemap.getActiveScene().camera.y = Tilemap.getActiveScene().camera.y + dt * Ingame.cameraSpeed
+    end
+}
+
