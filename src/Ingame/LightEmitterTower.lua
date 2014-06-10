@@ -39,12 +39,12 @@ function Ingame.LightEmitterTower:render()
     love.graphics.setColor(0,0,0)
     --love.graphics.rectangle("fill", self.x - Tilemap.Settings.tileSize*3/4, self.y - Tilemap.Settings.tileSize*3/4, Tilemap.Settings.tileSize*3/2, Tilemap.Settings.tileSize*3/2)
     --self.mesh:render()
-
+    local size =  Tilemap.Settings.tileSize*3/2 + 2
     love.graphics.draw( Game.getSprite("assets/sprites/Ingame/lightemittertower.png"),
-                        self.x - Game.getSprite("assets/sprites/Ingame/lightemittertower.png"):getWidth()*0.25-1,
-                        self.y - Game.getSprite("assets/sprites/Ingame/lightemittertower.png"):getHeight()*0.25-1,0,
-                        (46)/Game.getSprite("assets/sprites/Ingame/lightemittertower.png"):getWidth(),
-                        (40)/Game.getSprite("assets/sprites/Ingame/lightemittertower.png"):getHeight())
+                        self.x-size/2,
+                        self.y-size/2,0,
+                        (size)/Game.getSprite("assets/sprites/Ingame/lightemittertower.png"):getWidth(),
+                        (size)/Game.getSprite("assets/sprites/Ingame/lightemittertower.png"):getHeight())
 
     love.graphics.setColor( self.lightSource.color[1]*3,
                             self.lightSource.color[2]*3,

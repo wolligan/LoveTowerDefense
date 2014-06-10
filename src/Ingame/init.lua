@@ -13,7 +13,7 @@ Ingame.mode = ""
 Ingame.ambientColor = {255,255,255}
 Ingame.PhaseOrder = {Ingame.BuildPhase, Ingame.SpawnPhase}
 Ingame.activePhaseIndex = 0
-Ingame.coroutines = {}
+Ingame.cameraSpeed = 500
 
 --- Initializer
 function Ingame.init()
@@ -70,6 +70,20 @@ function Ingame.update(dt)
         Ingame.PhaseOrder[Ingame.activePhaseIndex].update(dt)
 
         Tilemap.update(dt)
+    end
+    Ingame.mouseCameraMovement(dt)
+end
+
+function Ingame.mouseCameraMovement(dt, speed)
+    if love.mouse.getX() <= 1 then
+        Tilemap.getActiveScene().camera.x = Tilemap.getActiveScene().camera.x - dt * Ingame.cameraSpeed
+    elseif love.mouse.getX() >= love.graphics.getWidth()-2 then
+        Tilemap.getActiveScene().camera.x = Tilemap.getActiveScene().camera.x + dt * Ingame.cameraSpeed
+    end
+    if love.mouse.getY() <= 1 then
+        Tilemap.getActiveScene().camera.y = Tilemap.getActiveScene().camera.y - dt * Ingame.cameraSpeed
+    elseif love.mouse.getY() >= love.graphics.getHeight()-2 then
+        Tilemap.getActiveScene().camera.y = Tilemap.getActiveScene().camera.y + dt * Ingame.cameraSpeed
     end
 end
 
