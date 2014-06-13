@@ -81,7 +81,10 @@ function love.mousepressed(x, y, button)
             end
         end
     end
-    GUI.notifyClick()
+
+    if button == "l" then
+        GUI.notifyClick()
+    end
 end
 
 --- love callback - updates keymap

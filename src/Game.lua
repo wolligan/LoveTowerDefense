@@ -11,6 +11,7 @@ require "SplashScreen"
 require "GUI"
 require "Testing"
 require "LevelEditor"
+require "Credits"
 
 Game.spritePool = {}
 Game.soundPool = {}
@@ -24,6 +25,7 @@ function Game.init()
 	math.randomseed(os.time())
     Game.changeState(Testing.Menu)
     --Game.changeState(Ingame)
+    Game.changeState(SplashScreen)
 end
 
 --- renders current game state, gui and textoutput
