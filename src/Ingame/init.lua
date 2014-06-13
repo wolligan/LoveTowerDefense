@@ -8,6 +8,7 @@ require "Ingame.Character"
 require "Ingame.TempCharacter"
 require "Ingame.Tower"
 require "Ingame.LightEmitterTower"
+require "Ingame.ReflectorTower"
 
 Ingame.mode = ""
 Ingame.ambientColor = {255,255,255}
@@ -28,6 +29,7 @@ end
 
 function Ingame.startLevel(filePath)
     Ingame.lightEmitterTowers = {}
+    Ingame.ReflectorTowers = {}
     Ingame.mobs = {}
 
     Lighting.lights = {}

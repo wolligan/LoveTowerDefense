@@ -45,34 +45,28 @@ end
 
 --- draws all shadow polygons of lightsource
 function Lighting.LightSource:drawShadows(translateX, translateY)
-    love.graphics.push()
-    love.graphics.translate(translateX, translateY)
     for i,curShadow in pairs(self.shadows) do
         curShadow:render(translateX, translateY)
     end
-    love.graphics.pop()
 end
 
 ---
 function Lighting.LightSource:drawReflections(translateX, translateY)
 
-    love.graphics.push()
-    love.graphics.translate(translateX, translateY)
     for i,curMeshReflections in pairs(self.reflections) do
         for j,curReflection in pairs(curMeshReflections) do
             self.canvas:clear()
             love.graphics.setBlendMode("alpha")
             love.graphics.setCanvas(self.canvas)
-            curReflection:drawLight()
+            curReflection:drawLight(translateX, translateY)
 
             love.graphics.setCanvas()
-            love.graphics.setInvertedStencil(function() curReflection:drawShadows() end)
+            love.graphics.setInvertedStencil(function() curReflection:drawShadows(translateX, translateY) end)
             love.graphics.setBlendMode("additive")
             love.graphics.draw(self.canvas)
             love.graphics.setInvertedStencil()
         end
     end
-    love.graphics.pop()
 end
 
 ---

@@ -6,6 +6,7 @@ function LevelEditor.init()
     Ingame.init()
     Tilemap.init()
     Tilemap.addScene(20, 20)
+    Tilemap.pause()
     LevelEditor.currentTileIndex = 1
     LevelEditor.createGUI()
 end

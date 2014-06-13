@@ -29,24 +29,29 @@ function Lighting.Reflection:render()
 end
 
 --- renders a fullscreen quad with inverted stencil with shadows
-function Lighting.Reflection:drawLight()
-    love.graphics.setStencil(function() love.graphics.polygon("fill", unpack(self.vertices)) end)
+function Lighting.Reflection:drawLight(translateX, translateY)
+    love.graphics.setStencil(function()
+            love.graphics.push()
+            love.graphics.translate(translateX, translateY)
+            love.graphics.polygon("fill", unpack(self.vertices))
+            love.graphics.pop()
+        end)
     love.graphics.setColor(unpack(self.color))
     love.graphics.draw(Lighting.unlitBackground)
     love.graphics.setStencil()
 end
 
 --- draws all shadow polygons of Reflection
-function Lighting.Reflection:drawShadows()
+function Lighting.Reflection:drawShadows(translateX, translateY)
     for i,curShadow in pairs(self.shadows) do
-        curShadow:render()
+        curShadow:render(translateX, translateY)
     end
 end
 
 ---
-function Lighting.Reflection:drawReflections()
+function Lighting.Reflection:drawReflections(translateX, translateX)
     for i,curReflection in pairs(self.reflections) do
-        curReflection:render()
+        curReflection:render(translateX, translateX)
     end
 end
 

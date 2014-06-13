@@ -4,6 +4,13 @@ Ingame.BuildPhase = {}
 Ingame.BuildPhase.ambientColor = {100,100,100}
 Ingame.BuildPhase.duration = 10 --seconds
 
+Ingame.BuildPhase.buildTowerAt = function(x,y)
+    Tilemap.getActiveScene().characters[#Tilemap.getActiveScene().characters+1] =
+        Ingame.LightEmitterTower(Tilemap.getActiveScene(),
+                                 x*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2,
+                                 y*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2)
+end
+
 function Ingame.BuildPhase.activate()
     --Utilities.TextOutput.print("Ingame.BuildPhase activated")
     Ingame.BuildPhase.timeAtActivation = love.timer.getTime()
@@ -31,7 +38,39 @@ function Ingame.BuildPhase.createGUI()
     phaseLabel.leftAnchorOffset = -100
     phaseLabel.rightAnchorOffset = 100
 
+    local towerList = GUI.List("horizontal", 60)
+    towerList.setLeftAnchor(GUI.Root, "right")
+    towerList.topAnchorOffset = 150
+
+    local buttonEmitter = towerList:add(GUI.Button("Lichtemitter", function()
+                Ingame.BuildPhase.buildTowerAt = function(x,y)
+                    Tilemap.getActiveScene().characters[#Tilemap.getActiveScene().characters+1] =
+                    Ingame.LightEmitterTower(Tilemap.getActiveScene(),
+                                             x*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2,
+                                             y*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2)
+                end
+            end
+        )
+    )
+
+    local buttonReflector = towerList:add(GUI.Button("Reflector", function()
+                Ingame.BuildPhase.buildTowerAt = function(x,y)
+                    Tilemap.getActiveScene().characters[#Tilemap.getActiveScene().characters+1] =
+                    Ingame.ReflectorTower(Tilemap.getActiveScene(),
+                                          x*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2,
+                                          y*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2)
+                end
+            end
+        )
+    )
+
+    towerList:addWidgetsToContainer(Ingame.BuildPhase.GUI)
     Ingame.BuildPhase.GUI:addWidget(phaseLabel)
+
+    buttonEmitter.backgroundColor = {255,255,255,100}
+    buttonReflector.backgroundColor = {255,255,255,100}
+    buttonEmitter.borderColor = {50,50,50}
+    buttonReflector.borderColor = {50,50,50}
 end
 
 function Ingame.BuildPhase.slideInGUI()
@@ -53,9 +92,7 @@ Ingame.BuildPhase.KeyBinding["mouse_left"] = {
     pressed = function()
         local x,y = Tilemap.getActiveScene():getTileCoordinatesByCamera(love.mouse.getX(), love.mouse.getY())
         if x > 0 and y > 0 and x <= Tilemap.getActiveScene():getLevelWidth() and y <= Tilemap.getActiveScene():getLevelHeight() and Tilemap.tileDict[Tilemap.getActiveScene().tiles[x][y]].name == "tower build point" then
-            Tilemap.getActiveScene().characters[#Tilemap.getActiveScene().characters+1] = Ingame.LightEmitterTower( Tilemap.getActiveScene(),
-                                                                                                        x*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2,
-                                                                                                        y*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2)
+            Ingame.BuildPhase.buildTowerAt(x,y)
             Tilemap.getActiveScene().tiles[x][y] = 4
         end
     end

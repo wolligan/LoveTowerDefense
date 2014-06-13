@@ -10,7 +10,7 @@ function GUI.List:new(alignment, widgetSize, paddingBetweenWidgets, paddingTop)
     GUI.Widget.new(self)
     self.alignment = alignment or "horizontal"
     self.widgetSize = widgetSize
-    self.paddingBetweenWidgets = paddingBetweenWidgets or 0
+    self.paddingBetweenWidgets = paddingBetweenWidgets or 1
     self.paddingTop = paddingTop or 0
 
     self.widgets = {}

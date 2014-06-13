@@ -22,10 +22,13 @@ function Lighting.Shadow:new(lightSource, mesh)
 end
 
 ---
-function Lighting.Shadow:render()
+function Lighting.Shadow:render(translateX, translateY)
     if not self.isInMesh then
+        love.graphics.push()
+        love.graphics.translate(translateX, translateY)
         love.graphics.setColor(255,255,255)
         love.graphics.polygon("fill", unpack(self.vertices))
+        love.graphics.pop()
     end
 end
 

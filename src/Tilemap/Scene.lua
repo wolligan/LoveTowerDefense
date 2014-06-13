@@ -101,13 +101,6 @@ function Tilemap.Scene:renderTiles()
 			end
 		end
 	end
-    love.graphics.push()
-    love.graphics.scale((self:getLevelWidth()*Tilemap.Settings.tileSize)  / Game.getSprite("assets/sprites/Tilemap/shading.png"):getWidth(),
-                        (self:getLevelHeight()*Tilemap.Settings.tileSize) / Game.getSprite("assets/sprites/Tilemap/shading.png"):getHeight())
-    love.graphics.setBlendMode("multiplicative")
-    love.graphics.draw(Game.getSprite("assets/sprites/Tilemap/shading.png"))
-    love.graphics.setBlendMode("alpha")
-    love.graphics.pop()
 
     self.camera:stop()
 end
