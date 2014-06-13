@@ -1,3 +1,6 @@
+--- Implementation of a simple thread example
+--@author Steve Wolligandt
+
 require "love.filesystem"
 require "love.timer"
 

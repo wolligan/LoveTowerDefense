@@ -1,4 +1,4 @@
---- ADD ME
+--- KeyBindings for Tilemap Test
 KeyBindings.TilemapTestKeyBinding = {}
 
 ---

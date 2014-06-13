@@ -1,4 +1,5 @@
 --- Testing module for Networking
+--@author Robert Wlcek
 require "Networking"
 
 Testing.Networking = {}

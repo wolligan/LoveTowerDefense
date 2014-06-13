@@ -1,9 +1,15 @@
---- ADD ME
+--- Mesh Class can be used for lighting or just for rendering
+--@author Steve Wolligandt
 
 Geometry.Mesh = {}
 Utilities.OO.createClass(Geometry.Mesh)
 
----
+--- Constructor
+-- @param x Y-coordinate
+-- @param y x-coordinate
+-- @param vertices {x1,y1, x2, y2, x3, y3, ...}
+-- @param color {r,g,b}
+-- @param reflectorSides {sideIndex1, sideIndex2, ...}
 function Geometry.Mesh:new(x,y, vertices, color, reflectorSides)
     self.position = {x,y}
     self.vertices = vertices or {}
@@ -11,7 +17,12 @@ function Geometry.Mesh:new(x,y, vertices, color, reflectorSides)
     self.reflectorSides = reflectorSides or {}
 end
 
----
+--- Creates a circle-like mesh, all sides are reflectorSides
+-- @param x x-coordinate
+-- @param y y-coordinate
+-- @param size radius of mesh
+-- @param slices number of slices the "circle" will have
+-- @param color color of the mesh
 function Geometry.Mesh.createDiscoCircle(x,y, size, slices, color)
     local vertices = {}
     local reflectorSides = {}
@@ -32,7 +43,12 @@ function Geometry.Mesh.createDiscoCircle(x,y, size, slices, color)
     return Geometry.Mesh(x,y, vertices, color, reflectorSides)
 end
 
----
+--- Creates a circle-like mesh
+-- @param x x-coordinate
+-- @param y y-coordinate
+-- @param size radius of mesh
+-- @param color color of the mesh
+-- @param reflectorSides {sideIndex1, sideIndex2, ...}
 function Geometry.Mesh.createRectangle(x,y, size, color, reflectorSides)
     local vertices = {}
     color = color or Color.white
@@ -45,7 +61,7 @@ function Geometry.Mesh.createRectangle(x,y, size, color, reflectorSides)
     return Geometry.Mesh(x,y, vertices, color, reflectorSides)
 end
 
----
+--- renders the mesh
 function Geometry.Mesh:render()
     love.graphics.push()
     love.graphics.translate(unpack(self.position))
@@ -54,7 +70,8 @@ function Geometry.Mesh:render()
     love.graphics.pop()
 end
 
----
+--- returns a list of all vertices in world coordinates
+-- @return {x1,y1, x2,y2, x3,y3, ...}
 function Geometry.Mesh:getWorldVertices()
     local worldVertices = {}
     for i=1,#self.vertices,2 do

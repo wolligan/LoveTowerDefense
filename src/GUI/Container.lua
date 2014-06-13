@@ -1,4 +1,5 @@
 --- Container that holds a list of widgets
+--@classmod Container
 
 GUI.Container = {}
 Utilities.OO.createClass(GUI.Container)

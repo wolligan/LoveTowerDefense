@@ -1,4 +1,6 @@
---- ADD ME
+---
+--@classmod AmbientLight
+--@author Steve Wolligandt
 
 Lighting.AmbientLight = {}
 Utilities.OO.createClass(Lighting.AmbientLight)

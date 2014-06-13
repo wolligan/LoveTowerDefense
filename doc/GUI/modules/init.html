@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>GUI Toolkit Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>GUI Toolkit</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>init</strong></li>
+</ul>
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/Widget.html">Widget</a></li>
+  <li><a href="../classes/List.html">List</a></li>
+  <li><a href="../classes/Button.html">Button</a></li>
+  <li><a href="../classes/Container.html">Container</a></li>
+  <li><a href="../classes/TextField.html">TextField</a></li>
+  <li><a href="../classes/Label.html">Label</a></li>
+</ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/GUI.lua.html">GUI.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>init</code></h1>
+<p>Simple GUI-Toolkit</p>
+<p>
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Root.getLeftAnchor">GUI.Root.getLeftAnchor ()</a></td>
+	<td class="summary">Left Anchor Point of Screen</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Root.getRightAnchor">GUI.Root.getRightAnchor ()</a></td>
+	<td class="summary">Right Anchor Point of Screen</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Root.getTopAnchor">GUI.Root.getTopAnchor ()</a></td>
+	<td class="summary">Top Anchor Point of Screen</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Root.getBottomAnchor">GUI.Root.getBottomAnchor ()</a></td>
+	<td class="summary">Bottom Anchor Point of Screen</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Root.getCenterHorAnchor">GUI.Root.getCenterHorAnchor ()</a></td>
+	<td class="summary">Horizontal Center Anchor Point of Screen</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Root.getCenterVerAnchor">GUI.Root.getCenterVerAnchor ()</a></td>
+	<td class="summary">Vertical Center Anchor Point of Screen</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.render">GUI.render ()</a></td>
+	<td class="summary">renders active container</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.update">GUI.update (dt)</a></td>
+	<td class="summary">updates active container</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.notifyClick">GUI.notifyClick ()</a></td>
+	<td class="summary">notifies click to active container</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.notifyRelease">GUI.notifyRelease ()</a></td>
+	<td class="summary">notifies release to active container</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.notifyKey">GUI.notifyKey (key)</a></td>
+	<td class="summary">notifies that a key has been pressed</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "GUI.Root.getLeftAnchor"></a>
+    <strong>GUI.Root.getLeftAnchor ()</strong>
+    </dt>
+    <dd>
+    Left Anchor Point of Screen
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Root.getRightAnchor"></a>
+    <strong>GUI.Root.getRightAnchor ()</strong>
+    </dt>
+    <dd>
+    Right Anchor Point of Screen
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Root.getTopAnchor"></a>
+    <strong>GUI.Root.getTopAnchor ()</strong>
+    </dt>
+    <dd>
+    Top Anchor Point of Screen
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Root.getBottomAnchor"></a>
+    <strong>GUI.Root.getBottomAnchor ()</strong>
+    </dt>
+    <dd>
+    Bottom Anchor Point of Screen
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Root.getCenterHorAnchor"></a>
+    <strong>GUI.Root.getCenterHorAnchor ()</strong>
+    </dt>
+    <dd>
+    Horizontal Center Anchor Point of Screen
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Root.getCenterVerAnchor"></a>
+    <strong>GUI.Root.getCenterVerAnchor ()</strong>
+    </dt>
+    <dd>
+    Vertical Center Anchor Point of Screen
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.render"></a>
+    <strong>GUI.render ()</strong>
+    </dt>
+    <dd>
+    renders active container
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.update"></a>
+    <strong>GUI.update (dt)</strong>
+    </dt>
+    <dd>
+    updates active container
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.notifyClick"></a>
+    <strong>GUI.notifyClick ()</strong>
+    </dt>
+    <dd>
+    notifies click to active container
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.notifyRelease"></a>
+    <strong>GUI.notifyRelease ()</strong>
+    </dt>
+    <dd>
+    notifies release to active container
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.notifyKey"></a>
+    <strong>GUI.notifyKey (key)</strong>
+    </dt>
+    <dd>
+    notifies that a key has been pressed
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

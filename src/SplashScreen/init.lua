@@ -1,4 +1,5 @@
---- SplashScreen
+---
+--@author Steve Wolligandt
 
 SplashScreen = {}
 

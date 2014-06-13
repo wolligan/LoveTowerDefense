@@ -1,4 +1,5 @@
---- ADD ME
+--- Basic Character that can interact on the tilemap and can also be an AI.
+--@author Steve Wolligandt
 
 Tilemap.Character = {}
 Utilities.OO.createClass(Tilemap.Character)

@@ -1,3 +1,6 @@
+---
+--@author Steve Wolligandt
+
 require "GUI"
 
 Ingame.SpawnPhase = {}

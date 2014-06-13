@@ -1,7 +1,11 @@
 --- Basic Text Input Field.
--- TODO: add permanent key input after pressing key for some time.
--- TODO: add selection.
--- TODO: show text field cursor icon when hovering.
+-- ToDo: add permanent key input after pressing key for some time.
+--
+-- ToDo: add selection.
+--
+-- ToDo: show text field cursor icon when hovering.
+--@author Steve Wolligandt
+--@classmod TextField
 
 GUI.Textfield = {}
 GUI.Textfield.safetyArea = 5
@@ -12,6 +16,7 @@ GUI.Textfield.shiftModifiedCharactes =  {"A","B","C","D","E","F","G","H","I","J"
 Utilities.OO.createDerivedClass(GUI.Textfield, GUI.Widget)
 
 --- Constructor
+-- @param hintText text that will be shown when there is no text typed into the text field
 function GUI.Textfield:new(hintText)
     GUI.Widget.new(self)
     self.text = ""

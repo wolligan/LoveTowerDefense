@@ -1,4 +1,5 @@
 --- Label Widget
+--@classmod Label
 
 require "GUI.Widget"
 

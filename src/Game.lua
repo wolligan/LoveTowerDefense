@@ -1,4 +1,9 @@
---- Game represents kind of an engine that handles GUI, key presses and releases and game states. Game states are something like scenes with their own render, update, init, onActivate and onDeactivate functions.
+--- Game represents the main engine that handles GUI, key presses and releases and game states.
+-- Game states are something like scenes with their own render, update, init, onActivate and onDeactivate functions and their own GUI Containers.
+-- When there is a state change, Game changes the GUI to the one of the state.
+-- Also Game has some containers that hold sprites, sounds and fonts, so that you will not have the same asset multiple times in memory.
+--@author Steve Wolligandt
+
 Game = {}
 
 require "Utilities"

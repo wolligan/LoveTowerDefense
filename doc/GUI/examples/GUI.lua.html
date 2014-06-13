@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>GUI Toolkit Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>GUI Toolkit</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>GUI.lua</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/init.html">init</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/Widget.html">Widget</a></li>
+  <li><a href="../classes/List.html">List</a></li>
+  <li><a href="../classes/Button.html">Button</a></li>
+  <li><a href="../classes/Container.html">Container</a></li>
+  <li><a href="../classes/TextField.html">TextField</a></li>
+  <li><a href="../classes/Label.html">Label</a></li>
+</ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <pre>
+<span class="comment">--- GUI Test creates two containers with buttons and labels, buttons change containers
+</span><span class="comment">-- Our Game Engine does everything to update, render and handle key inputs for the gui, so in this example there will not be any function calls depending those issues
+</span><span class="comment">--@author Steve Wolligandt
+</span>
+<span class="global">require</span> <span class="string">"GUI"</span>
+
+Testing.GUI = {}
+
+<span class="comment">--- @section GameState Function
+</span>
+<span class="comment">--- creates the gui
+</span><span class="keyword">function</span> Testing.GUI.init()
+    <span class="comment">-- create two different gui containers to show how you can switch between them
+</span>    guicont2 = GUI.Container(<span class="keyword">nil</span>,{<span class="number">230</span>,<span class="number">230</span>,<span class="number">230</span>},<span class="keyword">nil</span>,{<span class="number">0</span>,<span class="number">200</span>,<span class="number">0</span>},<span class="keyword">nil</span>,<span class="keyword">nil</span>,Utilities.Color.black)
+    guicont1 = GUI.Container(<span class="keyword">nil</span>,Utilities.Color.white,<span class="keyword">nil</span>,{<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">200</span>},{<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">200</span>},<span class="keyword">nil</span>,Utilities.Color.black)
+
+    <span class="comment">-- fill the containers with widgets
+</span>    Testing.GUI.fillContainer2()
+    Testing.GUI.fillContainer1()
+
+    <span class="comment">-- create a random background
+</span>    Testing.GUI.createBackground()
+<span class="keyword">end</span>
+
+<span class="comment">--- renders gui and some background
+</span><span class="keyword">function</span> Testing.GUI.render()
+    Testing.GUI.renderBackground()
+<span class="keyword">end</span>
+
+<span class="comment">---@section GUI creation
+</span>
+<span class="comment">--- shows how to create container and how to add widgets to it
+</span><span class="keyword">function</span> Testing.GUI.fillContainer1()
+
+    <span class="comment">-- this button will change the active GUI Container to the container2 when pressed
+</span>    <span class="keyword">local</span> b1_cont1 = GUI.Button(<span class="string">"Button - Change to Container 2"</span>, <span class="keyword">function</span>()
+        GUI.activeContainer = guicont2
+    <span class="keyword">end</span>)
+
+    <span class="comment">-- this button will toggle anchor visualization when pressed
+</span>    <span class="keyword">local</span> b_toggleAnchors = GUI.Button(<span class="string">"Toggle Anchor Visualization"</span>, <span class="keyword">function</span>()
+        guicont1.visualizeAnchors = <span class="keyword">not</span> guicont1.visualizeAnchors
+    <span class="keyword">end</span>)
+
+    <span class="comment">-- create a label
+</span>    <span class="keyword">local</span> l1_cont1 = GUI.Label(<span class="string">"This is Container1"</span>)
+
+    <span class="comment">-- create 4 more buttons to resize the label
+</span>    <span class="keyword">local</span> b_inc_x_cont1 = GUI.Button(<span class="string">"&gt;"</span>, <span class="keyword">function</span>()
+        l1_cont1.rightAnchorOffset = l1_cont1.rightAnchorOffset + <span class="number">2</span>
+    <span class="keyword">end</span>)
+
+    <span class="keyword">local</span> b_dec_x_cont1 = GUI.Button(<span class="string">"&lt;"</span>, <span class="keyword">function</span>()
+        l1_cont1.rightAnchorOffset = l1_cont1.rightAnchorOffset - <span class="number">2</span>
+    <span class="keyword">end</span>)
+
+    <span class="keyword">local</span> b_inc_y_cont1 = GUI.Button(<span class="string">"\\/"</span>, <span class="keyword">function</span>()
+        l1_cont1.bottomAnchorOffset = l1_cont1.bottomAnchorOffset + <span class="number">2</span>
+    <span class="keyword">end</span>)
+
+    <span class="keyword">local</span> b_dec_y_cont1 = GUI.Button(<span class="string">"/\\", function()
+        l1_cont1.bottomAnchorOffset = l1_cont1.bottomAnchorOffset - 2
+    end)
+
+-- set anchors of button1
+    b1_cont1:setLeftAnchor(GUI.Root, "</span>left<span class="string">")
+    b1_cont1:setRightAnchor(GUI.Root, "</span>right<span class="string">")
+    b1_cont1:setTopAnchor(GUI.Root, "</span>bottom<span class="string">")
+    b1_cont1:setBottomAnchor(GUI.Root, "</span>bottom<span class="string">")
+
+-- set offsets of button1
+    b1_cont1.topAnchorOffset    = -80
+    b1_cont1.bottomAnchorOffset = -20
+    b1_cont1.leftAnchorOffset   = 20
+    b1_cont1.rightAnchorOffset  = -20
+
+
+-- attach images to button
+    b1_cont1:attachBackgroundImage(Utilities.SlicedSprite( "</span>assets/sprites/GUI/slicedShadedBackground_20_20_20_20.png<span class="string">",
+                                            nil,nil,nil,nil,
+                                            20, 20, 20, 20 ),
+                         Utilities.SlicedSprite( "</span>assets/sprites/GUI/slicedShadedBackgroundPressed_20_20_20_20.png<span class="string">",
+                                            nil,nil,nil,nil,
+                                            20, 20, 20, 20 ))
+
+
+
+
+-- set anchors
+    b_toggleAnchors:setLeftAnchor(GUI.Root, "</span>right<span class="string">")
+    b_toggleAnchors:setRightAnchor(GUI.Root, "</span>right<span class="string">")
+    b_toggleAnchors:setTopAnchor(GUI.Root, "</span>top<span class="string">")
+    b_toggleAnchors:setBottomAnchor(GUI.Root, "</span>top<span class="string">")
+
+-- set offsets
+    b_toggleAnchors.topAnchorOffset    = 20
+    b_toggleAnchors.bottomAnchorOffset = 60
+    b_toggleAnchors.leftAnchorOffset   = -250
+    b_toggleAnchors.rightAnchorOffset  = -20
+
+
+-- attach images to button
+    b_toggleAnchors:attachBackgroundImage(Utilities.SlicedSprite( "</span>assets/sprites/GUI/slicedShadedBackground_20_20_20_20.png<span class="string">",
+                                            nil,nil,nil,nil,
+                                            20, 20, 20, 20 ),
+                         Utilities.SlicedSprite( "</span>assets/sprites/GUI/slicedShadedBackgroundPressed_20_20_20_20.png<span class="string">",
+                                            nil,nil,nil,nil,
+                                            20, 20, 20, 20 ))
+
+
+
+
+
+-- set anchors
+    l1_cont1:setLeftAnchor(GUI.Root, "</span>left<span class="string">")
+    l1_cont1:setRightAnchor(GUI.Root, "</span>left<span class="string">")
+    l1_cont1:setTopAnchor(GUI.Root, "</span>top<span class="string">")
+    l1_cont1:setBottomAnchor(GUI.Root, "</span>top<span class="string">")
+
+-- set offsets
+    l1_cont1.leftAnchorOffset   = 20
+    l1_cont1.rightAnchorOffset  = 200
+    l1_cont1.topAnchorOffset    = 20
+    l1_cont1.bottomAnchorOffset = 60
+
+-- attach background image
+    l1_cont1:attachBackgroundImage(Utilities.SlicedSprite( "</span>assets/sprites/GUI/slicedShadedBackground_20_20_20_20.png<span class="string">",
+                                            nil,nil,nil,nil,
+                                            20, 20, 20, 20 ))
+
+
+
+    -- set anchors and offsets of the 4 resize buttons
+    b_inc_x_cont1:setLeftAnchor(GUI.Root, "</span>center<span class="string">")
+    b_inc_x_cont1:setRightAnchor(GUI.Root, "</span>center<span class="string">")
+    b_inc_x_cont1:setTopAnchor(GUI.Root, "</span>center<span class="string">")
+    b_inc_x_cont1:setBottomAnchor(GUI.Root, "</span>center<span class="string">")
+
+    b_inc_x_cont1.leftAnchorOffset = 30
+    b_inc_x_cont1.rightAnchorOffset = 70
+    b_inc_x_cont1.topAnchorOffset = -20
+    b_inc_x_cont1.bottomAnchorOffset = 20
+
+    b_dec_x_cont1:setLeftAnchor(GUI.Root, "</span>center<span class="string">")
+    b_dec_x_cont1:setRightAnchor(GUI.Root, "</span>center<span class="string">")
+    b_dec_x_cont1:setTopAnchor(GUI.Root, "</span>center<span class="string">")
+    b_dec_x_cont1:setBottomAnchor(GUI.Root, "</span>center<span class="string">")
+
+    b_dec_x_cont1.leftAnchorOffset = -70
+    b_dec_x_cont1.rightAnchorOffset = -30
+    b_dec_x_cont1.topAnchorOffset = -20
+    b_dec_x_cont1.bottomAnchorOffset = 20
+
+    b_inc_y_cont1:setLeftAnchor(GUI.Root, "</span>center<span class="string">")
+    b_inc_y_cont1:setRightAnchor(GUI.Root, "</span>center<span class="string">")
+    b_inc_y_cont1:setTopAnchor(GUI.Root, "</span>center<span class="string">")
+    b_inc_y_cont1:setBottomAnchor(GUI.Root, "</span>center<span class="string">")
+
+    b_inc_y_cont1.leftAnchorOffset = -20
+    b_inc_y_cont1.rightAnchorOffset = 20
+    b_inc_y_cont1.topAnchorOffset = 30
+    b_inc_y_cont1.bottomAnchorOffset = 70
+
+    b_dec_y_cont1:setLeftAnchor(GUI.Root, "</span>center<span class="string">")
+    b_dec_y_cont1:setRightAnchor(GUI.Root, "</span>center<span class="string">")
+    b_dec_y_cont1:setTopAnchor(GUI.Root, "</span>center<span class="string">")
+    b_dec_y_cont1:setBottomAnchor(GUI.Root, "</span>center<span class="string">")
+
+    b_dec_y_cont1.leftAnchorOffset = -20
+    b_dec_y_cont1.rightAnchorOffset = 20
+    b_dec_y_cont1.topAnchorOffset = -70
+    b_dec_y_cont1.bottomAnchorOffset = -30
+
+
+
+    -- add buttons and label to container
+    guicont1:addWidget(l1_cont1)
+    guicont1:addWidget(b1_cont1)
+    guicont1:addWidget(b_toggleAnchors)
+    guicont1:addWidget(b_inc_x_cont1)
+    guicont1:addWidget(b_dec_x_cont1)
+    guicont1:addWidget(b_inc_y_cont1)
+    guicont1:addWidget(b_dec_y_cont1)
+end
+
+--- shows how to create container and how to add widgets to it
+function Testing.GUI.fillContainer2()
+
+-- fill container 2
+    -- create a button
+    local b2_cont2 = GUI.Button("</span>Button - Change to Container <span class="number">1</span><span class="string">", function()
+        GUI.activeContainer = guicont1
+    end)
+
+    b2_cont2:setLeftAnchor(GUI.Root, "</span>left<span class="string">")
+    b2_cont2:setRightAnchor(GUI.Root, "</span>right<span class="string">")
+    b2_cont2:setTopAnchor(GUI.Root, "</span>bottom<span class="string">")
+    b2_cont2:setBottomAnchor(GUI.Root, "</span>bottom<span class="string">")
+
+    b2_cont2.topAnchorOffset = -70
+    b2_cont2.bottomAnchorOffset = -20
+    b2_cont2.leftAnchorOffset = 20
+    b2_cont2.rightAnchorOffset = -20
+
+    -- create a label
+    local l2_cont2 = GUI.Label("</span>This is Container2<span class="string">")
+    l2_cont2:setLeftAnchor(GUI.Root, "</span>right<span class="string">")
+    l2_cont2:setRightAnchor(GUI.Root, "</span>right<span class="string">")
+    l2_cont2:setTopAnchor(GUI.Root, "</span>top<span class="string">")
+    l2_cont2:setBottomAnchor(GUI.Root, "</span>top<span class="string">")
+
+    l2_cont2.leftAnchorOffset = -220
+    l2_cont2.rightAnchorOffset = -20
+    l2_cont2.topAnchorOffset = 20
+    l2_cont2.bottomAnchorOffset = 50
+
+    -- create a textfield
+    local tf1_cont2 = GUI.Textfield("</span>blubb<span class="string">")
+    tf1_cont2:setLeftAnchor(l2_cont2, "</span>left<span class="string">")
+    tf1_cont2:setRightAnchor(l2_cont2, "</span>right<span class="string">")
+    tf1_cont2:setTopAnchor(l2_cont2, "</span>bottom<span class="string">")
+    tf1_cont2:setBottomAnchor(l2_cont2, "</span>bottom<span class="string">")
+
+    tf1_cont2.topAnchorOffset = 20
+    tf1_cont2.bottomAnchorOffset = 60
+
+    -- create list
+    local list_cont2 = GUI.List("</span>vertical<span class="string">", 20, 20)
+
+    list_cont2:setLeftAnchor(GUI.Root, "</span>left<span class="string">")
+    list_cont2:setRightAnchor(GUI.Root, "</span>left<span class="string">")
+    list_cont2:setTopAnchor(GUI.Root, "</span>top<span class="string">")
+    list_cont2:setBottomAnchor(b2_cont2, "</span>top<span class="string">")
+
+    list_cont2.leftAnchorOffset = 20
+    list_cont2.rightAnchorOffset = 520
+    list_cont2.topAnchorOffset = 20
+    list_cont2.bottomAnchorOffset = -20
+
+    list_cont2:add(GUI.Label("</span>test1<span class="string">"))
+    list_cont2:add(GUI.Label("</span>test2<span class="string">"))
+    list_cont2:add(GUI.Label("</span>test3<span class="string">"))
+    list_cont2:add(GUI.Label("</span>test4<span class="string">"))
+    list_cont2:addWidgetsToContainer(guicont2)
+
+
+    -- add button and label to container
+    guicont2:addWidget(b2_cont2)
+    guicont2:addWidget(l2_cont2)
+    guicont2:addWidget(list_cont2)
+    guicont2:addWidget(tf1_cont2)
+end
+
+--- @section background rendering
+
+--- renders background scene
+function Testing.GUI.renderBackground()
+    for i=1,30 do
+       love.graphics.setColor(unpack(scene[i].color))
+       love.graphics.rectangle("</span>fill<span class="string">", scene[i].rect[1],scene[i].rect[2], 100,100)
+    end
+end
+
+--- creates a scene for some background rendering
+function Testing.GUI.createBackground()
+   scene = {}
+    for i=1,30 do
+        scene[i] = {}
+        scene[i].color = {math.random(1,3)/0.3*255, math.random(1,3)/0.3*255, math.random(1,3)/0.3*255}
+
+        while scene[i].color[1] == scene[i].color[2] and scene[i].color[1] == scene[i].color[3] do
+            scene[i].color = {math.random(1,3)/0.3*255, math.random(1,3)/0.3*255, math.random(1,3)/0.3*255}
+        end
+        scene[i].rect = {math.random(0,love.graphics.getWidth() - 200), math.random(0,love.graphics.getHeight() - 200)}
+    end
+end
+
+--- @section keybindings
+
+--- Keybindings of game state Testing.GUI
+--@field escape Return to Testing.Menu
+Testing.GUI.activeKeyBinding = {}
+Testing.GUI.activeKeyBinding["</span>escape"] = {
+    pressed = <span class="keyword">function</span>()
+        Game.changeState(Testing.Menu)
+    <span class="keyword">end</span>
+}</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

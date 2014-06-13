@@ -1,4 +1,6 @@
---- ADD ME
+---
+--@author Steve Wolligandt
+
 Lighting = {}
 
 require "Geometry"

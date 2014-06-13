@@ -1,3 +1,7 @@
+---
+--@classmod Tower
+--@author Steve Wolligandt
+
 require "Tilemap"
 
 Ingame.Tower = {}

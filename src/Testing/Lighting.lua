@@ -1,4 +1,6 @@
---- ADD ME
+--- Testing of Lighting
+--@author Steve Wolligandt
+
 require "Lighting"
 
 Testing.Lighting = {}

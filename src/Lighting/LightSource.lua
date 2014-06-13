@@ -1,4 +1,6 @@
---- ADD ME
+---
+--@classmod LightSource
+--@author Steve Wolligandt
 
 require "Lighting.Shadow"
 require "Utilities.Intersection"

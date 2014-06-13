@@ -1,3 +1,6 @@
+--- Testing of sliced Sprites
+--@author Steve Wolligandt
+
 Testing.SlicedSprite = {}
 Testing.SlicedSprite.activeKeyBinding = {}
 Testing.SlicedSprite.activeKeyBinding["escape"] = {

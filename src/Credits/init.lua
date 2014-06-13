@@ -1,4 +1,6 @@
---- Credits
+--- Credits Game State.
+-- Shows the credits.
+--@author Steve Wolligandt
 
 Credits = {}
 
@@ -14,7 +16,6 @@ function Credits.init()
     Credits.scrollSpeed = 200
 end
 
---- updates active container
 function Credits.update(dt)
     Credits.creditList.topAnchorOffset = Credits.creditList.topAnchorOffset - Credits.scrollSpeed*dt
     Credits.creditList.bottomAnchorOffset = Credits.creditList.bottomAnchorOffset - Credits.scrollSpeed*dt

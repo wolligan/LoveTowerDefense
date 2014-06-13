@@ -1,4 +1,6 @@
 --- Comes up with some little helpers like a coordinate system, ...
+--@author Steve Wolligandt
+
 Testing = {}
 Testing.CoordinateSystem = {}
 Testing.CoordinateSystem.zoom = 30
@@ -56,4 +58,3 @@ require "Testing.Tilemap"
 require "Testing.Networking"
 require "Testing.Threading"
 require "Testing.ServerClient"
-require "Testing.CG"

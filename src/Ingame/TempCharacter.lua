@@ -1,4 +1,8 @@
 --- Character that destroys itself after some seconds
+--@classmod TempCharacter
+--@author Steve Wolligandt
+
+
 
 Ingame.TempCharacter = {}
 Utilities.OO.createDerivedClass(Ingame.TempCharacter, Ingame.Character)

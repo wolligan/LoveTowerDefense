@@ -1,3 +1,6 @@
+--- Testing of Tilemap
+--@author Steve Wolligandt
+
 require "Keybindings"
 
 Testing.Tilemap = {}

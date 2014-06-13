@@ -1,3 +1,6 @@
+--- Menu for choosing a test case
+--@author Steve Wolligandt
+
 Testing.Menu = {}
 
 Testing.Menu.activeKeyBinding = {}
@@ -25,6 +28,7 @@ function Testing.Menu.createMenuGUI()
         Ingame.startLevel("assets/maps/test.map")
     end))
     list:add(GUI.Button("Credits", function() Game.changeState(Credits) end))
+    list:add(GUI.Button("Start Level Editor", function() Game.changeState(LevelEditor) end))
     list:add(GUI.Button("Load GUI Test", function() Game.changeState(Testing.GUI) end))
     --list:add(GUI.Button("Load Intersection Test", function() Game.changeState(Testing.Intersection) end))
     list:add(GUI.Button("Load Lighting Test", function() Game.changeState(Testing.Lighting) end))
@@ -32,7 +36,6 @@ function Testing.Menu.createMenuGUI()
     list:add(GUI.Button("Load Networking Test", function() Game.changeState(Testing.Networking) end))
     --list:add(GUI.Button("Load Threading Test", function() Game.changeState(Testing.Threading) end))
     list:add(GUI.Button("Load Server-Client Tutorial from Löve Wiki with Threads", function() Game.changeState(Testing.ServerClient) end))
-    list:add(GUI.Button("Start Level Editor", function() Game.changeState(LevelEditor) end))
     list:addWidgetsToContainer(Testing.Menu.GUIContainer)
 
     local buttonAnchorVisToggle = GUI.Button("Toggle Anchor Visualization", function() Testing.Menu.GUIContainer.visualizeAnchors = not Testing.Menu.GUIContainer.visualizeAnchors end)

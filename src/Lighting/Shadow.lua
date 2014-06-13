@@ -1,4 +1,6 @@
---- ADD ME
+---
+--@classmod Shadow
+--@author Steve Wolligandt
 
 require "Utilities"
 

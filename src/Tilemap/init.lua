@@ -1,4 +1,7 @@
 --- Renders and updates lighted tilemaps
+--@author Steve Wolligandt
+--@module Tilemap
+
 Tilemap = {}
 
 require "Tilemap.Camera"

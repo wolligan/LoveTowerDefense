@@ -1,4 +1,10 @@
---- Basic Widget Class - every Widget needs to inherit from this class
+--- Basic Widget Class - every Widget needs to inherit from this class.
+-- The dimensions and positions are calculated by the anchors of the widget. At default every widget's anchors are at GUI.Root (means every widget is fullscreened).
+-- Every Widget gets its apparentContainer, font, backgroundColor, foregroundColor, hoverColor, clickedColor, borderColor and fontColor after adding it to a container.
+-- After adding a widget to a container you can change all of the colors or fonts, so that only the widget you change has the new color or font, not the other widgets of the container.
+-- Widget provides methods to render label and background.
+-- You can attach a sprite as a label or a sliced sprite as a background.
+--@classmod Widget
 
 
 GUI.Widget = {}

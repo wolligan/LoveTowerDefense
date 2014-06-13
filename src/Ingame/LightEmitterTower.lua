@@ -1,3 +1,7 @@
+---
+--@classmod LightEmitterTower
+--@author Steve Wolligandt
+
 require "Ingame.Tower"
 
 Ingame.LightEmitterTower = {}

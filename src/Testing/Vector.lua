@@ -1,4 +1,6 @@
---- ADD ME
+--- Testing of vectors
+--@author Steve Wolligandt
+
 Testing.Vector = {}
 
 Testing.Vector.activeKeyBinding = {}

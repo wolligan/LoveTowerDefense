@@ -1,4 +1,6 @@
 --- Game Mechanics
+--@author Steve Wolligandt
+
 Ingame = {}
 
 require "Ingame.BuildPhase"

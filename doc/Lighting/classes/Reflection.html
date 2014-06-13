@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Lighting Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Lighting Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/LightSource.html">LightSource</a></li>
+  <li><a href="../classes/Shadow.html">Shadow</a></li>
+  <li><a href="../classes/AmbientLight.html">AmbientLight</a></li>
+  <li><strong>Reflection</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/init.html">init</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Reflection</code></h1>
+<p></p>
+<p></p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Author</strong>: Steve Wolligandt</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:render">Lighting.Reflection:render ()</a></td>
+	<td class="summary">renders reflection with inverted stencil with shadows</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:drawLight">Lighting.Reflection:drawLight (translateX, translateY)</a></td>
+	<td class="summary">renders a fullscreen quad with inverted stencil with shadows</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:drawShadows">Lighting.Reflection:drawShadows (translateX, translateY)</a></td>
+	<td class="summary">draws all shadow polygons of Reflection</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:updateShadows">Lighting.Reflection:updateShadows (scene)</a></td>
+	<td class="summary">TODO make faster</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:updateReflections">Lighting.Reflection:updateReflections (scene)</a></td>
+	<td class="summary">TODO implement</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:updateLeftSide">Lighting.Reflection:updateLeftSide (lightSource, shadowVecLeftX, shadowVecLeftY)</a></td>
+	<td class="summary">recalculates reflection polygon, left point converges to right point</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:updateRightSide">Lighting.Reflection:updateRightSide (lightSource, shadowVecRightX, shadowVecRightY)</a></td>
+	<td class="summary">recalculates reflection polygon, left point converges to right point</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:split">Lighting.Reflection:split (lightSource, shadowVecLeftX, shadowVecLeftY, shadowVecRightX, shadowVecRightY)</a></td>
+	<td class="summary">splits reflection in two smaller reflections</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:calculateVertices">Lighting.Reflection:calculateVertices (lightSource, rightX, rightY, leftX, leftY)</a></td>
+	<td class="summary">calculates the reflection polygon</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "Lighting.Reflection:render"></a>
+    <strong>Lighting.Reflection:render ()</strong>
+    </dt>
+    <dd>
+    renders reflection with inverted stencil with shadows
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:drawLight"></a>
+    <strong>Lighting.Reflection:drawLight (translateX, translateY)</strong>
+    </dt>
+    <dd>
+    renders a fullscreen quad with inverted stencil with shadows
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">translateX</span>
+
+        </li>
+        <li><span class="parameter">translateY</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:drawShadows"></a>
+    <strong>Lighting.Reflection:drawShadows (translateX, translateY)</strong>
+    </dt>
+    <dd>
+    draws all shadow polygons of Reflection
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">translateX</span>
+
+        </li>
+        <li><span class="parameter">translateY</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:updateShadows"></a>
+    <strong>Lighting.Reflection:updateShadows (scene)</strong>
+    </dt>
+    <dd>
+    TODO make faster
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">scene</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:updateReflections"></a>
+    <strong>Lighting.Reflection:updateReflections (scene)</strong>
+    </dt>
+    <dd>
+    TODO implement
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">scene</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:updateLeftSide"></a>
+    <strong>Lighting.Reflection:updateLeftSide (lightSource, shadowVecLeftX, shadowVecLeftY)</strong>
+    </dt>
+    <dd>
+    recalculates reflection polygon, left point converges to right point
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">lightSource</span>
+
+        </li>
+        <li><span class="parameter">shadowVecLeftX</span>
+
+        </li>
+        <li><span class="parameter">shadowVecLeftY</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:updateRightSide"></a>
+    <strong>Lighting.Reflection:updateRightSide (lightSource, shadowVecRightX, shadowVecRightY)</strong>
+    </dt>
+    <dd>
+    recalculates reflection polygon, left point converges to right point
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">lightSource</span>
+
+        </li>
+        <li><span class="parameter">shadowVecRightX</span>
+
+        </li>
+        <li><span class="parameter">shadowVecRightY</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:split"></a>
+    <strong>Lighting.Reflection:split (lightSource, shadowVecLeftX, shadowVecLeftY, shadowVecRightX, shadowVecRightY)</strong>
+    </dt>
+    <dd>
+    splits reflection in two smaller reflections
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">lightSource</span>
+
+        </li>
+        <li><span class="parameter">shadowVecLeftX</span>
+
+        </li>
+        <li><span class="parameter">shadowVecLeftY</span>
+
+        </li>
+        <li><span class="parameter">shadowVecRightX</span>
+
+        </li>
+        <li><span class="parameter">shadowVecRightY</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:calculateVertices"></a>
+    <strong>Lighting.Reflection:calculateVertices (lightSource, rightX, rightY, leftX, leftY)</strong>
+    </dt>
+    <dd>
+    calculates the reflection polygon
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">lightSource</span>
+         LightSource object that shall be reflected
+        </li>
+        <li><span class="parameter">rightX</span>
+         x-coordinate of right point that shall be reflected
+        </li>
+        <li><span class="parameter">rightY</span>
+         y-coordinate of right point that shall be reflected
+        </li>
+        <li><span class="parameter">leftX</span>
+         x-coordinate of left point that shall be reflected
+        </li>
+        <li><span class="parameter">leftY</span>
+         y-coordinate of left point that shall be reflected
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

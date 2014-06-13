@@ -1,4 +1,6 @@
----
+--- Each Scene holds a camera that transforms the scene.
+--@author Steve Wolligandt
+
 Tilemap.Camera = {}
 Utilities.OO.createClass(Tilemap.Camera)
 

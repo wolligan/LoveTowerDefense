@@ -1,4 +1,5 @@
---- ADD ME
+--- Testing intersection
+--@author Steve Wolligandt
 
 require "Geometry"
 

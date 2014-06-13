@@ -1,4 +1,6 @@
---- ADD ME
+---
+--@classmod Reflection
+--@author Steve Wolligandt
 
 Lighting.Reflection = {}
 Utilities.OO.createClass(Lighting.Reflection)

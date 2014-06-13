@@ -1,3 +1,7 @@
+--- List positions widgets as an array.
+-- List can be horizontal or vertical.
+--@classmod List
+
 GUI.List = {}
 Utilities.OO.createDerivedClass(GUI.List, GUI.Widget)
 

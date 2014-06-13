@@ -1,24 +1,25 @@
 --- GUI Test creates two containers with buttons and labels, buttons change containers
+-- Our Game Engine does everything to update, render and handle key inputs for the gui, so in this example there will not be any function calls depending those issues
+--@author Steve Wolligandt
 
 require "GUI"
 
 Testing.GUI = {}
 
-Testing.GUI.activeKeyBinding = {}
-Testing.GUI.activeKeyBinding["escape"] = {
-    pressed = function()
-        Game.changeState(Testing.Menu)
-    end
-}
+--- @section GameState Function
 
 --- creates the gui
 function Testing.GUI.init()
--- create containers
-    Testing.GUI.createBackground()
+    -- create two different gui containers to show how you can switch between them
     guicont2 = GUI.Container(nil,{230,230,230},nil,{0,200,0},nil,nil,Utilities.Color.black)
     guicont1 = GUI.Container(nil,Utilities.Color.white,nil,{255,255,255,200},{255,255,255,200},nil,Utilities.Color.black)
+
+    -- fill the containers with widgets
     Testing.GUI.fillContainer2()
     Testing.GUI.fillContainer1()
+
+    -- create a random background
+    Testing.GUI.createBackground()
 end
 
 --- renders gui and some background
@@ -26,43 +27,48 @@ function Testing.GUI.render()
     Testing.GUI.renderBackground()
 end
 
---- renders background scene
-function Testing.GUI.renderBackground()
-    for i=1,30 do
-       love.graphics.setColor(unpack(scene[i].color))
-       love.graphics.rectangle("fill", scene[i].rect[1],scene[i].rect[2], 100,100)
-    end
-end
-
---- creates a scene for some background rendering
-function Testing.GUI.createBackground()
-   scene = {}
-    for i=1,30 do
-        scene[i] = {}
-        scene[i].color = {math.random(1,3)/0.3*255, math.random(1,3)/0.3*255, math.random(1,3)/0.3*255}
-
-        while scene[i].color[1] == scene[i].color[2] and scene[i].color[1] == scene[i].color[3] do
-            scene[i].color = {math.random(1,3)/0.3*255, math.random(1,3)/0.3*255, math.random(1,3)/0.3*255}
-        end
-        scene[i].rect = {math.random(0,love.graphics.getWidth() - 200), math.random(0,love.graphics.getHeight() - 200)}
-    end
-end
+---@section GUI creation
 
 --- shows how to create container and how to add widgets to it
 function Testing.GUI.fillContainer1()
 
--- create a button
+    -- this button will change the active GUI Container to the container2 when pressed
     local b1_cont1 = GUI.Button("Button - Change to Container 2", function()
         GUI.activeContainer = guicont2
     end)
 
--- set anchors
+    -- this button will toggle anchor visualization when pressed
+    local b_toggleAnchors = GUI.Button("Toggle Anchor Visualization", function()
+        guicont1.visualizeAnchors = not guicont1.visualizeAnchors
+    end)
+
+    -- create a label
+    local l1_cont1 = GUI.Label("This is Container1")
+
+    -- create 4 more buttons to resize the label
+    local b_inc_x_cont1 = GUI.Button(">", function()
+        l1_cont1.rightAnchorOffset = l1_cont1.rightAnchorOffset + 2
+    end)
+
+    local b_dec_x_cont1 = GUI.Button("<", function()
+        l1_cont1.rightAnchorOffset = l1_cont1.rightAnchorOffset - 2
+    end)
+
+    local b_inc_y_cont1 = GUI.Button("\\/", function()
+        l1_cont1.bottomAnchorOffset = l1_cont1.bottomAnchorOffset + 2
+    end)
+
+    local b_dec_y_cont1 = GUI.Button("/\\", function()
+        l1_cont1.bottomAnchorOffset = l1_cont1.bottomAnchorOffset - 2
+    end)
+
+-- set anchors of button1
     b1_cont1:setLeftAnchor(GUI.Root, "left")
     b1_cont1:setRightAnchor(GUI.Root, "right")
     b1_cont1:setTopAnchor(GUI.Root, "bottom")
     b1_cont1:setBottomAnchor(GUI.Root, "bottom")
 
--- set offsets
+-- set offsets of button1
     b1_cont1.topAnchorOffset    = -80
     b1_cont1.bottomAnchorOffset = -20
     b1_cont1.leftAnchorOffset   = 20
@@ -79,10 +85,6 @@ function Testing.GUI.fillContainer1()
 
 
 
-    -- create a button
-    local b_toggleAnchors = GUI.Button("Toggle Anchor Visualization", function()
-        guicont1.visualizeAnchors = not guicont1.visualizeAnchors
-    end)
 
 -- set anchors
     b_toggleAnchors:setLeftAnchor(GUI.Root, "right")
@@ -108,8 +110,6 @@ function Testing.GUI.fillContainer1()
 
 
 
--- create a label
-    local l1_cont1          = GUI.Label("This is Container1")
 
 -- set anchors
     l1_cont1:setLeftAnchor(GUI.Root, "left")
@@ -129,23 +129,8 @@ function Testing.GUI.fillContainer1()
                                             20, 20, 20, 20 ))
 
 
--- create 4 more buttons the same way to resize the label
-    local b_inc_x_cont1 = GUI.Button(">", function()
-        l1_cont1.rightAnchorOffset = l1_cont1.rightAnchorOffset + 2
-    end)
 
-    local b_dec_x_cont1 = GUI.Button("<", function()
-        l1_cont1.rightAnchorOffset = l1_cont1.rightAnchorOffset - 2
-    end)
-
-    local b_inc_y_cont1 = GUI.Button("\\/", function()
-        l1_cont1.bottomAnchorOffset = l1_cont1.bottomAnchorOffset + 2
-    end)
-
-    local b_dec_y_cont1 = GUI.Button("/\\", function()
-        l1_cont1.bottomAnchorOffset = l1_cont1.bottomAnchorOffset - 2
-    end)
-
+    -- set anchors and offsets of the 4 resize buttons
     b_inc_x_cont1:setLeftAnchor(GUI.Root, "center")
     b_inc_x_cont1:setRightAnchor(GUI.Root, "center")
     b_inc_x_cont1:setTopAnchor(GUI.Root, "center")
@@ -186,7 +171,9 @@ function Testing.GUI.fillContainer1()
     b_dec_y_cont1.topAnchorOffset = -70
     b_dec_y_cont1.bottomAnchorOffset = -30
 
--- add buttons and label to container
+
+
+    -- add buttons and label to container
     guicont1:addWidget(l1_cont1)
     guicont1:addWidget(b1_cont1)
     guicont1:addWidget(b_toggleAnchors)
@@ -263,3 +250,38 @@ function Testing.GUI.fillContainer2()
     guicont2:addWidget(list_cont2)
     guicont2:addWidget(tf1_cont2)
 end
+
+--- @section background rendering
+
+--- renders background scene
+function Testing.GUI.renderBackground()
+    for i=1,30 do
+       love.graphics.setColor(unpack(scene[i].color))
+       love.graphics.rectangle("fill", scene[i].rect[1],scene[i].rect[2], 100,100)
+    end
+end
+
+--- creates a scene for some background rendering
+function Testing.GUI.createBackground()
+   scene = {}
+    for i=1,30 do
+        scene[i] = {}
+        scene[i].color = {math.random(1,3)/0.3*255, math.random(1,3)/0.3*255, math.random(1,3)/0.3*255}
+
+        while scene[i].color[1] == scene[i].color[2] and scene[i].color[1] == scene[i].color[3] do
+            scene[i].color = {math.random(1,3)/0.3*255, math.random(1,3)/0.3*255, math.random(1,3)/0.3*255}
+        end
+        scene[i].rect = {math.random(0,love.graphics.getWidth() - 200), math.random(0,love.graphics.getHeight() - 200)}
+    end
+end
+
+--- @section keybindings
+
+--- Keybindings of game state Testing.GUI
+--@field escape Return to Testing.Menu
+Testing.GUI.activeKeyBinding = {}
+Testing.GUI.activeKeyBinding["escape"] = {
+    pressed = function()
+        Game.changeState(Testing.Menu)
+    end
+}

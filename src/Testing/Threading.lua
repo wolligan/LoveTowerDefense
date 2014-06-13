@@ -1,3 +1,6 @@
+--- Testing of Threading
+--@author Steve Wolligandt
+
 Testing.Threading = {}
 
 Testing.Threading.activeKeyBinding = {}

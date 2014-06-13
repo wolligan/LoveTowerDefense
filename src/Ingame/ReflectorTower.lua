@@ -1,3 +1,7 @@
+---
+--@classmod ReflectorTower
+--@author Steve Wolligandt
+
 require "Ingame.Tower"
 
 Ingame.ReflectorTower = {}

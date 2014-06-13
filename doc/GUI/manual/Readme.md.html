@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>GUI Toolkit Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>GUI Toolkit</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Introduction">Introduction </a></li>
+<li><a href="#Integrate_the_GUI_Toolkit_to_your_l__ve2D_Game">Integrate the GUI Toolkit to your löve2D Game </a></li>
+<li><a href="#Widgets">Widgets </a></li>
+<li><a href="#Usage">Usage </a></li>
+</ul>
+
+
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>Readme</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/init.html">init</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/Widget.html">Widget</a></li>
+  <li><a href="../classes/List.html">List</a></li>
+  <li><a href="../classes/Button.html">Button</a></li>
+  <li><a href="../classes/Container.html">Container</a></li>
+  <li><a href="../classes/TextField.html">TextField</a></li>
+  <li><a href="../classes/Label.html">Label</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/GUI.lua.html">GUI.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h1>A GUI Toolkit for Games</h1>
+
+<p><a name="Introduction"></a></p>
+
+<h2>Introduction</h2>
+
+<p>Within the scope of developing a the game we needed a solid GUI Toolkit for automatically positioning of buttons, labels, text entries, etc.
+The GUI Toolkit is inspired by the leading GUI Toolkit for the Unity3D Game Engine named &ldquo;NGUI&rdquo;.
+Every Widget has anchors on the left, right, top and bottom side.
+You can snap those anchors to anchors of other widgets or the borders of the screen. By setting the offset of the anchors you can position them freely on the screen.</p>
+
+<p><a name="Integrate_the_GUI_Toolkit_to_your_l__ve2D_Game"></a></p>
+
+<h2>Integrate the GUI Toolkit to your löve2D Game</h2>
+
+<p>At first you need to require the simple Object Orientation we have written and after that the GUI Toolkit itself:</p>
+
+<pre>
+<span class="global">require</span> <span class="string">"Utilities.OO"</span>
+<span class="global">require</span> <span class="string">"GUI"</span>
+</pre>
+
+
+<p>Add the render and update function of the GUI Toolkit at the end of löve2D&rsquo;s draw and update function:</p>
+
+<pre>
+<span class="keyword">function</span> love.draw()
+
+    ...
+
+    GUI.render()
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> love.update(dt)
+
+    ...
+
+    GUI.update(dt)
+<span class="keyword">end</span>
+</pre>
+
+
+<p>You also want to have key handling (if you do not want to have the key stealing feature then you can just call the last line of each callback)</p>
+
+<pre>
+<span class="comment">-- keypressed callback
+</span><span class="keyword">function</span> love.keypressed(key)
+
+    <span class="keyword">if</span> GUI.activeContainer <span class="keyword">then</span>
+        <span class="keyword">if</span> <span class="keyword">not</span> GUI.activeContainer.stealKeys <span class="keyword">then</span>
+            <span class="comment">-- call here your own key handling
+</span>            myKeyPressed(key)
+        <span class="keyword">end</span>
+
+    <span class="keyword">else</span>
+        <span class="comment">-- call here your own key handling
+</span>        myKeyPressed(key)
+    <span class="keyword">end</span>
+    GUI.notifyKey(key)
+<span class="keyword">end</span>
+
+
+<span class="comment">-- keyreleased callback
+</span><span class="keyword">function</span> love.keyreleased(key)
+
+    <span class="keyword">if</span> GUI.activeContainer <span class="keyword">then</span>
+        <span class="keyword">if</span> <span class="keyword">not</span> GUI.activeContainer.stealKeys <span class="keyword">then</span>
+            <span class="comment">-- call here your own key handling
+</span>            myKeyReleased(key)
+        <span class="keyword">end</span>
+
+    <span class="keyword">else</span>
+        <span class="comment">-- call here your own key handling
+</span>        myKeyReleased(key)
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+
+<span class="comment">-- mousepressed callback
+</span><span class="keyword">function</span> love.mousepressed(x, y, button)
+
+    <span class="keyword">if</span> GUI.activeContainer <span class="keyword">then</span>
+        <span class="keyword">if</span> <span class="keyword">not</span> GUI.activeContainer.stealKeys <span class="keyword">then</span>
+            <span class="comment">-- call here your own key handling
+</span>            myMousePressed(x,y,button)
+        <span class="keyword">end</span>
+
+    <span class="keyword">else</span>
+        <span class="comment">-- call here your own key handling
+</span>        myMousePressed(x,y,button)
+    <span class="keyword">end</span>
+
+    <span class="keyword">if</span> button == <span class="string">"l"</span> <span class="keyword">then</span>
+        GUI.notifyClick()
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+
+<span class="comment">-- mousereleased callback
+</span><span class="keyword">function</span> love.mousereleased(x, y, button)
+
+    <span class="keyword">if</span> GUI.activeContainer <span class="keyword">then</span>
+        <span class="keyword">if</span> Game.state.activeKeyBinding <span class="keyword">then</span>
+            <span class="comment">-- call here your own key handling
+</span>            myMouseReleased(x,y,button)
+        <span class="keyword">end</span>
+
+    <span class="keyword">else</span>
+        <span class="keyword">if</span> Game.state.activeKeyBinding[key] <span class="keyword">then</span>
+            <span class="comment">-- call here your own key handling
+</span>            myMouseReleased(x,y,button)
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    GUI.notifyRelease()
+<span class="keyword">end</span>
+</pre>
+
+
+<p><a name="Widgets"></a></p>
+
+<h2>Widgets</h2>
+
+<p>Every Widget except Widget itself needs to be derived from the Widget class:
+<pre>
+<span class="comment">&mdash;&ndash; Label Widget
+</span><span class="comment">&mdash;@classmod Label
+</span>
+<span class="global">require</span> <span class="string">&ldquo;GUI.Widget&rdquo;</span></p>
+
+<p>GUI.Label = {}
+Utilities.OO.createDerivedClass(GUI.Label, GUI.Widget)</p>
+
+<p><span class="comment">&mdash; &hellip;
+</span>
+</pre>
+<a name="Usage"></a></p>
+
+<h2>Usage</h2>
+
+<p>At first you have to create a container to hold your widgets:</p>
+
+<pre>
+<span class="comment">-- create container
+</span>
+</pre>
+
+
+<p>After that you can create your widgets</p>
+
+<pre>
+<span class="comment">-- create an example widget
+</span>
+</pre>
+
+
+<p>Now you can position the widget. In this example we position it to bottom left corner and dimensions of 200x100</p>
+
+<pre>
+<span class="comment">-- set anchors and offsets
+</span>
+</pre>
+
+
+<p>At last you have to add the widget to the container</p>
+
+<pre>
+<span class="comment">-- add widget to container
+</span>
+</pre>
+
+
+<p>Optionally you can individualize every single widget.</p>
+
+<pre>
+<span class="comment">-- change font and font color
+</span>
+</pre>
+
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

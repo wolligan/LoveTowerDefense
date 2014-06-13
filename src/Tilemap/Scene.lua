@@ -1,4 +1,7 @@
---- ADD ME
+---
+--@classmod Scene
+--@author Steve Wolligandt
+
 Tilemap.Scene = {}
 
 require "Tilemap.Character"
@@ -6,7 +9,8 @@ require "Tilemap.Camera"
 
 Utilities.OO.createClass(Tilemap.Scene)
 
----
+--- Constructor creates an empty Scene with size of the described one in Tilemap.Settings
+--@see Tilemap.Settings
 function Tilemap.Scene:new()
     self.tiles = {}
 

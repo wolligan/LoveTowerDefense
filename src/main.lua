@@ -1,4 +1,5 @@
 --- Starting point of love
+--@author Steve Wolligandt
 require "Game"
 
 --- Initializes Game
