@@ -1,3 +1,5 @@
+--- server example from the love wikie
+
 local socket = require "socket"
 
 -- begin

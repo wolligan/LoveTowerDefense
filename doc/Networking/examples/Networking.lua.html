@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Networking for Multiplayer</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Networking for Multiplayer</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>Networking.lua</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/init.html">init</a></li>
+  <li><a href="../modules/examples.client.main.html">examples.client.main</a></li>
+  <li><a href="../modules/examples.server.main.html">examples.server.main</a></li>
+  <li><a href="../modules/server.html">server</a></li>
+</ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <pre>
+<span class="comment">--- Testing module for Networking
+</span><span class="comment">--@author Robert Wlcek
+</span><span class="global">require</span> <span class="string">"Networking"</span>
+
+Testing.Networking = {}
+
+Testing.Networking.activeKeyBinding = {}
+Testing.Networking.activeKeyBinding[<span class="string">"escape"</span>] = {
+    pressed = <span class="keyword">function</span>()
+        Game.changeState(Testing.Menu)
+    <span class="keyword">end</span>
+}
+
+<span class="keyword">function</span> Testing.Networking.init()
+    Testing.Networking.createGUI()
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> Testing.Networking.render()
+
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> Testing.Networking.update(dt)
+
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> startServer() <span class="comment">-- TODO make port as user input
+</span>    Networking.spawnServer()
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> connectToServer()
+
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> Testing.Networking.createGUI()
+
+    Testing.Networking.GUI = GUI.Container(<span class="keyword">nil</span>,Utilities.Color.white,<span class="keyword">nil</span>,{<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">200</span>},{<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">200</span>},<span class="keyword">nil</span>,Utilities.Color.black)
+<span class="comment">-- create a label
+</span>    <span class="keyword">local</span> label = GUI.Label(<span class="string">"Networking Test"</span>)
+    label:setBottomAnchor(GUI.Root, <span class="string">"top"</span>)
+    label.leftAnchorOffset   = <span class="number">20</span>
+    label.rightAnchorOffset  = -<span class="number">20</span>
+    label.topAnchorOffset    = <span class="number">20</span>
+    label.bottomAnchorOffset = <span class="number">60</span>
+
+<span class="comment">-- create server start button
+</span>    <span class="keyword">local</span> startServerButton = GUI.Button(<span class="string">"Start Server"</span>, <span class="keyword">function</span>()
+            startServer() <span class="keyword">end</span>
+        )
+<span class="comment">-- create server stop button
+</span>    <span class="keyword">local</span> serverStopButton = GUI.Button(<span class="string">"Stop Server"</span>, <span class="keyword">function</span>()
+            stopServer() <span class="keyword">end</span>
+        )
+<span class="comment">-- create client start button
+</span>    <span class="keyword">local</span> connectButton = GUI.Button(<span class="string">"Connect to IP"</span>, <span class="keyword">function</span>()
+            connectToServer() <span class="keyword">end</span>
+        )
+
+    startServerButton:setTopAnchor(GUI.Root, <span class="string">"bottom"</span>)
+    startServerButton:setRightAnchor(GUI.Root, <span class="string">"center"</span>)
+    startServerButton.leftAnchorOffset   = <span class="number">20</span>
+    startServerButton.rightAnchorOffset  = -<span class="number">20</span>
+    startServerButton.topAnchorOffset    = -<span class="number">60</span>
+    startServerButton.bottomAnchorOffset = -<span class="number">20</span>
+
+    connectButton:setTopAnchor(GUI.Root, <span class="string">"bottom"</span>)
+    connectButton:setLeftAnchor(GUI.Root, <span class="string">"center"</span>)
+    connectButton.leftAnchorOffset   = <span class="number">20</span>
+    connectButton.rightAnchorOffset  = -<span class="number">20</span>
+    connectButton.topAnchorOffset    = -<span class="number">60</span>
+    connectButton.bottomAnchorOffset = -<span class="number">20</span>
+
+    serverStopButton:setTopAnchor(startServerButton, <span class="string">"top"</span>)
+    serverStopButton:setBottomAnchor(startServerButton, <span class="string">"top"</span>)
+    serverStopButton:setRightAnchor(GUI.Root, <span class="string">"center"</span>)
+    serverStopButton.leftAnchorOffset   = <span class="number">20</span>
+    serverStopButton.rightAnchorOffset  = -<span class="number">20</span>
+    serverStopButton.topAnchorOffset    = -<span class="number">60</span>
+    serverStopButton.bottomAnchorOffset = -<span class="number">20</span>
+
+    Testing.Networking.GUI:addWidget(startServerButton)
+    Testing.Networking.GUI:addWidget(connectButton)
+    Testing.Networking.GUI:addWidget(serverStopButton)
+<span class="keyword">end</span></pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

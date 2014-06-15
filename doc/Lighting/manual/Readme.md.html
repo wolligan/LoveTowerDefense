@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>2D Lighting</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>2D Lighting Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Usage">Usage </a></li>
+<li><a href="#Data_that_needs_to_be_defined_by_the_user">Data that needs to be defined by the user </a></li>
+<li><a href="#Internal_classes">Internal classes </a></li>
+</ul>
+
+
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>Readme</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/init.html">init</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/ShadowCaster.html">ShadowCaster</a></li>
+  <li><a href="../classes/LightSource.html">LightSource</a></li>
+  <li><a href="../classes/Shadow.html">Shadow</a></li>
+  <li><a href="../classes/AmbientLight.html">AmbientLight</a></li>
+  <li><a href="../classes/Reflection.html">Reflection</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/Lighting.lua.html">Lighting.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h1>Lighting Engine</h1>
+
+<p>With help of the lighting engine you can render a lighted scene. You can create light sources and shadow casters to create your unlit rendered scene.</p>
+
+<p>TODO</p>
+
+<ul>
+<li>implement mutli reflections with raytracing</li>
+</ul>
+
+
+<p><a name="Usage"></a></p>
+
+<h2>Usage</h2>
+
+<pre>
+<span class="global">require</span> <span class="string">"Lighting"</span>
+
+<span class="comment">--- love init function
+</span><span class="keyword">function</span> love.init()
+    <span class="comment">-- initialize lighting
+</span>    Lighting.init()
+
+    <span class="comment">-- create 4 shadowcasters with two reflector sides
+</span>    myShadowCasters = {
+        Lighting.ShadowCaster.createRectangle(<span class="number">100</span>,<span class="number">100</span>, <span class="number">40</span>, {<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>}, {<span class="number">1</span>,<span class="number">3</span>}),
+        Lighting.ShadowCaster.createRectangle(<span class="number">200</span>,<span class="number">100</span>, <span class="number">40</span>, {<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>}, {<span class="number">1</span>,<span class="number">3</span>}),
+        Lighting.ShadowCaster.createRectangle(<span class="number">100</span>,<span class="number">200</span>, <span class="number">40</span>, {<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>}, {<span class="number">1</span>,<span class="number">3</span>}),
+        Lighting.ShadowCaster.createRectangle(<span class="number">200</span>,<span class="number">200</span>, <span class="number">40</span>, {<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>}, {<span class="number">1</span>,<span class="number">3</span>})
+    }
+
+    <span class="comment">-- create a lightsource
+</span>    Lighting.lights = {
+        Lighting.LightSource(<span class="number">150</span>,<span class="number">150</span>, <span class="number">100</span>,<span class="number">100</span>,<span class="number">100</span>)
+    }
+
+    <span class="comment">-- camera coordinates, you can translate the whole lighting
+</span>    cameraX = <span class="number">0</span>
+    cameraY = <span class="number">0</span>
+
+<span class="keyword">end</span>
+
+<span class="comment">--- love update callback
+</span><span class="keyword">function</span> love.update(dt)
+    <span class="comment">-- send the myShadowCasters table to the lighting
+</span>    Lighting.update(dt, myShadowCasters)
+<span class="keyword">end</span>
+
+<span class="comment">--- love draw callback
+</span><span class="keyword">function</span> love.draw()
+    Lighting.renderShadedScene(cameraX, cameraY)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> Lighting.drawUnlitBackground()
+    <span class="comment">-- draw your scene here
+</span>
+    <span class="comment">-- draw shadowcasters
+</span>    <span class="keyword">for</span> i,curShadowCaster <span class="keyword">in</span> <span class="global">pairs</span>(myShadowCasters) <span class="keyword">do</span>
+        curShadowCaster:render()
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+
+<p><a name="Data_that_needs_to_be_defined_by_the_user"></a></p>
+
+<h2>Data that needs to be defined by the user</h2>
+
+<h3>Ambient Light</h3>
+
+<p><a href="../classes/AmbientLight.html">Ambient Light</a> is a light source that will not cast any shadows.
+If you want your scene to be ambiently lighted then do the following:
+<pre>
+Lighting.ambient = Lighting.Ambient(<span class="number">100</span>,<span class="number">100</span>,<span class="number">100</span>)
+</pre></p>
+
+<h3>Light Source</h3>
+
+<p>Add a <a href="../classes/LightSource.html">LightSource</a> object to the Lighting.lights table to have a light source in your scene that casts shadows to all shadowcasters you add to your update function of update.</p>
+
+<h3>Shadowcaster</h3>
+
+<p>A <a href="../classes/ShadowCaster.html">ShadowCaster</a> will occlude all light sources and can have reflector sides. You have to send a table with shadowcasters to the <a href="file:///home/steve/Projekte/Softwareprojekt/doc/Lighting/modules/init.html#Lighting.update">update function</a> of Lighting
+<a name="Internal_classes"></a></p>
+
+<h2>Internal classes</h2>
+
+<p>The following objects will automatically created by lightsources and shadowcasters</p>
+
+<ul>
+<li><a href="../classes/Shadow.html">Shadow</a></li>
+<li><a href="../classes/Reflection.html">Reflection</a></li>
+</ul>
+
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

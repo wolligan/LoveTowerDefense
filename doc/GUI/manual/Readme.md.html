@@ -34,8 +34,8 @@
 <ul>
 <li><a href="#Introduction">Introduction </a></li>
 <li><a href="#Integrate_the_GUI_Toolkit_to_your_l__ve2D_Game">Integrate the GUI Toolkit to your löve2D Game </a></li>
-<li><a href="#Widgets">Widgets </a></li>
 <li><a href="#Usage">Usage </a></li>
+<li><a href="#Widgets">Widgets </a></li>
 </ul>
 
 
@@ -120,28 +120,13 @@ You can snap those anchors to anchors of other widgets or the borders of the scr
         <span class="keyword">end</span>
 
     <span class="keyword">else</span>
+
         <span class="comment">-- call here your own key handling
 </span>        myKeyPressed(key)
     <span class="keyword">end</span>
+
     GUI.notifyKey(key)
 <span class="keyword">end</span>
-
-
-<span class="comment">-- keyreleased callback
-</span><span class="keyword">function</span> love.keyreleased(key)
-
-    <span class="keyword">if</span> GUI.activeContainer <span class="keyword">then</span>
-        <span class="keyword">if</span> <span class="keyword">not</span> GUI.activeContainer.stealKeys <span class="keyword">then</span>
-            <span class="comment">-- call here your own key handling
-</span>            myKeyReleased(key)
-        <span class="keyword">end</span>
-
-    <span class="keyword">else</span>
-        <span class="comment">-- call here your own key handling
-</span>        myKeyReleased(key)
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-
 
 <span class="comment">-- mousepressed callback
 </span><span class="keyword">function</span> love.mousepressed(x, y, button)
@@ -153,6 +138,7 @@ You can snap those anchors to anchors of other widgets or the borders of the scr
         <span class="keyword">end</span>
 
     <span class="keyword">else</span>
+
         <span class="comment">-- call here your own key handling
 </span>        myMousePressed(x,y,button)
     <span class="keyword">end</span>
@@ -173,58 +159,63 @@ You can snap those anchors to anchors of other widgets or the borders of the scr
         <span class="keyword">end</span>
 
     <span class="keyword">else</span>
+
         <span class="keyword">if</span> Game.state.activeKeyBinding[key] <span class="keyword">then</span>
             <span class="comment">-- call here your own key handling
 </span>            myMouseReleased(x,y,button)
         <span class="keyword">end</span>
     <span class="keyword">end</span>
+
     GUI.notifyRelease()
 <span class="keyword">end</span>
 </pre>
 
 
-<p><a name="Widgets"></a></p>
-
-<h2>Widgets</h2>
-
-<p>Every Widget except Widget itself needs to be derived from the Widget class:
-<pre>
-<span class="comment">&mdash;&ndash; Label Widget
-</span><span class="comment">&mdash;@classmod Label
-</span>
-<span class="global">require</span> <span class="string">&ldquo;GUI.Widget&rdquo;</span></p>
-
-<p>GUI.Label = {}
-Utilities.OO.createDerivedClass(GUI.Label, GUI.Widget)</p>
-
-<p><span class="comment">&mdash; &hellip;
-</span>
-</pre>
-<a name="Usage"></a></p>
+<p><a name="Usage"></a></p>
 
 <h2>Usage</h2>
 
-<p>At first you have to create a container to hold your widgets:</p>
+<p>At first you have to create a <a href="../classes/Container.html">Container</a> to hold your widgets:</p>
 
 <pre>
 <span class="comment">-- create container
-</span>
+</span><span class="keyword">local</span> guiContainer = GUI.Container()
 </pre>
 
 
 <p>After that you can create your widgets</p>
 
 <pre>
-<span class="comment">-- create an example widget
-</span>
+<span class="comment">-- create a label and a button
+</span><span class="keyword">local</span> button = GUI.Button(<span class="string">"This is a button"</span>, <span class="keyword">function</span>() <span class="global">print</span>(<span class="string">"clicked the button"</span>) <span class="keyword">end</span>)
+<span class="keyword">local</span> label = GUI.Label(<span class="string">"This is a label"</span>)
 </pre>
 
 
-<p>Now you can position the widget. In this example we position it to bottom left corner and dimensions of 200x100</p>
+<p>Now you can position the widgets. In this example we position the button to the bottom right corner with dimensions of 200x100 and the label to the top left corner with dimensions of 300x100.</p>
 
 <pre>
-<span class="comment">-- set anchors and offsets
-</span>
+<span class="comment">-- set anchors and offsets of the button
+</span>button:setLeftAnchor(GUI.Root, <span class="string">"right"</span>)
+button:setRightAnchor(GUI.Root, <span class="string">"right"</span>)
+button:setBottomAnchor(GUI.Root, <span class="string">"bottom"</span>)
+button:setTopAnchor(GUI.Root, <span class="string">"bottom"</span>)
+
+button.leftAnchorOffset = -<span class="number">200</span>
+button.rightAnchorOffset = <span class="number">0</span>
+button.bottomAnchorOffset = <span class="number">0</span>
+button.topAnchorOffset = -<span class="number">100</span>
+
+<span class="comment">-- set anchors and offsets of the label
+</span>label:setLeftAnchor(GUI.Root, <span class="string">"left"</span>)
+label:setRightAnchor(GUI.Root, <span class="string">"left"</span>)
+label:setBottomAnchor(GUI.Root, <span class="string">"top"</span>)
+label:setTopAnchor(GUI.Root, <span class="string">"top"</span>)
+
+label.leftAnchorOffset = <span class="number">0</span>
+label.rightAnchorOffset = <span class="number">300</span>
+label.bottomAnchorOffset = <span class="number">100</span>
+label.topAnchorOffset = <span class="number">0</span>
 </pre>
 
 
@@ -242,6 +233,63 @@ Utilities.OO.createDerivedClass(GUI.Label, GUI.Widget)</p>
 <span class="comment">-- change font and font color
 </span>
 </pre>
+
+
+<p><a name="Widgets"></a></p>
+
+<h2>Widgets</h2>
+
+<h3>Make your own Widgets</h3>
+
+<p>Every Widget except Widget itself needs to be derived from the Widget class:
+<pre>
+<span class="comment">&mdash;&ndash; Label Widget
+</span><span class="comment">&mdash;@classmod MyWidget
+</span>
+<span class="global">require</span> <span class="string">&ldquo;GUI.Widget&rdquo;</span></p>
+
+<p>GUI.MyWidget = {}
+Utilities.OO.createDerivedClass(GUI.MyWidget, GUI.Widget)</p>
+
+<p><span class="comment">&mdash;&ndash; Constructor
+</span><span class="keyword">function</span> MyWidget:new()
+   self.label = <span class="number">0</span>
+<span class="keyword">end</span>
+</pre>
+Now we have our basic Widget which can be extended. For example you can overwrite the render and update functions.
+(The Widget class has some useful <a href="../classes/Widget.html#Render_functions">predefined methods</a> that can be used for rendering.)</p>
+
+<pre>
+<span class="comment">--- render overwrite
+</span><span class="comment">-- renders the background and the label
+</span><span class="keyword">function</span> MyWidget:render()
+    self:renderBackground()
+    self:renderLabel()
+<span class="keyword">end</span>
+
+<span class="comment">--- update overwrite
+</span><span class="comment">-- increases the label variable by two per second
+</span><span class="keyword">function</span> MyWidget:update(dt)
+   self.label = self.label + <span class="number">2</span> * dt
+<span class="keyword">end</span>
+
+<span class="comment">-- ...
+</span>
+</pre>
+
+
+<h3>Callbacks</h3>
+
+<p>Every Widget has the following <a href="../classes/Widget.html#Callback_functions">Callback</a> functions:</p>
+
+<ul>
+<li>render ()</li>
+<li>update (dt)</li>
+<li>onHover ()</li>
+<li>onClick ()</li>
+<li>onRelease ()</li>
+<li>notifyKey (key)</li>
+</ul>
 
 
 

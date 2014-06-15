@@ -34,44 +34,19 @@ function GUI.Widget:new()
     GUI.Widget.counter = GUI.Widget.counter + 1
 end
 
---- renders background
-function GUI.Widget:renderBackground()
-    if self.backgroundIsImaged then
-        love.graphics.setColor(unpack(self.backgroundColor))
-        self.backgroundImage.position = {self:getLeftAnchor(), self:getTopAnchor()}
-        self.backgroundImage.width = self:getWidth()
-        self.backgroundImage.height = self:getHeight()
-        self.backgroundImage:render()
-    else
-        love.graphics.setLineWidth(0.5)
-        love.graphics.setColor(unpack(self.backgroundColor))
-        love.graphics.rectangle("fill", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
-        love.graphics.setColor(unpack(self.borderColor))
-        love.graphics.rectangle("line", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
-    end
+function GUI.Widget:setApparentContainer(apparentContainer)
+    self.apparentContainer = apparentContainer
+    self.font = apparentContainer.font
+    self.backgroundColor = apparentContainer.backgroundColor
+    self.foregroundColor = apparentContainer.foregroundColor
+    self.hoverColor = apparentContainer.hoverColor
+    self.clickedColor = apparentContainer.clickedColor
+    self.borderColor = apparentContainer.borderColor
+    self.fontColor = apparentContainer.fontColor
 end
 
-
---- renders text at center of label
-function GUI.Widget:renderLabel()
-    if self.labelIsImaged then
-        local imageWidth = self.labelImage:getWidth()
-        local imageHeight = self.labelImage:getHeight()
-        local imagePosX = math.floor(self:getLeftAnchor() + self:getWidth()/2 - imageWidth/2)
-        local imagePosY = math.floor(self:getTopAnchor() + self:getHeight()/2 - imageHeight/2)
-
-        love.graphics.setColor(255,255,255)
-        love.graphics.draw(self.labelImage, imagePosX, imagePosY)
-    else
-        local textWidth = self.font:getWidth(self.text)
-        local textHeight = self.font:getHeight(self.text)
-        local textPosX = math.floor(self:getLeftAnchor() + self:getWidth()/2 - textWidth/2)
-        local textPosY = math.floor(self:getTopAnchor() + self:getHeight()/2 - textHeight/2)
-
-        love.graphics.setFont(self.font)
-        love.graphics.setColor(unpack(self.fontColor))
-        love.graphics.print(self.text, textPosX, textPosY)
-    end
+function GUI.Widget:isCursorOverWidget()
+    return Utilities.Intersection.checkPointRectangle(love.mouse.getX(), love.mouse.getY(), self:getLeftAnchor(), self:getRightAnchor(), self:getTopAnchor(), self:getBottomAnchor())
 end
 
 --- Anchor functions
@@ -186,10 +161,6 @@ function GUI.Widget:update(dt)
 
 end
 
-function GUI.Widget:isCursorOverWidget()
-    return Utilities.Intersection.checkPointRectangle(love.mouse.getX(), love.mouse.getY(), self:getLeftAnchor(), self:getRightAnchor(), self:getTopAnchor(), self:getBottomAnchor())
-end
-
 --- gets called when mouse cursor hovers
 function GUI.Widget:onHover()
     --Utilities.TextOutput.print("hovered "..self.name)
@@ -249,13 +220,44 @@ function GUI.Widget:visualizeAnchors()
     love.graphics.line((self:getLeftAnchor() + self:getRightAnchor()) / 2, self:bottomAnchor(), (self:getLeftAnchor() + self:getRightAnchor()) / 2, self:getBottomAnchor())
 end
 
-function GUI.Widget:setApparentContainer(apparentContainer)
-    self.apparentContainer = apparentContainer
-    self.font = apparentContainer.font
-    self.backgroundColor = apparentContainer.backgroundColor
-    self.foregroundColor = apparentContainer.foregroundColor
-    self.hoverColor = apparentContainer.hoverColor
-    self.clickedColor = apparentContainer.clickedColor
-    self.borderColor = apparentContainer.borderColor
-    self.fontColor = apparentContainer.fontColor
+--- Render functions
+-- @section renderf
+
+--- renders background
+function GUI.Widget:renderBackground()
+    if self.backgroundIsImaged then
+        love.graphics.setColor(unpack(self.backgroundColor))
+        self.backgroundImage.position = {self:getLeftAnchor(), self:getTopAnchor()}
+        self.backgroundImage.width = self:getWidth()
+        self.backgroundImage.height = self:getHeight()
+        self.backgroundImage:render()
+    else
+        love.graphics.setLineWidth(0.5)
+        love.graphics.setColor(unpack(self.backgroundColor))
+        love.graphics.rectangle("fill", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
+        love.graphics.setColor(unpack(self.borderColor))
+        love.graphics.rectangle("line", self:getLeftAnchor(), self:getTopAnchor(), self:getWidth(), self:getHeight())
+    end
+end
+
+--- renders text at center of label
+function GUI.Widget:renderLabel()
+    if self.labelIsImaged then
+        local imageWidth = self.labelImage:getWidth()
+        local imageHeight = self.labelImage:getHeight()
+        local imagePosX = math.floor(self:getLeftAnchor() + self:getWidth()/2 - imageWidth/2)
+        local imagePosY = math.floor(self:getTopAnchor() + self:getHeight()/2 - imageHeight/2)
+
+        love.graphics.setColor(255,255,255)
+        love.graphics.draw(self.labelImage, imagePosX, imagePosY)
+    else
+        local textWidth = self.font:getWidth(self.text)
+        local textHeight = self.font:getHeight(self.text)
+        local textPosX = math.floor(self:getLeftAnchor() + self:getWidth()/2 - textWidth/2)
+        local textPosY = math.floor(self:getTopAnchor() + self:getHeight()/2 - textHeight/2)
+
+        love.graphics.setFont(self.font)
+        love.graphics.setColor(unpack(self.fontColor))
+        love.graphics.print(self.text, textPosX, textPosY)
+    end
 end

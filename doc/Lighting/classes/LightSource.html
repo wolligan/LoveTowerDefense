@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Lighting Engine Documentation</title>
+    <title>2D Lighting</title>
     <link rel="stylesheet" href="../ldoc.css" type="text/css" />
 </head>
 <body>
@@ -24,7 +24,7 @@
 
 <div id="navigation">
 <br/>
-<h1>Lighting Engine</h1>
+<h1>2D Lighting Engine</h1>
 
 <ul>
   <li><a href="../index.html">Index</a></li>
@@ -38,6 +38,7 @@
 
 <h2>Classes</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/ShadowCaster.html">ShadowCaster</a></li>
   <li><strong>LightSource</strong></li>
   <li><a href="../classes/Shadow.html">Shadow</a></li>
   <li><a href="../classes/AmbientLight.html">AmbientLight</a></li>
@@ -47,14 +48,24 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/init.html">init</a></li>
 </ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/Lighting.lua.html">Lighting.lua</a></li>
+</ul>
 
 </div>
 
 <div id="content">
 
 <h1>Class <code>LightSource</code></h1>
-<p></p>
-<p></p>
+<p>
+</p>
+<p>
+</p>
     <h3>Info:</h3>
     <ul>
         <li><strong>Author</strong>: Steve Wolligandt</li>
@@ -64,20 +75,36 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#Lighting.LightSource:new">Lighting.LightSource:new (x, y, r, g, b, range)</a></td>
+	<td class="summary">Constructor</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#Lighting.LightSource:render">Lighting.LightSource:render (translateX, translateY)</a></td>
-	<td class="summary">renders light without shadows and reflections</td>
+	<td class="summary">renders light with and its reflections</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Lighting.LightSource:drawLight">Lighting.LightSource:drawLight (translateX, translateY)</a></td>
-	<td class="summary">renders a fullscreen quad with inverted stencil with shadows</td>
+	<td class="summary">renders the light source with shadows</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Lighting.LightSource:drawShadows">Lighting.LightSource:drawShadows (translateX, translateY)</a></td>
-	<td class="summary">draws all shadow polygons of lightsource</td>
+	<td class="summary">draws the lightsource&rsquo;s shadows</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.LightSource:drawReflections">Lighting.LightSource:drawReflections (translateX, translateY)</a></td>
+	<td class="summary">draws the lightsource&rsquo;s reflections</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.LightSource:update">Lighting.LightSource:update (scene)</a></td>
+	<td class="summary">creates lightsources&rsquo;s shadows and reflections</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Lighting.LightSource:updateShadows">Lighting.LightSource:updateShadows (scene)</a></td>
-	<td class="summary">calculates the shadow polygons for a list of shadowcasters</td>
+	<td class="summary">creates lightsources&rsquo;s shadows</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.LightSource:updateReflections">Lighting.LightSource:updateReflections (scene)</a></td>
+	<td class="summary">creates lightsources&rsquo;s reflections</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Lighting.LightSource:getReflectionPolygons">Lighting.LightSource:getReflectionPolygons (mesh)</a></td>
@@ -92,19 +119,56 @@
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
     <dt>
+    <a name = "Lighting.LightSource:new"></a>
+    <strong>Lighting.LightSource:new (x, y, r, g, b, range)</strong>
+    </dt>
+    <dd>
+    Constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         x-position
+        </li>
+        <li><span class="parameter">y</span>
+         y-position
+        </li>
+        <li><span class="parameter">r</span>
+         red color value
+        </li>
+        <li><span class="parameter">g</span>
+         green color value
+        </li>
+        <li><span class="parameter">b</span>
+         blue color value
+        </li>
+        <li><span class="parameter">range</span>
+         radius of the light source
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "Lighting.LightSource:render"></a>
     <strong>Lighting.LightSource:render (translateX, translateY)</strong>
     </dt>
     <dd>
-    renders light without shadows and reflections
+    renders light with and its reflections
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">translateX</span>
 
+
         </li>
         <li><span class="parameter">translateY</span>
+
 
         </li>
     </ul>
@@ -119,15 +183,17 @@
     <strong>Lighting.LightSource:drawLight (translateX, translateY)</strong>
     </dt>
     <dd>
-    renders a fullscreen quad with inverted stencil with shadows
+    renders the light source with shadows
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">translateX</span>
 
+
         </li>
         <li><span class="parameter">translateY</span>
+
 
         </li>
     </ul>
@@ -142,15 +208,63 @@
     <strong>Lighting.LightSource:drawShadows (translateX, translateY)</strong>
     </dt>
     <dd>
-    draws all shadow polygons of lightsource
+    draws the lightsource&rsquo;s shadows
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">translateX</span>
 
+
         </li>
         <li><span class="parameter">translateY</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.LightSource:drawReflections"></a>
+    <strong>Lighting.LightSource:drawReflections (translateX, translateY)</strong>
+    </dt>
+    <dd>
+    draws the lightsource&rsquo;s reflections
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">translateX</span>
+
+
+        </li>
+        <li><span class="parameter">translateY</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.LightSource:update"></a>
+    <strong>Lighting.LightSource:update (scene)</strong>
+    </dt>
+    <dd>
+    creates lightsources&rsquo;s shadows and reflections
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">scene</span>
+
 
         </li>
     </ul>
@@ -165,13 +279,34 @@
     <strong>Lighting.LightSource:updateShadows (scene)</strong>
     </dt>
     <dd>
-    calculates the shadow polygons for a list of shadowcasters
+    creates lightsources&rsquo;s shadows
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">scene</span>
          list of Mesh objects
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.LightSource:updateReflections"></a>
+    <strong>Lighting.LightSource:updateReflections (scene)</strong>
+    </dt>
+    <dd>
+    creates lightsources&rsquo;s reflections
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">scene</span>
+
+
         </li>
     </ul>
 

@@ -1,4 +1,5 @@
----
+--- Basic Character, derive every other character from this Class
+--@classmod Character
 --@author Steve Wolligandt
 
 require "Tilemap"
@@ -12,7 +13,6 @@ function Ingame.Character:new(apparentScene,x,y, color, goalX, goalY)
 
     self.goalX = goalX
     self.goalY = goalY
-    --self:AI_calculatePathToGoal(1,1)
 
     Ingame.mobs[#Ingame.mobs+1] = self
 end

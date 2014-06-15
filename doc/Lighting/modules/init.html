@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Lighting Engine Documentation</title>
+    <title>2D Lighting</title>
     <link rel="stylesheet" href="../ldoc.css" type="text/css" />
 </head>
 <body>
@@ -24,7 +24,7 @@
 
 <div id="navigation">
 <br/>
-<h1>Lighting Engine</h1>
+<h1>2D Lighting Engine</h1>
 
 <ul>
   <li><a href="../index.html">Index</a></li>
@@ -42,10 +42,19 @@
 </ul>
 <h2>Classes</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/ShadowCaster.html">ShadowCaster</a></li>
   <li><a href="../classes/LightSource.html">LightSource</a></li>
   <li><a href="../classes/Shadow.html">Shadow</a></li>
   <li><a href="../classes/AmbientLight.html">AmbientLight</a></li>
   <li><a href="../classes/Reflection.html">Reflection</a></li>
+</ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/Lighting.lua.html">Lighting.lua</a></li>
 </ul>
 
 </div>
@@ -53,8 +62,10 @@
 <div id="content">
 
 <h1>Module <code>init</code></h1>
-<p></p>
-<p></p>
+<p>
+</p>
+<p>
+</p>
     <h3>Info:</h3>
     <ul>
         <li><strong>Author</strong>: Steve Wolligandt</li>
@@ -64,8 +75,16 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#Lighting.init">Lighting.init ()</a></td>
+	<td class="summary">initializes everything used for lighting</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.renderShadedScene">Lighting.renderShadedScene (translateX, translateY)</a></td>
+	<td class="summary">Renders a shaded scene</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#Lighting.drawUnlitBackground">Lighting.drawUnlitBackground ()</a></td>
-	<td class="summary">This function needs to be overwritten</td>
+	<td class="summary">This function needs to be overwritten.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Lighting.update">Lighting.update (dt, shadowCasters)</a></td>
@@ -80,11 +99,48 @@
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
     <dt>
+    <a name = "Lighting.init"></a>
+    <strong>Lighting.init ()</strong>
+    </dt>
+    <dd>
+    initializes everything used for lighting
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.renderShadedScene"></a>
+    <strong>Lighting.renderShadedScene (translateX, translateY)</strong>
+    </dt>
+    <dd>
+    Renders a shaded scene
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">translateX</span>
+         You can use this value for camera translation.
+        </li>
+        <li><span class="parameter">translateY</span>
+         You can use this value for camera translation.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "Lighting.drawUnlitBackground"></a>
     <strong>Lighting.drawUnlitBackground ()</strong>
     </dt>
     <dd>
-    This function needs to be overwritten
+    This function needs to be overwritten.  It renders the unlit background
 
 
 
@@ -104,10 +160,10 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">dt</span>
-
+         delta time
         </li>
         <li><span class="parameter">shadowCasters</span>
-
+         list of the shadow casters you want to have in your lit scene
         </li>
     </ul>
 

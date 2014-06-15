@@ -1,5 +1,4 @@
 --- Button
--- Button
 --@classmod Button
 
 require "GUI.Label"

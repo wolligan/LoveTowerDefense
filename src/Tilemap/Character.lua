@@ -9,7 +9,7 @@ function Tilemap.Character:new(apparentScene,x,y)
 	self.x = x
 	self.y = y
 
-    self.mesh = Geometry.Mesh.createDiscoCircle(x,y, Tilemap.Settings.playerSize/2, 10, {0,127,0})
+    self.mesh = Lighting.ShadowCaster.createDiscoCircle(x,y, Tilemap.Settings.playerSize/2, 10, {0,127,0})
     self.mesh.reflectorSides = {}
 
 	self.oldX = x

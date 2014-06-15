@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>2D Lighting</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>2D Lighting Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>Lighting.lua</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/init.html">init</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/ShadowCaster.html">ShadowCaster</a></li>
+  <li><a href="../classes/LightSource.html">LightSource</a></li>
+  <li><a href="../classes/Shadow.html">Shadow</a></li>
+  <li><a href="../classes/AmbientLight.html">AmbientLight</a></li>
+  <li><a href="../classes/Reflection.html">Reflection</a></li>
+</ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <pre>
+<span class="comment">--- Testing of Lighting
+</span><span class="comment">--@author Steve Wolligandt
+</span>
+<span class="global">require</span> <span class="string">"Lighting"</span>
+
+Testing.Lighting = {}
+
+<span class="keyword">function</span> Testing.Lighting.init()
+    Lighting.init()
+    Lighting.lights =  {Lighting.LightSource(love.graphics.getWidth()/<span class="number">3</span>, love.graphics.getHeight()/<span class="number">2</span>, <span class="number">50</span>,<span class="number">50</span>,<span class="number">50</span>),
+                        <span class="comment">--[[Lighting.LightSource(love.graphics.getWidth()*2/3, love.graphics.getHeight()/2, 50,50,50)]]</span>}
+    Lighting.ambient = Lighting.AmbientLight(<span class="number">100</span>,<span class="number">100</span>,<span class="number">100</span>)
+    <span class="comment">--Lighting.ambient = Lighting.AmbientLight(255,255,255)
+</span>
+    Testing.Lighting.background = Game.getSprite(<span class="string">"assets/sprites/lighttest/background.png"</span>)
+    Lighting.drawUnlitBackground = <span class="keyword">function</span>() love.graphics.draw(Testing.Lighting.background) <span class="keyword">end</span>
+    Testing.Lighting.createShadowCasters()
+
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> Testing.Lighting.update(dt)
+    <span class="keyword">if</span> Testing.Lighting.clickedLightSource <span class="keyword">then</span>
+        Testing.Lighting.clickedLightSource.position = {love.mouse.getX(), love.mouse.getY()}
+    <span class="keyword">end</span>
+    Lighting.update(dt, Testing.Lighting.shadowCasters)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> Testing.Lighting.render()
+    Lighting.renderShadedScene()
+    <span class="keyword">for</span> i,curShadowCaster <span class="keyword">in</span> <span class="global">pairs</span>(Testing.Lighting.shadowCasters) <span class="keyword">do</span>
+        curShadowCaster:render()
+    <span class="keyword">end</span>
+    <span class="keyword">for</span> i,curLight <span class="keyword">in</span> <span class="global">pairs</span>(Lighting.lights) <span class="keyword">do</span>
+        love.graphics.setColor(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>)
+        love.graphics.circle(<span class="string">"fill"</span>, curLight.position[<span class="number">1</span>], curLight.position[<span class="number">2</span>], <span class="number">10</span>)
+    <span class="keyword">end</span>
+
+    love.graphics.<span class="global">print</span>(<span class="string">"Drag the lightsource"</span>,<span class="number">10</span>,<span class="number">10</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> Testing.Lighting.createShadowCasters()
+    <span class="comment">-- create list of shadowCasters
+</span>    Testing.Lighting.shadowCasters = {}
+    <span class="keyword">local</span> arraySizeX = <span class="number">5</span>
+    <span class="keyword">local</span> arraySizeY = <span class="number">4</span>
+    <span class="keyword">local</span> border = <span class="number">200</span>
+    <span class="keyword">local</span> primitiveSize = <span class="number">23</span>
+    <span class="keyword">local</span> numSlices = <span class="number">4</span>
+
+    <span class="comment">--local colors = {Color.blue, Color.red, Color.green, Color.yellow}
+</span>    <span class="keyword">local</span> colors = {{<span class="number">60</span>,<span class="number">60</span>,<span class="number">60</span>}}
+    curColorIndex = <span class="number">1</span>
+
+    <span class="keyword">for</span> x = <span class="number">1</span>,arraySizeX <span class="keyword">do</span>
+        <span class="keyword">for</span> y = <span class="number">1</span>,arraySizeY <span class="keyword">do</span>
+
+            curColorIndex = curColorIndex % #colors
+            <span class="keyword">if</span> curColorIndex == <span class="number">0</span> <span class="keyword">then</span> curColorIndex = #colors <span class="keyword">end</span>
+
+            Testing.Lighting.shadowCasters[#Testing.Lighting.shadowCasters + <span class="number">1</span>] = Lighting.ShadowCaster.createRectangle((love.graphics.getWidth()-border*<span class="number">2</span>)  * ((x-<span class="number">1</span>)/(arraySizeX-<span class="number">1</span>)) + border,
+                                                                                              (love.graphics.getHeight()-border*<span class="number">2</span>) * ((y-<span class="number">1</span>)/(arraySizeY-<span class="number">1</span>)) + border,
+                                                                                              primitiveSize, colors[curColorIndex])
+            curColorIndex = curColorIndex + <span class="number">1</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+Testing.Lighting.activeKeyBinding = {}
+Testing.Lighting.activeKeyBinding[<span class="string">"escape"</span>] = {
+    pressed = <span class="keyword">function</span>()
+        Game.changeState(Testing.Menu)
+    <span class="keyword">end</span>
+}
+
+
+Testing.Lighting.activeKeyBinding[<span class="string">"mouse_left"</span>] = {
+    pressed = <span class="keyword">function</span>()
+        <span class="keyword">local</span> mX = love.mouse.getX()
+        <span class="keyword">local</span> mY = love.mouse.getY()
+
+        <span class="keyword">for</span> i,curLight <span class="keyword">in</span> <span class="global">pairs</span>(Lighting.lights) <span class="keyword">do</span>
+            <span class="keyword">if</span> <span class="global">math</span>.abs(mX - curLight.position[<span class="number">1</span>]) &lt; <span class="number">7</span> <span class="keyword">and</span> <span class="global">math</span>.abs(mY - curLight.position[<span class="number">2</span>]) &lt; <span class="number">7</span> <span class="keyword">then</span>
+                Testing.Lighting.clickedLightSource = curLight
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>,
+
+    released = <span class="keyword">function</span>()
+        Testing.Lighting.clickedLightSource = <span class="keyword">nil</span>
+    <span class="keyword">end</span>
+}</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

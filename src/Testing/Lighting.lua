@@ -27,6 +27,15 @@ end
 
 function Testing.Lighting.render()
     Lighting.renderShadedScene()
+    for i,curShadowCaster in pairs(Testing.Lighting.shadowCasters) do
+        curShadowCaster:render()
+    end
+    for i,curLight in pairs(Lighting.lights) do
+        love.graphics.setColor(255,255,255)
+        love.graphics.circle("fill", curLight.position[1], curLight.position[2], 10)
+    end
+
+    love.graphics.print("Drag the lightsource",10,10)
 end
 
 function Testing.Lighting.createShadowCasters()
@@ -48,7 +57,7 @@ function Testing.Lighting.createShadowCasters()
             curColorIndex = curColorIndex % #colors
             if curColorIndex == 0 then curColorIndex = #colors end
 
-            Testing.Lighting.shadowCasters[#Testing.Lighting.shadowCasters + 1] = Geometry.Mesh.createRectangle((love.graphics.getWidth()-border*2)  * ((x-1)/(arraySizeX-1)) + border,
+            Testing.Lighting.shadowCasters[#Testing.Lighting.shadowCasters + 1] = Lighting.ShadowCaster.createRectangle((love.graphics.getWidth()-border*2)  * ((x-1)/(arraySizeX-1)) + border,
                                                                                               (love.graphics.getHeight()-border*2) * ((y-1)/(arraySizeY-1)) + border,
                                                                                               primitiveSize, colors[curColorIndex])
             curColorIndex = curColorIndex + 1

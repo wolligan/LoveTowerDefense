@@ -1,4 +1,4 @@
----
+--- Blub
 --@classmod Scene
 --@author Steve Wolligandt
 
@@ -56,8 +56,8 @@ function Tilemap.Scene:createRandomLevel()
         while Tilemap.tileDict[self.tiles[goalX][goalY]].isObstacle do
 			goalX, goalY = math.random(1,Tilemap.Settings.levelSize), math.random(1,Tilemap.Settings.levelSize)
 		end
-        self.characters[#self.characters]:AI_setGoal(goalX, goalY)
-        self.characters[#self.characters]:AI_calculatePathToGoal()
+
+        self.characters[#self.characters]:AI_calculatePathToGoal(goalX, goalY)
 
 	end
     self.camera.target = self.characters[1]
@@ -158,7 +158,7 @@ function Tilemap.Scene:getObstacleMeshes()
     for y = 1, self:getLevelHeight()  do
 		for x = 1,self:getLevelHeight() do
 			if Tilemap.tileDict[self.tiles[x][y]].isObstacle then
-				meshes[#meshes+1] = Geometry.Mesh.createRectangle((x-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize/2, (y-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize/2, Tilemap.Settings.tileSize/2, Tilemap.tileDict[self.tiles[x][y]].color, {})
+				meshes[#meshes+1] = Lighting.ShadowCaster.createRectangle((x-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize/2, (y-1)*Tilemap.Settings.tileSize + Tilemap.Settings.tileSize/2, Tilemap.Settings.tileSize/2, Tilemap.tileDict[self.tiles[x][y]].color, {})
 			end
 		end
 	end

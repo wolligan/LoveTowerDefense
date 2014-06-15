@@ -47,8 +47,6 @@ function Testing.CoordinateSystem.getMouseCoordinates()
     return x,y
 end
 
-
-require "Testing.Intersection"
 require "Testing.Lighting"
 require "Testing.Vector"
 require "Testing.GUI"

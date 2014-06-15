@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Game Mechanics</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Game Mechanics</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Key_Bindings">Key Bindings </a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/init.html">init</a></li>
+  <li><strong>BuildPhase</strong></li>
+  <li><a href="../modules/SpawnPhase.html">SpawnPhase</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/Tower.html">Tower</a></li>
+  <li><a href="../classes/ReflectorTower.html">ReflectorTower</a></li>
+  <li><a href="../classes/Character.html">Character</a></li>
+  <li><a href="../classes/TempCharacter.html">TempCharacter</a></li>
+  <li><a href="../classes/LightEmitterTower.html">LightEmitterTower</a></li>
+</ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>BuildPhase</code></h1>
+<p>Phase for building, setting and upgrading towers</p>
+<p>
+</p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Author</strong>: Steve Wolligandt</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Ingame.BuildPhase.buildTowerAt">Ingame.BuildPhase.buildTowerAt (x, y)</a></td>
+	<td class="summary">Current function to build a tower.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Ingame.BuildPhase.activate">Ingame.BuildPhase.activate ()</a></td>
+	<td class="summary">Activates Build Phase</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Ingame.BuildPhase.update">Ingame.BuildPhase.update (dt)</a></td>
+	<td class="summary">Updates Build Phase</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Ingame.BuildPhase.createGUI">Ingame.BuildPhase.createGUI ()</a></td>
+	<td class="summary">Creates the GUI of the Build Phase</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Ingame.BuildPhase.slideInGUI">Ingame.BuildPhase.slideInGUI ()</a></td>
+	<td class="summary">Activates the GUI
+ TODO animate GUI activation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Ingame.BuildPhase.slideOutGUI">Ingame.BuildPhase.slideOutGUI ()</a></td>
+	<td class="summary">Deactivates the GUI
+ TODO animate GUI deactivation</td>
+	</tr>
+</table>
+<h2><a href="#Key_Bindings">Key Bindings </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Ingame.BuildPhase.KeyBinding">Ingame.BuildPhase.KeyBinding</a></td>
+	<td class="summary">Keybindings</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "Ingame.BuildPhase.buildTowerAt"></a>
+    <strong>Ingame.BuildPhase.buildTowerAt (x, y)</strong>
+    </dt>
+    <dd>
+    Current function to build a tower.  This function will be overwritten at some times to set different towers
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         x-coordinate of tower to be set
+        </li>
+        <li><span class="parameter">y</span>
+         y-coordinate of tower to be set
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Ingame.BuildPhase.activate"></a>
+    <strong>Ingame.BuildPhase.activate ()</strong>
+    </dt>
+    <dd>
+    Activates Build Phase
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Ingame.BuildPhase.update"></a>
+    <strong>Ingame.BuildPhase.update (dt)</strong>
+    </dt>
+    <dd>
+    Updates Build Phase
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+         delta time
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Ingame.BuildPhase.createGUI"></a>
+    <strong>Ingame.BuildPhase.createGUI ()</strong>
+    </dt>
+    <dd>
+    Creates the GUI of the Build Phase
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Ingame.BuildPhase.slideInGUI"></a>
+    <strong>Ingame.BuildPhase.slideInGUI ()</strong>
+    </dt>
+    <dd>
+    Activates the GUI
+ TODO animate GUI activation
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Ingame.BuildPhase.slideOutGUI"></a>
+    <strong>Ingame.BuildPhase.slideOutGUI ()</strong>
+    </dt>
+    <dd>
+    Deactivates the GUI
+ TODO animate GUI deactivation
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Key_Bindings"></a>Key Bindings </h2>
+
+
+    <dl class="function">
+    <dt>
+    <a name = "Ingame.BuildPhase.KeyBinding"></a>
+    <strong>Ingame.BuildPhase.KeyBinding</strong>
+    </dt>
+    <dd>
+    Keybindings
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">leftMouse</span>
+         set the currently activated tower
+        </li>
+        <li><span class="parameter">escape</span>
+         open pause menu
+        </li>
+        <li><span class="parameter">left</span>
+        ,right,up,down move camera
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

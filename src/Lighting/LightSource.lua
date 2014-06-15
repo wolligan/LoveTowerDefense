@@ -8,7 +8,13 @@ require "Utilities.Intersection"
 Lighting.LightSource = {}
 Utilities.OO.createClass(Lighting.LightSource)
 
----
+--- Constructor
+--@param x x-position
+--@param y y-position
+--@param r red color value
+--@param g green color value
+--@param b blue color value
+--@param range radius of the light source
 function Lighting.LightSource:new(x,y, r,g,b, range)
     self.position = {}
     self.position[1] = x or 0
@@ -25,14 +31,14 @@ function Lighting.LightSource:new(x,y, r,g,b, range)
     self.canvas = love.graphics.newCanvas()
 end
 
---- renders light without shadows and reflections
+--- renders light with and its reflections
 function Lighting.LightSource:render(translateX, translateY)
     self:drawLight(translateX, translateY)
 
     self:drawReflections(translateX, translateY)
 end
 
---- renders a fullscreen quad with inverted stencil with shadows
+--- renders the light source with shadows
 function Lighting.LightSource:drawLight(translateX, translateY)
 
     love.graphics.setBlendMode("additive")
@@ -45,14 +51,14 @@ function Lighting.LightSource:drawLight(translateX, translateY)
     --love.graphics.setInvertedStencil(nil)
 end
 
---- draws all shadow polygons of lightsource
+--- draws the lightsource's shadows
 function Lighting.LightSource:drawShadows(translateX, translateY)
     for i,curShadow in pairs(self.shadows) do
         curShadow:render(translateX, translateY)
     end
 end
 
----
+--- draws the lightsource's reflections
 function Lighting.LightSource:drawReflections(translateX, translateY)
 
     for i,curMeshReflections in pairs(self.reflections) do
@@ -71,23 +77,13 @@ function Lighting.LightSource:drawReflections(translateX, translateY)
     end
 end
 
----
-function Lighting.LightSource:renderCircle()
-    love.graphics.setColor(unpack(self.color))
-    love.graphics.circle( "fill", self.position[1], self.position[2], 10 )
-
-    love.graphics.setColor(0,0,0)
-    love.graphics.setLineWidth(1)
-    love.graphics.circle( "line", self.position[1], self.position[2], 10 )
-end
-
----
+--- creates lightsources's shadows and reflections
 function Lighting.LightSource:update(scene)
     self:updateShadows(scene)
     self:updateReflections(scene)
 end
 
---- calculates the shadow polygons for a list of shadowcasters
+--- creates lightsources's shadows
 -- @param scene list of Mesh objects
 function Lighting.LightSource:updateShadows(scene)
     self.shadows = {}
@@ -99,7 +95,7 @@ function Lighting.LightSource:updateShadows(scene)
     end
 end
 
----
+--- creates lightsources's reflections
 function Lighting.LightSource:updateReflections(scene)
     self.reflections = {}
     for i=1,#scene do

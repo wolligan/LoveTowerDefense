@@ -30,8 +30,8 @@ function Tilemap.Camera:update()
         else
             self.y = self.appropriateScene:getLevelHeight()*Tilemap.Settings.tileSize/2
         end
-		camera.x = getActiveScene().characters[getActiveScene().playerIndex].x
-		camera.y = getActiveScene().characters[getActiveScene().playerIndex].y
+		self.x = Tilemap.getActiveScene().characters[Tilemap.getActiveScene().playerIndex].x
+		self.y = Tilemap.getActiveScene().characters[Tilemap.getActiveScene().playerIndex].y
 	end
 end
 

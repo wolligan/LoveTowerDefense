@@ -1,5 +1,4 @@
 --- loads all utility modules
-
 Utilities = {}
 
 require "Utilities.Color"

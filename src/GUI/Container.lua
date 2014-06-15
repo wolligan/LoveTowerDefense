@@ -15,7 +15,7 @@ Utilities.OO.createClass(GUI.Container)
 function GUI.Container:new(font, backgroundColor, foregroundColor, hoverColor, clickedColor, borderColor, fontColor)
     self.widgets = {}
     --self.font = font or Game.getFont("assets/fonts/comic.ttf")
-    self.font = font or Game.getFont("assets/fonts/DejaVuSans.ttf")
+    self.font = font or Game.getFont("GUI/DejaVuSans.ttf")
     self.backgroundColor = backgroundColor or Utilities.Color.white
     self.foregroundColor = foregroundColor or {150,150,150}
     self.hoverColor = hoverColor or {230,230,230}

@@ -1,10 +1,14 @@
----
+--- Lets you graphically save, load and create tilemaps
 --@author Steve Wolligandt
 
 require "Tilemap"
 
 LevelEditor = {}
 
+--- Game State functions
+--@section gamestatfuncs
+
+--- Call this function to initialize the LevelEditor
 function LevelEditor.init()
     Ingame.init()
     Tilemap.init()
@@ -14,14 +18,21 @@ function LevelEditor.init()
     LevelEditor.createGUI()
 end
 
+--- Renders the LevelEditor
 function LevelEditor.render()
     Tilemap.render()
 end
 
+--- Updates the LevelEditor
+--@param dt delta time
 function LevelEditor.update(dt)
     Tilemap.update(dt)
 end
 
+--- Functions
+--@section general
+
+--- Creates the GUI for Level Editor
 function LevelEditor.createGUI()
     LevelEditor.GUI = GUI.Container(nil,{255,255,255,200},nil,{200,200,200,200},{255,255,255,200},{50,50,50,255},Utilities.Color.black)
 
@@ -133,12 +144,22 @@ function LevelEditor.createGUI()
     LevelEditor.GUI:addWidget(button_clear)
 end
 
+--- Change the tile under the current position of the cursor
 function LevelEditor.changeTile()
     local x,y = Tilemap.getActiveScene():getTileCoordinatesByCamera(love.mouse.getX(), love.mouse.getY())
     if x > 0 and y > 0 and x <= Tilemap.getActiveScene():getLevelWidth() and y <= Tilemap.getActiveScene():getLevelHeight() then
         Tilemap.getActiveScene().tiles[x][y] = LevelEditor.currentTileIndex
     end
 end
+
+--- Keybindings
+--@section keys
+
+--- Keybindings for the level editor
+--@field escape Return to Menu.
+--@field w,a,s,d Walk with first character in scene.
+--@field space Center camera to first character in scene.
+--@field up,down,left,right Move the camera in scene.
 
 LevelEditor.activeKeyBinding = {}
 LevelEditor.activeKeyBinding["escape"] = {
@@ -210,6 +231,11 @@ LevelEditor.activeKeyBinding[" "] = {
 	end
 }
 
+--- Custom Widget render functions
+--@section widgets
+
+--- Custom render function for widget that draws the currently selected tile
+--@param self blub
 function LevelEditor.renderSelectedTileWidget(self)
     self:renderBackground()
     love.graphics.setColor(unpack(self.apparentContainer.fontColor))

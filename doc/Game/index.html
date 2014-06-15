@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>LightedTowerDefense Documentation</title>
+    <title>Lighted Tower Defense</title>
     <link rel="stylesheet" href="ldoc.css" type="text/css" />
 </head>
 <body>
@@ -24,338 +24,298 @@
 
 <div id="navigation">
 <br/>
-<h1>löve! Tower Defense!</h1>
+<h1>Lighted Tower Defense Game</h1>
 
 
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
 
 
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
-  <li><a href="modules/Tilemap.html">Tilemap</a></li>
-  <li><a href="modules/Tilemap.Character.html">Tilemap.Character</a></li>
-  <li><a href="modules/Tilemap.Settings.html">Tilemap.Settings</a></li>
-  <li><a href="modules/Tilemap.Camera.html">Tilemap.Camera</a></li>
-  <li><a href="modules/Tilemap.TileDict.html">Tilemap.TileDict</a></li>
-  <li><a href="modules/Utilities.html">Utilities</a></li>
-  <li><a href="modules/Utilities.Tables.html">Utilities.Tables</a></li>
-  <li><a href="modules/Utilities.Vector.html">Utilities.Vector</a></li>
-  <li><a href="modules/Utilities.TextOutput.html">Utilities.TextOutput</a></li>
-  <li><a href="modules/Utilities.Intersection.html">Utilities.Intersection</a></li>
-  <li><a href="modules/Utilities.SlicedSprite.html">Utilities.SlicedSprite</a></li>
-  <li><a href="modules/Utilities.Color.html">Utilities.Color</a></li>
-  <li><a href="modules/Utilities.OO.html">Utilities.OO</a></li>
-  <li><a href="modules/LevelEditor.html">LevelEditor</a></li>
-  <li><a href="modules/MainMenu.html">MainMenu</a></li>
-  <li><a href="modules/Game.html">Game</a></li>
-  <li><a href="modules/Lighting.html">Lighting</a></li>
-  <li><a href="modules/Keys.html">Keys</a></li>
-  <li><a href="modules/GUI.html">GUI</a></li>
-  <li><a href="modules/Networking.html">Networking</a></li>
-  <li><a href="modules/Keybindings.html">Keybindings</a></li>
-  <li><a href="modules/Keybindings.TilemapTestKeyBinding.html">Keybindings.TilemapTestKeyBinding</a></li>
-  <li><a href="modules/Geometry.html">Geometry</a></li>
-  <li><a href="modules/Geometry.Mesh.html">Geometry.Mesh</a></li>
-  <li><a href="modules/main.html">main</a></li>
-  <li><a href="modules/Ingame.html">Ingame</a></li>
-  <li><a href="modules/Ingame.BuildPhase.html">Ingame.BuildPhase</a></li>
-  <li><a href="modules/Ingame.Character.html">Ingame.Character</a></li>
-  <li><a href="modules/Ingame.SpawnPhase.html">Ingame.SpawnPhase</a></li>
-  <li><a href="modules/Credits.html">Credits</a></li>
-  <li><a href="modules/SplashScreen.html">SplashScreen</a></li>
-  <li><a href="modules/Testing.Networking.html">Testing.Networking</a></li>
-  <li><a href="modules/Testing.Menu.html">Testing.Menu</a></li>
-  <li><a href="modules/Testing.html">Testing</a></li>
-  <li><a href="modules/Testing.Threads.thread1.html">Testing.Threads.thread1</a></li>
-  <li><a href="modules/Testing.Threads.thread2.html">Testing.Threads.thread2</a></li>
-  <li><a href="modules/Testing.Vector.html">Testing.Vector</a></li>
-  <li><a href="modules/Testing.GUI.html">Testing.GUI</a></li>
-  <li><a href="modules/Testing.ServerClient.html">Testing.ServerClient</a></li>
-  <li><a href="modules/Testing.Intersection.html">Testing.Intersection</a></li>
-  <li><a href="modules/Testing.Lighting.html">Testing.Lighting</a></li>
-  <li><a href="modules/Testing.Tilemap.html">Testing.Tilemap</a></li>
-  <li><a href="modules/Testing.SlicedSprite.html">Testing.SlicedSprite</a></li>
-  <li><a href="modules/Testing.Threading.html">Testing.Threading</a></li>
+  <li><strong>Game</strong></li>
 </ul>
-<h2>Classes</h2>
+<h2>Manual</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
-  <li><a href="classes/Scene.html">Scene</a></li>
-  <li><a href="classes/LightSource.html">LightSource</a></li>
-  <li><a href="classes/Shadow.html">Shadow</a></li>
-  <li><a href="classes/AmbientLight.html">AmbientLight</a></li>
-  <li><a href="classes/Reflection.html">Reflection</a></li>
-  <li><a href="classes/Widget.html">Widget</a></li>
-  <li><a href="classes/List.html">List</a></li>
-  <li><a href="classes/Button.html">Button</a></li>
-  <li><a href="classes/Container.html">Container</a></li>
-  <li><a href="classes/TextField.html">TextField</a></li>
-  <li><a href="classes/Label.html">Label</a></li>
-  <li><a href="classes/Tower.html">Tower</a></li>
-  <li><a href="classes/ReflectorTower.html">ReflectorTower</a></li>
-  <li><a href="classes/TempCharacter.html">TempCharacter</a></li>
-  <li><a href="classes/LightEmitterTower.html">LightEmitterTower</a></li>
-</ul>
-<h2>Topics</h2>
-<ul class="$(kind=='Topics' and '' or 'nowrap'">
-  <li><a href="topics/README.md.html">README</a></li>
+  <li><a href="manual/README.md.html">README</a></li>
 </ul>
 
 </div>
 
 <div id="content">
 
+<h1>Module <code>Game</code></h1>
+<p>Game represents the main engine that handles GUI, key presses and releases and game states.</p>
+<p> Game states are something like scenes with their own render, update, init, onActivate and onDeactivate functions and their own GUI Containers.
+ When there is a state change, Game changes the GUI to the one of the state.
+ Also Game has some containers that hold sprites, sounds and fonts, so that you will not have the same asset multiple times in memory.</p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Author</strong>: Steve Wolligandt</li>
+    </ul>
 
 
-<h2>Modules</h2>
-<table class="module_list">
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
 	<tr>
-		<td class="name"  nowrap><a href="modules/Tilemap.html">Tilemap</a></td>
-		<td class="summary">Renders and updates lighted tilemaps</td>
+	<td class="name" nowrap><a href="#init">init ()</a></td>
+	<td class="summary">initializes the engine</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/Tilemap.Character.html">Tilemap.Character</a></td>
-		<td class="summary">Basic Character that can interact on the tilemap and can also be an AI.</td>
+	<td class="name" nowrap><a href="#render">render ()</a></td>
+	<td class="summary">renders current game state, gui and textoutput</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/Tilemap.Settings.html">Tilemap.Settings</a></td>
-		<td class="summary">Basic Settings for Tilemap</td>
+	<td class="name" nowrap><a href="#update">update (dt)</a></td>
+	<td class="summary">updates current game state, gui and keyhandling</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/Tilemap.Camera.html">Tilemap.Camera</a></td>
-		<td class="summary">Each Scene holds a camera that transforms the scene.</td>
+	<td class="name" nowrap><a href="#changeState">changeState (state)</a></td>
+	<td class="summary">changes current game state and calls some callbacks</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/Tilemap.TileDict.html">Tilemap.TileDict</a></td>
-		<td class="summary">TileDict saves visual representation of tiles and mechanics of tiles.</td>
+	<td class="name" nowrap><a href="#startCoroutine">startCoroutine (coroutine)</a></td>
+	<td class="summary">adds a coroutine to couroutine list</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/Utilities.html">Utilities</a></td>
-		<td class="summary">loads all utility modules</td>
+	<td class="name" nowrap><a href="#getSprite">getSprite (path)</a></td>
+	<td class="summary">loads sprites, if sprite is already loaded it returns a reference to this</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/Utilities.Tables.html">Utilities.Tables</a></td>
-		<td class="summary">Adds some more functions to the predefined lua table named "table"</td>
+	<td class="name" nowrap><a href="#getFont">getFont (path, size)</a></td>
+	<td class="summary">loads fonts, if font is already loaded it returns a reference to this</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/Utilities.Vector.html">Utilities.Vector</a></td>
-		<td class="summary">Implements several functions for 2D Vector operations</td>
+	<td class="name" nowrap><a href="#getSound">getSound (path, type)</a></td>
+	<td class="summary">loads sounds, if sound is already loaded it returns a reference to this</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/Utilities.TextOutput.html">Utilities.TextOutput</a></td>
-		<td class="summary">Holds a string buffer and renders strings on screen.</td>
+	<td class="name" nowrap><a href="#tidyUpSpritePool">tidyUpSpritePool ()</a></td>
+	<td class="summary">clears the sprite pool</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/Utilities.Intersection.html">Utilities.Intersection</a></td>
-		<td class="summary">Contains some helpful functions to check if and where two primitives collide</td>
+	<td class="name" nowrap><a href="#tidyUpSoundPool">tidyUpSoundPool ()</a></td>
+	<td class="summary">clears the sound pool</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/Utilities.SlicedSprite.html">Utilities.SlicedSprite</a></td>
-		<td class="summary">Sliced Sprites let you draw sprites where the borders will only be stretched in one direction, corners won't be stretched, center will be stretched in both directions.</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Utilities.Color.html">Utilities.Color</a></td>
-		<td class="summary">Some helpful functions concerning Colors and some predefined colors</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Utilities.OO.html">Utilities.OO</a></td>
-		<td class="summary">create classes and derived classes</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/LevelEditor.html">LevelEditor</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/MainMenu.html">MainMenu</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Game.html">Game</a></td>
-		<td class="summary">Game represents the main engine that handles GUI, key presses and releases and game states.</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Lighting.html">Lighting</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Keys.html">Keys</a></td>
-		<td class="summary">Handles key and mouse</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/GUI.html">GUI</a></td>
-		<td class="summary">Simple GUI-Toolkit</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Networking.html">Networking</a></td>
-		<td class="summary">ADD ME</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Keybindings.html">Keybindings</a></td>
-		<td class="summary">Includes all keybindings</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Keybindings.TilemapTestKeyBinding.html">Keybindings.TilemapTestKeyBinding</a></td>
-		<td class="summary">KeyBindings for Tilemap Test</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Geometry.html">Geometry</a></td>
-		<td class="summary">Geometry is a library that holds geometrical primitives</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Geometry.Mesh.html">Geometry.Mesh</a></td>
-		<td class="summary">Mesh Class can be used for lighting or just for rendering</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/main.html">main</a></td>
-		<td class="summary">Starting point of love</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Ingame.html">Ingame</a></td>
-		<td class="summary">Game Mechanics</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Ingame.BuildPhase.html">Ingame.BuildPhase</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Ingame.Character.html">Ingame.Character</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Ingame.SpawnPhase.html">Ingame.SpawnPhase</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Credits.html">Credits</a></td>
-		<td class="summary">Credits Game State.</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/SplashScreen.html">SplashScreen</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.Networking.html">Testing.Networking</a></td>
-		<td class="summary">Testing module for Networking</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.Menu.html">Testing.Menu</a></td>
-		<td class="summary">Menu for choosing a test case</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.html">Testing</a></td>
-		<td class="summary">Comes up with some little helpers like a coordinate system, ...</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.Threads.thread1.html">Testing.Threads.thread1</a></td>
-		<td class="summary">Implementation of a simple thread example</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.Threads.thread2.html">Testing.Threads.thread2</a></td>
-		<td class="summary">Implementation of a simple thread example</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.Vector.html">Testing.Vector</a></td>
-		<td class="summary">Testing of vectors</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.GUI.html">Testing.GUI</a></td>
-		<td class="summary">GUI Test creates two containers with buttons and labels, buttons change containers
- Our Game Engine does everything to update, render and handle key inputs for the gui, so in this example there will not be any function calls depending those issues</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.ServerClient.html">Testing.ServerClient</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.Intersection.html">Testing.Intersection</a></td>
-		<td class="summary">Testing intersection</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.Lighting.html">Testing.Lighting</a></td>
-		<td class="summary">Testing of Lighting</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.Tilemap.html">Testing.Tilemap</a></td>
-		<td class="summary">Testing of Tilemap</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.SlicedSprite.html">Testing.SlicedSprite</a></td>
-		<td class="summary">Testing of sliced Sprites</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Testing.Threading.html">Testing.Threading</a></td>
-		<td class="summary">Testing of Threading</td>
+	<td class="name" nowrap><a href="#tidyUpFontPool">tidyUpFontPool ()</a></td>
+	<td class="summary">clears the font pool</td>
 	</tr>
 </table>
-<h2>Classes</h2>
-<table class="module_list">
-	<tr>
-		<td class="name"  nowrap><a href="classes/Scene.html">Scene</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/LightSource.html">LightSource</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/Shadow.html">Shadow</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/AmbientLight.html">AmbientLight</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/Reflection.html">Reflection</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/Widget.html">Widget</a></td>
-		<td class="summary">Basic Widget Class - every Widget needs to inherit from this class.</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/List.html">List</a></td>
-		<td class="summary">List positions widgets as an array.</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/Button.html">Button</a></td>
-		<td class="summary">Button
- Button</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/Container.html">Container</a></td>
-		<td class="summary">Container that holds a list of widgets</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/TextField.html">TextField</a></td>
-		<td class="summary">Basic Text Input Field.</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/Label.html">Label</a></td>
-		<td class="summary">Label Widget</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/Tower.html">Tower</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/ReflectorTower.html">ReflectorTower</a></td>
-		<td class="summary"></td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/TempCharacter.html">TempCharacter</a></td>
-		<td class="summary">Character that destroys itself after some seconds</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="classes/LightEmitterTower.html">LightEmitterTower</a></td>
-		<td class="summary"></td>
-	</tr>
-</table>
-<h2>Topics</h2>
-<table class="module_list">
-	<tr>
-		<td class="name"  nowrap><a href="topics/README.md.html">README.md</a></td>
-		<td class="summary"></td>
-	</tr>
-</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "init"></a>
+    <strong>init ()</strong>
+    </dt>
+    <dd>
+    initializes the engine
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "render"></a>
+    <strong>render ()</strong>
+    </dt>
+    <dd>
+    renders current game state, gui and textoutput
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "update"></a>
+    <strong>update (dt)</strong>
+    </dt>
+    <dd>
+    updates current game state, gui and keyhandling
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "changeState"></a>
+    <strong>changeState (state)</strong>
+    </dt>
+    <dd>
+    changes current game state and calls some callbacks
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">state</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "startCoroutine"></a>
+    <strong>startCoroutine (coroutine)</strong>
+    </dt>
+    <dd>
+    adds a coroutine to couroutine list
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">coroutine</span>
+         coroutine to add
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getSprite"></a>
+    <strong>getSprite (path)</strong>
+    </dt>
+    <dd>
+    loads sprites, if sprite is already loaded it returns a reference to this
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getFont"></a>
+    <strong>getFont (path, size)</strong>
+    </dt>
+    <dd>
+    loads fonts, if font is already loaded it returns a reference to this
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+
+
+        </li>
+        <li><span class="parameter">size</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getSound"></a>
+    <strong>getSound (path, type)</strong>
+    </dt>
+    <dd>
+    loads sounds, if sound is already loaded it returns a reference to this
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+
+
+        </li>
+        <li><span class="parameter">type</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "tidyUpSpritePool"></a>
+    <strong>tidyUpSpritePool ()</strong>
+    </dt>
+    <dd>
+    clears the sprite pool
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "tidyUpSoundPool"></a>
+    <strong>tidyUpSoundPool ()</strong>
+    </dt>
+    <dd>
+    clears the sound pool
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "tidyUpFontPool"></a>
+    <strong>tidyUpFontPool ()</strong>
+    </dt>
+    <dd>
+    clears the font pool
+
+
+
+
+
+
+
+</dd>
+</dl>
+
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->

@@ -9,8 +9,8 @@ Utilities.OO.createDerivedClass(Ingame.Tower, Tilemap.Character)
 
 function Ingame.Tower:new(apparentScene,x,y)
     Tilemap.Character.new(self,apparentScene,x,y)
-    --self.mesh = Geometry.Mesh.createRectangle(x,y, Tilemap.Settings.tileSize*3/4, {0,0,0})
-    self.mesh = Geometry.Mesh.createDiscoCircle(x,y, Tilemap.Settings.tileSize*3/4, 6, {0,0,0})
+    --self.mesh = Lighting.ShadowCaster.createRectangle(x,y, Tilemap.Settings.tileSize*3/4, {0,0,0})
+    self.mesh = Lighting.ShadowCaster.createDiscoCircle(x,y, Tilemap.Settings.tileSize*3/4, 6, {0,0,0})
     self.mesh.reflectorSides = {}
 end
 

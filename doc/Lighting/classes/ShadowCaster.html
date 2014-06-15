@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>2D Lighting</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>2D Lighting Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>ShadowCaster</strong></li>
+  <li><a href="../classes/LightSource.html">LightSource</a></li>
+  <li><a href="../classes/Shadow.html">Shadow</a></li>
+  <li><a href="../classes/AmbientLight.html">AmbientLight</a></li>
+  <li><a href="../classes/Reflection.html">Reflection</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/init.html">init</a></li>
+</ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/Lighting.lua.html">Lighting.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>ShadowCaster</code></h1>
+<p>ShadowCaster</p>
+<p>
+</p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Author</strong>: Steve Wolligandt</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.ShadowCaster:new">Lighting.ShadowCaster:new (x, y, vertices, color, reflectorSides)</a></td>
+	<td class="summary">Constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.ShadowCaster.createDiscoCircle">Lighting.ShadowCaster.createDiscoCircle (x, y, size, slices, color)</a></td>
+	<td class="summary">Creates a circle-like ShadowCaster, all sides are reflectorSides</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.ShadowCaster.createRectangle">Lighting.ShadowCaster.createRectangle (x, y, size, color, reflectorSides)</a></td>
+	<td class="summary">Creates a rectangle ShadowCaster</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.ShadowCaster:render">Lighting.ShadowCaster:render ()</a></td>
+	<td class="summary">renders the ShadowCaster</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.ShadowCaster:getWorldVertices">Lighting.ShadowCaster:getWorldVertices ()</a></td>
+	<td class="summary">returns a list of all vertices in world coordinates</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "Lighting.ShadowCaster:new"></a>
+    <strong>Lighting.ShadowCaster:new (x, y, vertices, color, reflectorSides)</strong>
+    </dt>
+    <dd>
+    Constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         Y-coordinate
+        </li>
+        <li><span class="parameter">y</span>
+         x-coordinate
+        </li>
+        <li><span class="parameter">vertices</span>
+         {x1,y1, x2, y2, x3, y3, &hellip;}
+        </li>
+        <li><span class="parameter">color</span>
+         {r,g,b}
+        </li>
+        <li><span class="parameter">reflectorSides</span>
+         {sideIndex1, sideIndex2, &hellip;}
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.ShadowCaster.createDiscoCircle"></a>
+    <strong>Lighting.ShadowCaster.createDiscoCircle (x, y, size, slices, color)</strong>
+    </dt>
+    <dd>
+    Creates a circle-like ShadowCaster, all sides are reflectorSides
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         x-coordinate
+        </li>
+        <li><span class="parameter">y</span>
+         y-coordinate
+        </li>
+        <li><span class="parameter">size</span>
+         radius of ShadowCaster
+        </li>
+        <li><span class="parameter">slices</span>
+         number of slices the &ldquo;circle&rdquo; will have
+        </li>
+        <li><span class="parameter">color</span>
+         color of the ShadowCaster
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.ShadowCaster.createRectangle"></a>
+    <strong>Lighting.ShadowCaster.createRectangle (x, y, size, color, reflectorSides)</strong>
+    </dt>
+    <dd>
+    Creates a rectangle ShadowCaster
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         x-coordinate
+        </li>
+        <li><span class="parameter">y</span>
+         y-coordinate
+        </li>
+        <li><span class="parameter">size</span>
+         radius of ShadowCaster
+        </li>
+        <li><span class="parameter">color</span>
+         color of the ShadowCaster
+        </li>
+        <li><span class="parameter">reflectorSides</span>
+         {sideIndex1, sideIndex2, &hellip;}
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.ShadowCaster:render"></a>
+    <strong>Lighting.ShadowCaster:render ()</strong>
+    </dt>
+    <dd>
+    renders the ShadowCaster
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.ShadowCaster:getWorldVertices"></a>
+    <strong>Lighting.ShadowCaster:getWorldVertices ()</strong>
+    </dt>
+    <dd>
+    returns a list of all vertices in world coordinates
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        {x1,y1, x2,y2, x3,y3, &hellip;}
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

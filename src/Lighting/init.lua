@@ -3,16 +3,17 @@
 
 Lighting = {}
 
-require "Geometry"
 require "Lighting.LightSource"
 require "Lighting.AmbientLight"
 require "Lighting.Reflection"
 require "Lighting.Shadow"
+require "Lighting.ShadowCaster"
 
 Lighting.lights = {}
 Lighting.curShadowCasters = {}
 Lighting.ambient = nil
 
+--- initializes everything used for lighting
 function Lighting.init()
     Lighting.unlitBackground = love.graphics.newCanvas()
 
@@ -31,7 +32,9 @@ function Lighting.init()
 
 end
 
----
+--- Renders a shaded scene
+--@param translateX You can use this value for camera translation.
+--@param translateY You can use this value for camera translation.
 function Lighting.renderShadedScene(translateX, translateY)
     Lighting.unlitBackground:clear(0,0,0)
 
@@ -70,12 +73,14 @@ function Lighting.renderShadedScene(translateX, translateY)
     end]]
 end
 
---- This function needs to be overwritten
+--- This function needs to be overwritten. It renders the unlit background
 function Lighting.drawUnlitBackground()
 
 end
 
 --- updates lightsources
+--@param dt delta time
+--@param shadowCasters list of the shadow casters you want to have in your lit scene
 function Lighting.update(dt, shadowCasters)
     for lightIndex=1,#Lighting.lights do
         Lighting.lights[lightIndex]:update(shadowCasters)

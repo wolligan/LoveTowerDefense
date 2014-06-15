@@ -1,4 +1,4 @@
----
+--- Phase to spawn enemies
 --@author Steve Wolligandt
 
 require "GUI"
@@ -11,6 +11,7 @@ Ingame.SpawnPhase.maxSurvivedMobs = 10
 Ingame.SpawnPhase.spawnedMobs = 0
 Ingame.SpawnPhase.maxSpawnedMobs = 30
 
+--- Activates Spawn Phase
 function Ingame.SpawnPhase.activate()
     --Utilities.TextOutput.print("Ingame.SpawnPhase activated")
     Ingame.SpawnPhase.timeAtActivation = love.timer.getTime()
@@ -22,6 +23,8 @@ function Ingame.SpawnPhase.activate()
     Ingame.activeKeyBinding = Ingame.SpawnPhase.KeyBinding
 end
 
+--- Updates Spawn Phase
+--@param dt delta time
 function Ingame.SpawnPhase.update(dt)
     Ingame.SpawnPhasemobCounterLabel.text = Ingame.SpawnPhase.survivedMobs .. " / " .. Ingame.SpawnPhase.maxSurvivedMobs
     --if love.timer.getTime() - Ingame.SpawnPhase.timeAtActivation > Ingame.SpawnPhase.duration then
@@ -43,6 +46,7 @@ function Ingame.SpawnPhase.update(dt)
     end
 end
 
+--- Creates the GUI of the Build Phase
 function Ingame.SpawnPhase.createGUI()
     Ingame.SpawnPhase.GUI = GUI.Container(Game.getFont("assets/fonts/nulshock bd.ttf", 30),nil,nil,nil,nil,nil,{255,255,255})
 
@@ -66,20 +70,26 @@ function Ingame.SpawnPhase.createGUI()
     Ingame.SpawnPhase.GUI:addWidget(Ingame.SpawnPhasemobCounterLabel)
 end
 
+--- Activates the GUI
+-- TODO animate GUI activation
 function Ingame.SpawnPhase.slideInGUI()
     GUI.activeContainer = Ingame.SpawnPhase.GUI
 end
 
+--- Deactivates the GUI
+-- TODO animate GUI deactivation
 function Ingame.SpawnPhase.slideOutGUI()
 
 end
 
+--- Key Bindings
+--@section keys
+
+--- Keybindings
+--@field escape open pause menu
+--@field left,right,up,down move camera
+
 Ingame.SpawnPhase.KeyBinding = {}
-Ingame.SpawnPhase.KeyBinding[" "] = {
-    pressed = function()
-        Utilities.TextOutput.print("Space at Spawning")
-    end
-}
 
 Ingame.SpawnPhase.KeyBinding["escape"] = {
     pressed = function()

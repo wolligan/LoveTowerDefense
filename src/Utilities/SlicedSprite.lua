@@ -3,7 +3,7 @@
 Utilities.SlicedSprite = {}
 Utilities.OO.createClass(Utilities.SlicedSprite)
 
---- constructr
+--- constructor
 -- @param pathToImage Path to image that shall be rendered
 -- @param x x-coordinate of sprite to be rendered
 -- @param y y-coordinate of sprite to be rendered
@@ -38,8 +38,6 @@ end
 
 --- Renders the sliced sprite on screen
 function Utilities.SlicedSprite:render()
-
-
     --[[
 
     posX1       posX3

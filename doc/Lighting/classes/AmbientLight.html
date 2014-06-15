@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Lighting Engine Documentation</title>
+    <title>2D Lighting</title>
     <link rel="stylesheet" href="../ldoc.css" type="text/css" />
 </head>
 <body>
@@ -24,16 +24,21 @@
 
 <div id="navigation">
 <br/>
-<h1>Lighting Engine</h1>
+<h1>2D Lighting Engine</h1>
 
 <ul>
   <li><a href="../index.html">Index</a></li>
 </ul>
 
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
 
 
 <h2>Classes</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/ShadowCaster.html">ShadowCaster</a></li>
   <li><a href="../classes/LightSource.html">LightSource</a></li>
   <li><a href="../classes/Shadow.html">Shadow</a></li>
   <li><strong>AmbientLight</strong></li>
@@ -43,25 +48,88 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/init.html">init</a></li>
 </ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/Lighting.lua.html">Lighting.lua</a></li>
+</ul>
 
 </div>
 
 <div id="content">
 
 <h1>Class <code>AmbientLight</code></h1>
-<p></p>
-<p></p>
+<p>Ambient Light</p>
+<p>
+</p>
     <h3>Info:</h3>
     <ul>
         <li><strong>Author</strong>: Steve Wolligandt</li>
     </ul>
 
 
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.AmbientLight:new">Lighting.AmbientLight:new (r, g, b)</a></td>
+	<td class="summary">Constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.AmbientLight:render">Lighting.AmbientLight:render ()</a></td>
+	<td class="summary">renders the ambient light</td>
+	</tr>
+</table>
 
 <br/>
 <br/>
 
 
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "Lighting.AmbientLight:new"></a>
+    <strong>Lighting.AmbientLight:new (r, g, b)</strong>
+    </dt>
+    <dd>
+    Constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">r</span>
+         red color value
+        </li>
+        <li><span class="parameter">g</span>
+         green color value
+        </li>
+        <li><span class="parameter">b</span>
+         blue color value
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.AmbientLight:render"></a>
+    <strong>Lighting.AmbientLight:render ()</strong>
+    </dt>
+    <dd>
+    renders the ambient light
+
+
+
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->

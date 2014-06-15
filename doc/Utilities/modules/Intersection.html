@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Utilities</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Utilities</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/init.html">init</a></li>
+  <li><a href="../modules/Tables.html">Tables</a></li>
+  <li><a href="../modules/Vector.html">Vector</a></li>
+  <li><a href="../modules/TextOutput.html">TextOutput</a></li>
+  <li><strong>Intersection</strong></li>
+  <li><a href="../modules/SlicedSprite.html">SlicedSprite</a></li>
+  <li><a href="../modules/Color.html">Color</a></li>
+  <li><a href="../modules/OO.html">OO</a></li>
+</ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Intersection</code></h1>
+<p>Contains some helpful functions to check if and where two primitives collide</p>
+<p>
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Intersection.LineLine">Utilities.Intersection.LineLine (p1x, p1y, v1x, v1y, p2x, p2y, v2x, v2y)</a></td>
+	<td class="summary">Calculates the intersection point of two lines
+ line1 = p1 + r <em> v1
+ line2 = p2 + s </em> v2</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Intersection.LineLineseg">Utilities.Intersection.LineLineseg (p1x, p1y, v1x, v1y, p2x, p2y, p3x, p3y)</a></td>
+	<td class="summary">returns intersection point of a line and a line segment
+ line = p1 + r * v1
+ line segment = from p2 to p3</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Intersection.checkPointRectangle">Utilities.Intersection.checkPointRectangle (x, y, left, right, top, bottom)</a></td>
+	<td class="summary">Checks if a point is in a rectangle</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Intersection.checkRectangleRectangle">Utilities.Intersection.checkRectangleRectangle (left1, right1, top1, bottom1, left2, right2, top2, bottom2)</a></td>
+	<td class="summary">Checks if two rectangles collide</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Utilities.Intersection.checkPointPolygon">Utilities.Intersection.checkPointPolygon (x, y, polygon)</a></td>
+	<td class="summary">Checks if a point is in a convex polygon</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "Utilities.Intersection.LineLine"></a>
+    <strong>Utilities.Intersection.LineLine (p1x, p1y, v1x, v1y, p2x, p2y, v2x, v2y)</strong>
+    </dt>
+    <dd>
+    Calculates the intersection point of two lines
+ line1 = p1 + r <em> v1
+ line2 = p2 + s </em> v2
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p1x</span>
+         x-coordinate of p1
+        </li>
+        <li><span class="parameter">p1y</span>
+         y-coordinate of p1
+        </li>
+        <li><span class="parameter">v1x</span>
+         x-coordinate of v1
+        </li>
+        <li><span class="parameter">v1y</span>
+         y-coordinate of v1
+        </li>
+        <li><span class="parameter">p2x</span>
+         x-coordinate of p2
+        </li>
+        <li><span class="parameter">p2y</span>
+         y-coordinate of p2
+        </li>
+        <li><span class="parameter">v2x</span>
+         x-coordinate of v2
+        </li>
+        <li><span class="parameter">v2y</span>
+         y-coordinate of v2
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        if there is an intersection point: function returns {intersecX, intersecY} otherwise it returns nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Intersection.LineLineseg"></a>
+    <strong>Utilities.Intersection.LineLineseg (p1x, p1y, v1x, v1y, p2x, p2y, p3x, p3y)</strong>
+    </dt>
+    <dd>
+    returns intersection point of a line and a line segment
+ line = p1 + r * v1
+ line segment = from p2 to p3
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">p1x</span>
+         x-coordinate of p1
+        </li>
+        <li><span class="parameter">p1y</span>
+         y-coordinate of p1
+        </li>
+        <li><span class="parameter">v1x</span>
+         x-coordinate of v1
+        </li>
+        <li><span class="parameter">v1y</span>
+         y-coordinate of v1
+        </li>
+        <li><span class="parameter">p2x</span>
+         x-coordinate of p2
+        </li>
+        <li><span class="parameter">p2y</span>
+         y-coordinate of p2
+        </li>
+        <li><span class="parameter">p3x</span>
+         x-coordinate of p3
+        </li>
+        <li><span class="parameter">p3y</span>
+         y-coordinate of p3
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        if there is an intersection point: function returns {intersecX, intersecY} otherwise it returns nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Intersection.checkPointRectangle"></a>
+    <strong>Utilities.Intersection.checkPointRectangle (x, y, left, right, top, bottom)</strong>
+    </dt>
+    <dd>
+    Checks if a point is in a rectangle
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         x-coordinate of point
+        </li>
+        <li><span class="parameter">y</span>
+         y-coordinate of point
+        </li>
+        <li><span class="parameter">left</span>
+         left coordinate of rectangle
+        </li>
+        <li><span class="parameter">right</span>
+         right coordinate of rectangle
+        </li>
+        <li><span class="parameter">top</span>
+         top coordinate of rectangle
+        </li>
+        <li><span class="parameter">bottom</span>
+         bottom coordinate of rectangle
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Intersection.checkRectangleRectangle"></a>
+    <strong>Utilities.Intersection.checkRectangleRectangle (left1, right1, top1, bottom1, left2, right2, top2, bottom2)</strong>
+    </dt>
+    <dd>
+    Checks if two rectangles collide
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">left1</span>
+         left coordinate of rectangle1
+        </li>
+        <li><span class="parameter">right1</span>
+         right coordinate of rectangle1
+        </li>
+        <li><span class="parameter">top1</span>
+         top coordinate of rectangle1
+        </li>
+        <li><span class="parameter">bottom1</span>
+         bottom coordinate of rectangle1
+        </li>
+        <li><span class="parameter">left2</span>
+         left coordinate of rectangle2
+        </li>
+        <li><span class="parameter">right2</span>
+         right coordinate of rectangle2
+        </li>
+        <li><span class="parameter">top2</span>
+         top coordinate of rectangle2
+        </li>
+        <li><span class="parameter">bottom2</span>
+         bottom coordinate of rectangle2
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Utilities.Intersection.checkPointPolygon"></a>
+    <strong>Utilities.Intersection.checkPointPolygon (x, y, polygon)</strong>
+    </dt>
+    <dd>
+    Checks if a point is in a convex polygon
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         x-coordinate of point
+        </li>
+        <li><span class="parameter">y</span>
+         y-coordinate of point
+        </li>
+        <li><span class="parameter">polygon</span>
+         {x1, y1, x2, y2, &hellip;, xn, yn}
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

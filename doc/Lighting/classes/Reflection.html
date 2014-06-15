@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Lighting Engine Documentation</title>
+    <title>2D Lighting</title>
     <link rel="stylesheet" href="../ldoc.css" type="text/css" />
 </head>
 <body>
@@ -24,7 +24,7 @@
 
 <div id="navigation">
 <br/>
-<h1>Lighting Engine</h1>
+<h1>2D Lighting Engine</h1>
 
 <ul>
   <li><a href="../index.html">Index</a></li>
@@ -38,6 +38,7 @@
 
 <h2>Classes</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/ShadowCaster.html">ShadowCaster</a></li>
   <li><a href="../classes/LightSource.html">LightSource</a></li>
   <li><a href="../classes/Shadow.html">Shadow</a></li>
   <li><a href="../classes/AmbientLight.html">AmbientLight</a></li>
@@ -47,14 +48,24 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/init.html">init</a></li>
 </ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/Lighting.lua.html">Lighting.lua</a></li>
+</ul>
 
 </div>
 
 <div id="content">
 
 <h1>Class <code>Reflection</code></h1>
-<p></p>
-<p></p>
+<p>
+</p>
+<p>
+</p>
     <h3>Info:</h3>
     <ul>
         <li><strong>Author</strong>: Steve Wolligandt</li>
@@ -63,6 +74,10 @@
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:new">Lighting.Reflection:new (lightSource, rightX, rightY, leftX, leftY, r, g, b, bouncedTimes)</a></td>
+	<td class="summary">Constructor</td>
+	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Lighting.Reflection:render">Lighting.Reflection:render ()</a></td>
 	<td class="summary">renders reflection with inverted stencil with shadows</td>
@@ -76,12 +91,22 @@
 	<td class="summary">draws all shadow polygons of Reflection</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:drawReflections">Lighting.Reflection:drawReflections (translateX, translateX)</a></td>
+	<td class="summary">draws the reflection&rsquo;s reflections</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:update">Lighting.Reflection:update (scene)</a></td>
+	<td class="summary">updates reflection&rsquo;s shadows and reflections</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#Lighting.Reflection:updateShadows">Lighting.Reflection:updateShadows (scene)</a></td>
-	<td class="summary">TODO make faster</td>
+	<td class="summary">updates shadows
+ TODO make faster</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Lighting.Reflection:updateReflections">Lighting.Reflection:updateReflections (scene)</a></td>
-	<td class="summary">TODO implement</td>
+	<td class="summary">updates reflections
+ TODO implement</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Lighting.Reflection:updateLeftSide">Lighting.Reflection:updateLeftSide (lightSource, shadowVecLeftX, shadowVecLeftY)</a></td>
@@ -99,6 +124,14 @@
 	<td class="name" nowrap><a href="#Lighting.Reflection:calculateVertices">Lighting.Reflection:calculateVertices (lightSource, rightX, rightY, leftX, leftY)</a></td>
 	<td class="summary">calculates the reflection polygon</td>
 	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:getRight">Lighting.Reflection:getRight ()</a></td>
+	<td class="summary">return coordintates of the right point</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Lighting.Reflection:getLeft">Lighting.Reflection:getLeft ()</a></td>
+	<td class="summary">return coordintates of the left point</td>
+	</tr>
 </table>
 
 <br/>
@@ -107,6 +140,50 @@
 
     <h2><a name="Functions"></a>Functions</h2>
     <dl class="function">
+    <dt>
+    <a name = "Lighting.Reflection:new"></a>
+    <strong>Lighting.Reflection:new (lightSource, rightX, rightY, leftX, leftY, r, g, b, bouncedTimes)</strong>
+    </dt>
+    <dd>
+    Constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">lightSource</span>
+         lightsource that casts this reflection
+        </li>
+        <li><span class="parameter">rightX</span>
+         x-coordinte of the right point of the reflection
+        </li>
+        <li><span class="parameter">rightY</span>
+         y-coordinte of the right point of the reflection
+        </li>
+        <li><span class="parameter">leftX</span>
+         x-coordinte of the left point of the reflection
+        </li>
+        <li><span class="parameter">leftY</span>
+         y-coordinte of the left point of the reflection
+        </li>
+        <li><span class="parameter">r</span>
+         red color value
+        </li>
+        <li><span class="parameter">g</span>
+         green color value
+        </li>
+        <li><span class="parameter">b</span>
+         blue color value
+        </li>
+        <li><span class="parameter">bouncedTimes</span>
+         number of bounces of this reflection
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
     <dt>
     <a name = "Lighting.Reflection:render"></a>
     <strong>Lighting.Reflection:render ()</strong>
@@ -133,8 +210,10 @@
     <ul>
         <li><span class="parameter">translateX</span>
 
+
         </li>
         <li><span class="parameter">translateY</span>
+
 
         </li>
     </ul>
@@ -156,8 +235,56 @@
     <ul>
         <li><span class="parameter">translateX</span>
 
+
         </li>
         <li><span class="parameter">translateY</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:drawReflections"></a>
+    <strong>Lighting.Reflection:drawReflections (translateX, translateX)</strong>
+    </dt>
+    <dd>
+    draws the reflection&rsquo;s reflections
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">translateX</span>
+
+
+        </li>
+        <li><span class="parameter">translateX</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:update"></a>
+    <strong>Lighting.Reflection:update (scene)</strong>
+    </dt>
+    <dd>
+    updates reflection&rsquo;s shadows and reflections
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">scene</span>
+
 
         </li>
     </ul>
@@ -172,12 +299,14 @@
     <strong>Lighting.Reflection:updateShadows (scene)</strong>
     </dt>
     <dd>
-    TODO make faster
+    updates shadows
+ TODO make faster
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">scene</span>
+
 
         </li>
     </ul>
@@ -192,12 +321,14 @@
     <strong>Lighting.Reflection:updateReflections (scene)</strong>
     </dt>
     <dd>
-    TODO implement
+    updates reflections
+ TODO implement
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">scene</span>
+
 
         </li>
     </ul>
@@ -219,11 +350,14 @@
     <ul>
         <li><span class="parameter">lightSource</span>
 
+
         </li>
         <li><span class="parameter">shadowVecLeftX</span>
 
+
         </li>
         <li><span class="parameter">shadowVecLeftY</span>
+
 
         </li>
     </ul>
@@ -245,11 +379,14 @@
     <ul>
         <li><span class="parameter">lightSource</span>
 
+
         </li>
         <li><span class="parameter">shadowVecRightX</span>
 
+
         </li>
         <li><span class="parameter">shadowVecRightY</span>
+
 
         </li>
     </ul>
@@ -271,17 +408,22 @@
     <ul>
         <li><span class="parameter">lightSource</span>
 
+
         </li>
         <li><span class="parameter">shadowVecLeftX</span>
+
 
         </li>
         <li><span class="parameter">shadowVecLeftY</span>
 
+
         </li>
         <li><span class="parameter">shadowVecRightX</span>
 
+
         </li>
         <li><span class="parameter">shadowVecRightY</span>
+
 
         </li>
     </ul>
@@ -317,6 +459,34 @@
          y-coordinate of left point that shall be reflected
         </li>
     </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:getRight"></a>
+    <strong>Lighting.Reflection:getRight ()</strong>
+    </dt>
+    <dd>
+    return coordintates of the right point
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Lighting.Reflection:getLeft"></a>
+    <strong>Lighting.Reflection:getLeft ()</strong>
+    </dt>
+    <dd>
+    return coordintates of the left point
+
+
 
 
 

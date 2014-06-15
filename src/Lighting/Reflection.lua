@@ -8,7 +8,16 @@ Utilities.OO.createClass(Lighting.Reflection)
 Lighting.Reflection.maxBounces = 3
 Lighting.Reflection.reflectionLength = math.sqrt(math.pow(love.graphics.getWidth(), 2) + math.pow(love.graphics.getHeight(), 2))*20
 
----
+--- Constructor
+--@param lightSource lightsource that casts this reflection
+--@param rightX x-coordinte of the right point of the reflection
+--@param rightY y-coordinte of the right point of the reflection
+--@param leftX x-coordinte of the left point of the reflection
+--@param leftY y-coordinte of the left point of the reflection
+--@param r red color value
+--@param g green color value
+--@param b blue color value
+--@param bouncedTimes number of bounces of this reflection
 function Lighting.Reflection:new(lightSource, rightX, rightY, leftX, leftY, r,g,b, bouncedTimes)
     self.vertices  = {}
     self:calculateVertices(lightSource, rightX, rightY, leftX, leftY)
@@ -50,20 +59,21 @@ function Lighting.Reflection:drawShadows(translateX, translateY)
     end
 end
 
----
+--- draws the reflection's reflections
 function Lighting.Reflection:drawReflections(translateX, translateX)
     for i,curReflection in pairs(self.reflections) do
         curReflection:render(translateX, translateX)
     end
 end
 
----
+--- updates reflection's shadows and reflections
 function Lighting.Reflection:update(scene)
     self:updateShadows(scene)
     self:updateReflections(scene)
 end
 
---- TODO make faster
+--- updates shadows
+-- TODO make faster
 function Lighting.Reflection:updateShadows(scene)
     self.shadows = {}
     for i=1,#scene do
@@ -78,7 +88,8 @@ function Lighting.Reflection:updateShadows(scene)
     return shadowVolumes
 end
 
---- TODO implement
+--- updates reflections
+-- TODO implement
 function Lighting.Reflection:updateReflections(scene)
     if self.bouncedTimes < Lighting.Reflection.maxBounces then
 
@@ -183,12 +194,12 @@ function Lighting.Reflection:calculateOrigin()
     end
 end
 
----
+--- return coordintates of the right point
 function Lighting.Reflection:getRight()
     return self.vertices[3], self.vertices[4]
 end
 
----
+--- return coordintates of the left point
 function Lighting.Reflection:getLeft()
     return self.vertices[1], self.vertices[2]
 end

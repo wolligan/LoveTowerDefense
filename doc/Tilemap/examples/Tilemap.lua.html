@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Lighted Tilemap</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Lighted Tilemap Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>Tilemap.lua</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/Tilemap.html">Tilemap</a></li>
+  <li><a href="../modules/Character.html">Character</a></li>
+  <li><a href="../modules/Settings.html">Settings</a></li>
+  <li><a href="../modules/Camera.html">Camera</a></li>
+  <li><a href="../modules/TileDict.html">TileDict</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/Scene.html">Scene</a></li>
+</ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <pre>
+<span class="comment">--- Testing of Tilemap
+</span><span class="comment">--@author Steve Wolligandt
+</span>
+Testing.Tilemap = {}
+
+<span class="comment">--- Game State functions
+</span><span class="comment">--@section gamestate
+</span>
+<span class="keyword">function</span> Testing.Tilemap.init()
+    Tilemap.init()
+    Tilemap.activeSceneIndex = <span class="number">1</span>
+    <span class="keyword">for</span> i=<span class="number">1</span>,<span class="number">3</span> <span class="keyword">do</span>
+        Tilemap.loadedScenes[#Tilemap.loadedScenes + <span class="number">1</span>] = Tilemap.Scene()
+        Tilemap.loadedScenes[i]:createRandomLevel()
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> Testing.Tilemap.render()
+    Tilemap.render()
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> Testing.Tilemap.update(dt)
+    Tilemap.update(dt)
+<span class="keyword">end</span>
+
+<span class="comment">--- Testing
+</span><span class="comment">--@section keys
+</span>
+<span class="comment">--- Tilemap Testing Keybindings
+</span><span class="comment">--@field escape return to testing menu
+</span><span class="comment">--@field w,a,s,d move current character
+</span><span class="comment">--@field up,down change player index of active scene
+</span><span class="comment">--@field left,right change active scene
+</span>Testing.Tilemap.activeKeyBinding = {}
+
+Testing.Tilemap.activeKeyBinding[<span class="string">"w"</span>] = {
+	repeated = <span class="keyword">function</span>(dt)
+		Tilemap.getActiveScene().characters[Tilemap.getActiveScene().playerIndex]:moveUp(dt)
+	<span class="keyword">end</span>
+}
+
+Testing.Tilemap.activeKeyBinding[<span class="string">"a"</span>] = {
+	repeated = <span class="keyword">function</span>(dt)
+		Tilemap.getActiveScene().characters[Tilemap.getActiveScene().playerIndex]:moveLeft(dt)
+	<span class="keyword">end</span>
+}
+
+
+Testing.Tilemap.activeKeyBinding[<span class="string">"s"</span>] = {
+	repeated = <span class="keyword">function</span>(dt)
+		Tilemap.getActiveScene().characters[Tilemap.getActiveScene().playerIndex]:moveDown(dt)
+	<span class="keyword">end</span>
+}
+
+
+Testing.Tilemap.activeKeyBinding[<span class="string">"d"</span>] = {
+	repeated = <span class="keyword">function</span>(dt)
+		Tilemap.getActiveScene().characters[Tilemap.getActiveScene().playerIndex]:moveRight(dt)
+	<span class="keyword">end</span>
+}
+
+
+Testing.Tilemap.activeKeyBinding[<span class="string">"up"</span>] = {
+	pressed = <span class="keyword">function</span>(dt)
+		Tilemap.getActiveScene().playerIndex = <span class="global">math</span>.min(#Tilemap.getActiveScene().characters, Tilemap.getActiveScene().playerIndex + <span class="number">1</span>)
+	<span class="keyword">end</span>
+}
+
+
+Testing.Tilemap.activeKeyBinding[<span class="string">"down"</span>] = {
+	pressed = <span class="keyword">function</span>(dt)
+		Tilemap.getActiveScene().playerIndex = <span class="global">math</span>.max(<span class="number">1</span>, Tilemap.getActiveScene().playerIndex - <span class="number">1</span>)
+	<span class="keyword">end</span>
+}
+
+
+Testing.Tilemap.activeKeyBinding[<span class="string">"right"</span>] = {
+	pressed = <span class="keyword">function</span>(dt)
+		Tilemap.activeSceneIndex = <span class="global">math</span>.min(Tilemap.activeSceneIndex+<span class="number">1</span>, #Tilemap.loadedScenes)
+	<span class="keyword">end</span>
+}
+
+
+Testing.Tilemap.activeKeyBinding[<span class="string">"left"</span>] = {
+	pressed = <span class="keyword">function</span>(dt)
+		Tilemap.activeSceneIndex = <span class="global">math</span>.max(Tilemap.activeSceneIndex-<span class="number">1</span>, <span class="number">1</span>)
+	<span class="keyword">end</span>
+}
+
+
+Testing.Tilemap.activeKeyBinding[<span class="string">"escape"</span>] = {
+	pressed = <span class="keyword">function</span>(dt)
+		Game.changeState(Testing.Menu)
+	<span class="keyword">end</span>
+}</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

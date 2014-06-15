@@ -1,3 +1,5 @@
+--- client example from the love wikie
+
 -- to start with, we need to require the 'socket' lib (which is compiled
 -- into love). socket provides low-level networking features.
 local socket = require "socket"

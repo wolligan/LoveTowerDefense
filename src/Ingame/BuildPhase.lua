@@ -1,4 +1,4 @@
----
+--- Phase for building, setting and upgrading towers
 --@author Steve Wolligandt
 
 require "GUI"
@@ -7,13 +7,17 @@ Ingame.BuildPhase = {}
 Ingame.BuildPhase.ambientColor = {100,100,100}
 Ingame.BuildPhase.duration = 10 --seconds
 
-Ingame.BuildPhase.buildTowerAt = function(x,y)
+--- Current function to build a tower. This function will be overwritten at some times to set different towers
+--@param x x-coordinate of tower to be set
+--@param y y-coordinate of tower to be set
+function Ingame.BuildPhase.buildTowerAt(x,y)
     Tilemap.getActiveScene().characters[#Tilemap.getActiveScene().characters+1] =
         Ingame.LightEmitterTower(Tilemap.getActiveScene(),
                                  x*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2,
                                  y*Tilemap.Settings.tileSize - Tilemap.Settings.tileSize/2)
 end
 
+--- Activates Build Phase
 function Ingame.BuildPhase.activate()
     --Utilities.TextOutput.print("Ingame.BuildPhase activated")
     Ingame.BuildPhase.timeAtActivation = love.timer.getTime()
@@ -23,12 +27,15 @@ function Ingame.BuildPhase.activate()
     Ingame.activeKeyBinding = Ingame.BuildPhase.KeyBinding
 end
 
+--- Updates Build Phase
+--@param dt delta time
 function Ingame.BuildPhase.update(dt)
     if love.timer.getTime() - Ingame.BuildPhase.timeAtActivation > Ingame.BuildPhase.duration then
         Ingame.activateNextPhase()
     end
 end
 
+--- Creates the GUI of the Build Phase
 function Ingame.BuildPhase.createGUI()
     Ingame.BuildPhase.GUI = GUI.Container(Game.getFont("assets/fonts/nulshock bd.ttf", 30),nil,nil,nil,nil,nil,{255,255,255})
 
@@ -76,20 +83,26 @@ function Ingame.BuildPhase.createGUI()
     buttonReflector.borderColor = {50,50,50}
 end
 
+--- Activates the GUI
+-- TODO animate GUI activation
 function Ingame.BuildPhase.slideInGUI()
     GUI.activeContainer = Ingame.BuildPhase.GUI
 end
 
+--- Deactivates the GUI
+-- TODO animate GUI deactivation
 function Ingame.BuildPhase.slideOutGUI()
 
 end
 
+--- Key Bindings
+--@section keys
+
+--- Keybindings
+--@field leftMouse set the currently activated tower
+--@field escape open pause menu
+--@field left,right,up,down move camera
 Ingame.BuildPhase.KeyBinding = {}
-Ingame.BuildPhase.KeyBinding[" "] = {
-    pressed = function()
-        Utilities.TextOutput.print("Space at Building")
-    end
-}
 
 Ingame.BuildPhase.KeyBinding["mouse_left"] = {
     pressed = function()

@@ -1,8 +1,6 @@
 --- Handles key and mouse
 --@author Steve Wolligandt
 
-require "Keybindings"
-
 Keys = {}
 Keys.activeKeys = {}
 

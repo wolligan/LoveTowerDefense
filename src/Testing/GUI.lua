@@ -181,6 +181,8 @@ function Testing.GUI.fillContainer1()
     guicont1:addWidget(b_dec_x_cont1)
     guicont1:addWidget(b_inc_y_cont1)
     guicont1:addWidget(b_dec_y_cont1)
+
+    l1_cont1.fontColor = {255,255,255}
 end
 
 --- shows how to create container and how to add widgets to it
@@ -249,6 +251,8 @@ function Testing.GUI.fillContainer2()
     guicont2:addWidget(l2_cont2)
     guicont2:addWidget(list_cont2)
     guicont2:addWidget(tf1_cont2)
+
+    l2_cont2.fontColor = {255,255,255}
 end
 
 --- @section background rendering
