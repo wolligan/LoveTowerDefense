@@ -1,20 +1,21 @@
 --- Each Scene holds a camera that transforms the scene.
 --@author Steve Wolligandt
+--@classmod Camera
 
 Tilemap.Camera = {}
 Utilities.OO.createClass(Tilemap.Camera)
 
-function Tilemap.Camera:new(scene,x,y)
+--- Constructor
+--@param scene Scene that the camera shall transform
+function Tilemap.Camera:new(scene)
     self.appropriateScene = scene
-    self.x = x or love.graphics.getWidth()*0.5
-    self.y = y or love.graphics.getHeight()*0.5
     self.rotation = 0
     self.target = nil
     self.x = self.appropriateScene:getLevelWidth()*Tilemap.Settings.tileSize/2
     self.y = self.appropriateScene:getLevelHeight()*Tilemap.Settings.tileSize/2
 end
 
----
+--- follow a character if specified or just show the centered map
 function Tilemap.Camera:update()
 	if self.target then
         if not (love.graphics.getWidth() > self.appropriateScene:getLevelWidth()*Tilemap.Settings.tileSize) then
@@ -35,7 +36,7 @@ function Tilemap.Camera:update()
 	end
 end
 
----
+--- call this before rendering the tilemap
 function Tilemap.Camera:begin()
 	love.graphics.push()
 
@@ -51,7 +52,7 @@ function Tilemap.Camera:begin()
 	love.graphics.shear(0,0)
 end
 
----
+--- call this after rendering the tilemap
 function Tilemap.Camera:stop()
 	love.graphics.pop()
 end

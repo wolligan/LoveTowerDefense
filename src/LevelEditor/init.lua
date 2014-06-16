@@ -76,17 +76,17 @@ function LevelEditor.createGUI()
     button_clear.rightAnchorOffset = -10
     button_clear.leftAnchorOffset = -60
 
-    -- create a textfield
-    local tf_mapName = GUI.Textfield("Map Name")
-    tf_mapName:setLeftAnchor(button_play, "left")
-    tf_mapName:setTopAnchor(button_play, "bottom")
-    tf_mapName:setBottomAnchor(button_play, "bottom")
+    -- create a TextEntry
+    local te_mapName = GUI.TextEntry("Map Name")
+    te_mapName:setLeftAnchor(button_play, "left")
+    te_mapName:setTopAnchor(button_play, "bottom")
+    te_mapName:setBottomAnchor(button_play, "bottom")
 
-    tf_mapName.topAnchorOffset = 10
-    tf_mapName.bottomAnchorOffset = 40
-    tf_mapName.rightAnchorOffset = -10
+    te_mapName.topAnchorOffset = 10
+    te_mapName.bottomAnchorOffset = 40
+    te_mapName.rightAnchorOffset = -10
 
-    local button_saveMap = GUI.Button("Save Map", function() Tilemap.getActiveScene():saveMap(tf_mapName.text .. ".map") end)
+    local button_saveMap = GUI.Button("Save Map", function() Tilemap.getActiveScene():saveMap(te_mapName.text .. ".map") end)
     button_saveMap:setTopAnchor(GUI.Root, "bottom")
     button_saveMap:setRightAnchor(GUI.Root, "center")
     button_saveMap.topAnchorOffset = -50
@@ -95,8 +95,8 @@ function LevelEditor.createGUI()
     button_saveMap.rightAnchorOffset = -5
 
     local button_loadMap = GUI.Button("Load Map", function()
-            print("loading " .. tf_mapName.text .. ".map")
-            Tilemap.loadMap(tf_mapName.text .. ".map")
+            print("loading " .. te_mapName.text .. ".map")
+            Tilemap.loadMap(te_mapName.text .. ".map")
             button_clear.onRelease()
         end)
     button_loadMap:setTopAnchor(GUI.Root, "bottom")
@@ -109,18 +109,18 @@ function LevelEditor.createGUI()
     local widget_selectedTile = GUI.Widget()
     widget_selectedTile:setTopAnchor(button_loadMap, "top")
     widget_selectedTile:setBottomAnchor(button_loadMap, "top")
-    widget_selectedTile:setRightAnchor(tf_mapName, "right")
-    widget_selectedTile:setLeftAnchor(tf_mapName, "left")
+    widget_selectedTile:setRightAnchor(te_mapName, "right")
+    widget_selectedTile:setLeftAnchor(te_mapName, "left")
     widget_selectedTile.topAnchorOffset = -70
     widget_selectedTile.bottomAnchorOffset = -10
     widget_selectedTile.render = LevelEditor.renderSelectedTileWidget
 
 -- create tile button list
     local list_tiles = GUI.List("horizontal", 30, 1)
-    list_tiles:setLeftAnchor(tf_mapName, "left")
-    list_tiles:setRightAnchor(tf_mapName, "right")
+    list_tiles:setLeftAnchor(te_mapName, "left")
+    list_tiles:setRightAnchor(te_mapName, "right")
     list_tiles:setBottomAnchor(widget_selectedTile, "top")
-    list_tiles:setTopAnchor(tf_mapName, "bottom")
+    list_tiles:setTopAnchor(te_mapName, "bottom")
     list_tiles.topAnchorOffset = 10
 
     for i,curTile in pairs(Tilemap.tileDict) do
@@ -138,7 +138,7 @@ function LevelEditor.createGUI()
     LevelEditor.GUI:addWidget(widget_selectedTile)
     LevelEditor.GUI:addWidget(button_saveMap)
     LevelEditor.GUI:addWidget(button_loadMap)
-    LevelEditor.GUI:addWidget(tf_mapName)
+    LevelEditor.GUI:addWidget(te_mapName)
     LevelEditor.GUI:addWidget(button_pause)
     LevelEditor.GUI:addWidget(button_play)
     LevelEditor.GUI:addWidget(button_clear)

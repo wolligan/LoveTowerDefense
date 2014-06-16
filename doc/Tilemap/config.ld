@@ -1,11 +1,11 @@
 project = 'Lighted Tilemap Engine'
 description='Implementation of a Lighting Tilemap Engine.'
 title='Lighted Tilemap'
-readme='doc/Tilemap/Readme.md'
+readme='Readme.md'
 file = '../../src/Tilemap'
-dir='doc/Tilemap'
+dir='.'
 format='discount'
 kind_names={topic='Manual'}
 examples = {
-    'src/Testing/Tilemap.lua',
+    '../../src/Testing/Tilemap.lua',
 }

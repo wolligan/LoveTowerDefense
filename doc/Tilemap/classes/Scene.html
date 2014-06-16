@@ -33,19 +33,23 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
+<li><a href="#Scene_creation">Scene creation </a></li>
+<li><a href="#Render_Methods">Render Methods </a></li>
+<li><a href="#Tile_coordinate_calculations">Tile coordinate calculations </a></li>
+<li><a href="#Pathfinding">Pathfinding </a></li>
 </ul>
 
 
 <h2>Classes</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/Character.html">Character</a></li>
+  <li><a href="../classes/Camera.html">Camera</a></li>
   <li><strong>Scene</strong></li>
 </ul>
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/Tilemap.html">Tilemap</a></li>
-  <li><a href="../modules/Character.html">Character</a></li>
   <li><a href="../modules/Settings.html">Settings</a></li>
-  <li><a href="../modules/Camera.html">Camera</a></li>
   <li><a href="../modules/TileDict.html">TileDict</a></li>
 </ul>
 <h2>Manual</h2>
@@ -75,7 +79,79 @@
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#Tilemap.Scene:new">Tilemap.Scene:new ()</a></td>
-	<td class="summary">Constructor creates an empty Scene with size of the described one in Tilemap.Settings</td>
+	<td class="summary">Constructor creates an empty Scene with size of the described in <a href="../modules/Settings.html">Tilemap.Settings</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:update">Tilemap.Scene:update (dt)</a></td>
+	<td class="summary">updates the tilemap engine</td>
+	</tr>
+</table>
+<h2><a href="#Scene_creation">Scene creation </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:createRandomLevel">Tilemap.Scene:createRandomLevel ()</a></td>
+	<td class="summary">Creates a random level with the size specified in the Tilemap Settings.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:createEmptyLevel">Tilemap.Scene:createEmptyLevel (levelWidth, levelHeight)</a></td>
+	<td class="summary">creates an level filled with Tile Index 1</td>
+	</tr>
+</table>
+<h2><a href="#Render_Methods">Render Methods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:renderTiles">Tilemap.Scene:renderTiles ()</a></td>
+	<td class="summary">renders all tiles that are on screen, not the ones that are outside of the screen</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:renderObstacleTiles">Tilemap.Scene:renderObstacleTiles ()</a></td>
+	<td class="summary">renders all obstacle tiles (the engine calls this after drawing shadows</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:renderShading">Tilemap.Scene:renderShading ()</a></td>
+	<td class="summary">renders lighted tiles with shadows and reflections</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:getObstacleMeshes">Tilemap.Scene:getObstacleMeshes ()</a></td>
+	<td class="summary">Returns a list of shadowcasters that will be created from obstacle tiles</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:renderCharacters">Tilemap.Scene:renderCharacters ()</a></td>
+	<td class="summary">renders all characters from active scene</td>
+	</tr>
+</table>
+<h2><a href="#Tile_coordinate_calculations">Tile coordinate calculations </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:getTileCoordinatesAtPosition">Tilemap.Scene:getTileCoordinatesAtPosition (x, y)</a></td>
+	<td class="summary">Returns tile coordinates under screen coordinates (camera won&rsquo;t be recognized)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:getTileCoordinatesByCamera">Tilemap.Scene:getTileCoordinatesByCamera (mx, my)</a></td>
+	<td class="summary">Returns tile coordinates under screen coordinates with camera recognition</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:getTileCoordinatesUnderPlayer">Tilemap.Scene:getTileCoordinatesUnderPlayer ()</a></td>
+	<td class="summary">Returns the tile coordinates under character with player index</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:getTileCoordinatesUnderCharacter">Tilemap.Scene:getTileCoordinatesUnderCharacter (character)</a></td>
+	<td class="summary">Returns tile coordinates under a character</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:getLevelWidth">Tilemap.Scene:getLevelWidth ()</a></td>
+	<td class="summary">Returns level width</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:getLevelHeight">Tilemap.Scene:getLevelHeight ()</a></td>
+	<td class="summary">Returns level height</td>
+	</tr>
+</table>
+<h2><a href="#Pathfinding">Pathfinding </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Scene:Route_getRoute">Tilemap.Scene:Route_getRoute (startX, startY, goalX, goalY)</a></td>
+	<td class="summary">Returns the shortest path from start to goal as a list of tile coordinates</td>
 	</tr>
 </table>
 
@@ -90,15 +166,302 @@
     <strong>Tilemap.Scene:new ()</strong>
     </dt>
     <dd>
-    Constructor creates an empty Scene with size of the described one in Tilemap.Settings
+    Constructor creates an empty Scene with size of the described in <a href="../modules/Settings.html">Tilemap.Settings</a>
 
 
 
 
 
-    <h3>See also:</h3>
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Scene:update"></a>
+    <strong>Tilemap.Scene:update (dt)</strong>
+    </dt>
+    <dd>
+    updates the tilemap engine
+
+
+    <h3>Parameters:</h3>
     <ul>
+        <li><span class="parameter">dt</span>
+         delta time
+        </li>
     </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Scene_creation"></a>Scene creation </h2>
+
+
+    <dl class="function">
+    <dt>
+    <a name = "Tilemap.Scene:createRandomLevel"></a>
+    <strong>Tilemap.Scene:createRandomLevel ()</strong>
+    </dt>
+    <dd>
+    Creates a random level with the size specified in the Tilemap Settings.  All Tiles have the same weight in random factor.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Scene:createEmptyLevel"></a>
+    <strong>Tilemap.Scene:createEmptyLevel (levelWidth, levelHeight)</strong>
+    </dt>
+    <dd>
+    creates an level filled with Tile Index 1
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">levelWidth</span>
+         width of level
+        </li>
+        <li><span class="parameter">levelHeight</span>
+         height of level
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Render_Methods"></a>Render Methods </h2>
+
+
+    <dl class="function">
+    <dt>
+    <a name = "Tilemap.Scene:renderTiles"></a>
+    <strong>Tilemap.Scene:renderTiles ()</strong>
+    </dt>
+    <dd>
+    renders all tiles that are on screen, not the ones that are outside of the screen
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Scene:renderObstacleTiles"></a>
+    <strong>Tilemap.Scene:renderObstacleTiles ()</strong>
+    </dt>
+    <dd>
+    renders all obstacle tiles (the engine calls this after drawing shadows
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Scene:renderShading"></a>
+    <strong>Tilemap.Scene:renderShading ()</strong>
+    </dt>
+    <dd>
+    renders lighted tiles with shadows and reflections
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Scene:getObstacleMeshes"></a>
+    <strong>Tilemap.Scene:getObstacleMeshes ()</strong>
+    </dt>
+    <dd>
+    Returns a list of shadowcasters that will be created from obstacle tiles
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Scene:renderCharacters"></a>
+    <strong>Tilemap.Scene:renderCharacters ()</strong>
+    </dt>
+    <dd>
+    renders all characters from active scene
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Tile_coordinate_calculations"></a>Tile coordinate calculations </h2>
+
+
+    <dl class="function">
+    <dt>
+    <a name = "Tilemap.Scene:getTileCoordinatesAtPosition"></a>
+    <strong>Tilemap.Scene:getTileCoordinatesAtPosition (x, y)</strong>
+    </dt>
+    <dd>
+    Returns tile coordinates under screen coordinates (camera won&rsquo;t be recognized)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         x-coordinate to check
+        </li>
+        <li><span class="parameter">y</span>
+         y-coordinate to check
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Scene:getTileCoordinatesByCamera"></a>
+    <strong>Tilemap.Scene:getTileCoordinatesByCamera (mx, my)</strong>
+    </dt>
+    <dd>
+    Returns tile coordinates under screen coordinates with camera recognition
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">mx</span>
+         x-cursor-coordinate to check
+        </li>
+        <li><span class="parameter">my</span>
+         y-cursor-coordinate to check
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Scene:getTileCoordinatesUnderPlayer"></a>
+    <strong>Tilemap.Scene:getTileCoordinatesUnderPlayer ()</strong>
+    </dt>
+    <dd>
+    Returns the tile coordinates under character with player index
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Scene:getTileCoordinatesUnderCharacter"></a>
+    <strong>Tilemap.Scene:getTileCoordinatesUnderCharacter (character)</strong>
+    </dt>
+    <dd>
+    Returns tile coordinates under a character
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">character</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Scene:getLevelWidth"></a>
+    <strong>Tilemap.Scene:getLevelWidth ()</strong>
+    </dt>
+    <dd>
+    Returns level width
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Scene:getLevelHeight"></a>
+    <strong>Tilemap.Scene:getLevelHeight ()</strong>
+    </dt>
+    <dd>
+    Returns level height
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Pathfinding"></a>Pathfinding </h2>
+
+
+    <dl class="function">
+    <dt>
+    <a name = "Tilemap.Scene:Route_getRoute"></a>
+    <strong>Tilemap.Scene:Route_getRoute (startX, startY, goalX, goalY)</strong>
+    </dt>
+    <dd>
+    Returns the shortest path from start to goal as a list of tile coordinates
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">startX</span>
+         x-coordinate of start point
+        </li>
+        <li><span class="parameter">startY</span>
+         y-coordinate of start point
+        </li>
+        <li><span class="parameter">goalX</span>
+         x-coordinate of goal point
+        </li>
+        <li><span class="parameter">goalY</span>
+         Y-coordinate of goal point
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        {{startX, startY}, {nextTileX, nextTileY}, &hellip;, {goalX, goalY}}
+    </ol>
+
+
 
 
 </dd>

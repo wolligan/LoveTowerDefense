@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>GUI Toolkit Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>GUI Toolkit</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/Widget.html">Widget</a></li>
+  <li><a href="../classes/List.html">List</a></li>
+  <li><strong>TextEntry</strong></li>
+  <li><a href="../classes/Button.html">Button</a></li>
+  <li><a href="../classes/Container.html">Container</a></li>
+  <li><a href="../classes/Label.html">Label</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/init.html">init</a></li>
+</ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/GUI.lua.html">GUI.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>TextEntry</code></h1>
+<p>Basic Text Input Field.</p>
+<p> ToDo: add permanent key input after pressing key for some time.</p>
+
+<p> ToDo: add selection.</p>
+
+<p> ToDo: show text field cursor icon when hovering.</p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Author</strong>: Steve Wolligandt</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#GUI.TextEntry:new">GUI.TextEntry:new (hintText)</a></td>
+	<td class="summary">Constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.TextEntry:render">GUI.TextEntry:render ()</a></td>
+	<td class="summary">renders the text field</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.TextEntry:update">GUI.TextEntry:update (dt)</a></td>
+	<td class="summary">updates the TextEntry</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.TextEntry:notifyKey">GUI.TextEntry:notifyKey (key)</a></td>
+	<td class="summary">notifies that a key has been pressed</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.TextEntry:moveCursorLeft">GUI.TextEntry:moveCursorLeft ()</a></td>
+	<td class="summary">moves the cursor and the TextEntry view to the left.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.TextEntry:moveCursorRight">GUI.TextEntry:moveCursorRight ()</a></td>
+	<td class="summary">moves the cursor and the TextEntry view to the right</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.TextEntry:onClick">GUI.TextEntry:onClick ()</a></td>
+	<td class="summary">reposition cursor on click</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "GUI.TextEntry:new"></a>
+    <strong>GUI.TextEntry:new (hintText)</strong>
+    </dt>
+    <dd>
+    Constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">hintText</span>
+         text that will be shown when there is no text typed into the text field
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.TextEntry:render"></a>
+    <strong>GUI.TextEntry:render ()</strong>
+    </dt>
+    <dd>
+    renders the text field
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.TextEntry:update"></a>
+    <strong>GUI.TextEntry:update (dt)</strong>
+    </dt>
+    <dd>
+    updates the TextEntry
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+         delta time
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.TextEntry:notifyKey"></a>
+    <strong>GUI.TextEntry:notifyKey (key)</strong>
+    </dt>
+    <dd>
+    notifies that a key has been pressed
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+         Key that has been pressed
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.TextEntry:moveCursorLeft"></a>
+    <strong>GUI.TextEntry:moveCursorLeft ()</strong>
+    </dt>
+    <dd>
+    moves the cursor and the TextEntry view to the left.
+ TODO moving the the left does not work correctly
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.TextEntry:moveCursorRight"></a>
+    <strong>GUI.TextEntry:moveCursorRight ()</strong>
+    </dt>
+    <dd>
+    moves the cursor and the TextEntry view to the right
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.TextEntry:onClick"></a>
+    <strong>GUI.TextEntry:onClick ()</strong>
+    </dt>
+    <dd>
+    reposition cursor on click
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

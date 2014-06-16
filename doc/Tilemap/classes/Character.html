@@ -1,0 +1,459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Lighted Tilemap</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Lighted Tilemap Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Character_Movement">Character Movement </a></li>
+<li><a href="#Collision_Detection">Collision Detection </a></li>
+<li><a href="#AI_functions">AI functions </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>Character</strong></li>
+  <li><a href="../classes/Camera.html">Camera</a></li>
+  <li><a href="../classes/Scene.html">Scene</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/Tilemap.html">Tilemap</a></li>
+  <li><a href="../modules/Settings.html">Settings</a></li>
+  <li><a href="../modules/TileDict.html">TileDict</a></li>
+</ul>
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../manual/Readme.md.html">Readme</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/Tilemap.lua.html">Tilemap.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Character</code></h1>
+<p>Basic Character that can interact on the tilemap and can also be an AI.</p>
+<p>
+</p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Author</strong>: Steve Wolligandt</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:new">Tilemap.Character:new (apparentScene, x, y)</a></td>
+	<td class="summary">Constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:render">Tilemap.Character:render ()</a></td>
+	<td class="summary">Renders the Character (This should be overwritten in your derived class)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:update">Tilemap.Character:update (dt)</a></td>
+	<td class="summary">Renders the Character (This should be overwritten in your derived class)</td>
+	</tr>
+</table>
+<h2><a href="#Character_Movement">Character Movement </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:moveUp">Tilemap.Character:moveUp (dt)</a></td>
+	<td class="summary">Moves the Character up, also regards the speed under the tile the character is located at</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:moveLeft">Tilemap.Character:moveLeft (dt)</a></td>
+	<td class="summary">Moves the Character left, also regards the speed under the tile the character is located at</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:moveDown">Tilemap.Character:moveDown (dt)</a></td>
+	<td class="summary">Moves the Character down, also regards the speed under the tile the character is located at</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:moveRight">Tilemap.Character:moveRight (dt)</a></td>
+	<td class="summary">Moves the Character right, also regards the speed under the tile the character is located at</td>
+	</tr>
+</table>
+<h2><a href="#Collision_Detection">Collision Detection </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:checkObstacleX">Tilemap.Character:checkObstacleX ()</a></td>
+	<td class="summary">checks if the Character is caught in an obstacle in x-coordinate and resets to the old x-coordinate if thats the case</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:checkObstacleY">Tilemap.Character:checkObstacleY ()</a></td>
+	<td class="summary">checks if the Character is caught in an obstacle in y-coordinate and resets to the old x-coordinate if thats the case</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:getTileIndex">Tilemap.Character:getTileIndex ()</a></td>
+	<td class="summary">returns the tile index the character is standing on</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:getTileCoordinate">Tilemap.Character:getTileCoordinate ()</a></td>
+	<td class="summary">returns the tile coordinates the character is standing on</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:keepCharInMap">Tilemap.Character:keepCharInMap ()</a></td>
+	<td class="summary">assert that the character stays in range of the map</td>
+	</tr>
+</table>
+<h2><a href="#AI_functions">AI functions </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:AI_think">Tilemap.Character:AI_think (dt)</a></td>
+	<td class="summary">Think function gets repeatedly called from update.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:AI_walkToGoal">Tilemap.Character:AI_walkToGoal (dt)</a></td>
+	<td class="summary">Call this in your think method to let the character move to its goal if defined</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Tilemap.Character:AI_calculatePathToGoal">Tilemap.Character:AI_calculatePathToGoal (goalX, goalY)</a></td>
+	<td class="summary">calculate a path to a goal</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "Tilemap.Character:new"></a>
+    <strong>Tilemap.Character:new (apparentScene, x, y)</strong>
+    </dt>
+    <dd>
+    Constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">apparentScene</span>
+         Scene of the character
+        </li>
+        <li><span class="parameter">x</span>
+         x-coordinate of the character
+        </li>
+        <li><span class="parameter">y</span>
+         y-coordinate of the character
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Character:render"></a>
+    <strong>Tilemap.Character:render ()</strong>
+    </dt>
+    <dd>
+    Renders the Character (This should be overwritten in your derived class)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Character:update"></a>
+    <strong>Tilemap.Character:update (dt)</strong>
+    </dt>
+    <dd>
+    Renders the Character (This should be overwritten in your derived class)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Character_Movement"></a>Character Movement </h2>
+
+
+    <dl class="function">
+    <dt>
+    <a name = "Tilemap.Character:moveUp"></a>
+    <strong>Tilemap.Character:moveUp (dt)</strong>
+    </dt>
+    <dd>
+    Moves the Character up, also regards the speed under the tile the character is located at
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+         delta time
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Character:moveLeft"></a>
+    <strong>Tilemap.Character:moveLeft (dt)</strong>
+    </dt>
+    <dd>
+    Moves the Character left, also regards the speed under the tile the character is located at
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+         delta time
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Character:moveDown"></a>
+    <strong>Tilemap.Character:moveDown (dt)</strong>
+    </dt>
+    <dd>
+    Moves the Character down, also regards the speed under the tile the character is located at
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+         delta time
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Character:moveRight"></a>
+    <strong>Tilemap.Character:moveRight (dt)</strong>
+    </dt>
+    <dd>
+    Moves the Character right, also regards the speed under the tile the character is located at
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+         delta time
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Collision_Detection"></a>Collision Detection </h2>
+
+
+    <dl class="function">
+    <dt>
+    <a name = "Tilemap.Character:checkObstacleX"></a>
+    <strong>Tilemap.Character:checkObstacleX ()</strong>
+    </dt>
+    <dd>
+    checks if the Character is caught in an obstacle in x-coordinate and resets to the old x-coordinate if thats the case
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Character:checkObstacleY"></a>
+    <strong>Tilemap.Character:checkObstacleY ()</strong>
+    </dt>
+    <dd>
+    checks if the Character is caught in an obstacle in y-coordinate and resets to the old x-coordinate if thats the case
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Character:getTileIndex"></a>
+    <strong>Tilemap.Character:getTileIndex ()</strong>
+    </dt>
+    <dd>
+    returns the tile index the character is standing on
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Character:getTileCoordinate"></a>
+    <strong>Tilemap.Character:getTileCoordinate ()</strong>
+    </dt>
+    <dd>
+    returns the tile coordinates the character is standing on
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Character:keepCharInMap"></a>
+    <strong>Tilemap.Character:keepCharInMap ()</strong>
+    </dt>
+    <dd>
+    assert that the character stays in range of the map
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="AI_functions"></a>AI functions </h2>
+
+
+    <dl class="function">
+    <dt>
+    <a name = "Tilemap.Character:AI_think"></a>
+    <strong>Tilemap.Character:AI_think (dt)</strong>
+    </dt>
+    <dd>
+    Think function gets repeatedly called from update.  Overwrite this method in your derived class
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Character:AI_walkToGoal"></a>
+    <strong>Tilemap.Character:AI_walkToGoal (dt)</strong>
+    </dt>
+    <dd>
+    Call this in your think method to let the character move to its goal if defined
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Tilemap.Character:AI_calculatePathToGoal"></a>
+    <strong>Tilemap.Character:AI_calculatePathToGoal (goalX, goalY)</strong>
+    </dt>
+    <dd>
+    calculate a path to a goal
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">goalX</span>
+
+
+        </li>
+        <li><span class="parameter">goalY</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

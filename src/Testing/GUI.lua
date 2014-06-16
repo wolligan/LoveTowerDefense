@@ -216,8 +216,8 @@ function Testing.GUI.fillContainer2()
     l2_cont2.topAnchorOffset = 20
     l2_cont2.bottomAnchorOffset = 50
 
-    -- create a textfield
-    local tf1_cont2 = GUI.Textfield("blubb")
+    -- create a TextEntry
+    local tf1_cont2 = GUI.TextEntry("blubb")
     tf1_cont2:setLeftAnchor(l2_cont2, "left")
     tf1_cont2:setRightAnchor(l2_cont2, "right")
     tf1_cont2:setTopAnchor(l2_cont2, "bottom")

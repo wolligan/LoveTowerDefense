@@ -30,18 +30,22 @@
   <li><a href="../index.html">Index</a></li>
 </ul>
 
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
 
 
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><strong>Tilemap</strong></li>
-  <li><a href="../modules/Character.html">Character</a></li>
   <li><a href="../modules/Settings.html">Settings</a></li>
-  <li><a href="../modules/Camera.html">Camera</a></li>
   <li><a href="../modules/TileDict.html">TileDict</a></li>
 </ul>
 <h2>Classes</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/Character.html">Character</a></li>
+  <li><a href="../classes/Camera.html">Camera</a></li>
   <li><a href="../classes/Scene.html">Scene</a></li>
 </ul>
 <h2>Manual</h2>
@@ -67,11 +71,200 @@
     </ul>
 
 
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#init">init ()</a></td>
+	<td class="summary">initializes the Tilemap Engine</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#render">render ()</a></td>
+	<td class="summary">renders the Tilemap Engine</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#update">update (dt)</a></td>
+	<td class="summary">updates the Tilemap Engine</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getActiveScene">getActiveScene ()</a></td>
+	<td class="summary">Returns the active Scene</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#pause">pause ()</a></td>
+	<td class="summary">pauses the game</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#resume">resume ()</a></td>
+	<td class="summary">resumes the game</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#togglePause">togglePause ()</a></td>
+	<td class="summary">toggle between paused and unpaused</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#loadMap">loadMap (filepath)</a></td>
+	<td class="summary">loads a map from file</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#addScene">addScene (sceneWidth, sceneHeight)</a></td>
+	<td class="summary">adds a scene to the scene list</td>
+	</tr>
+</table>
 
 <br/>
 <br/>
 
 
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "init"></a>
+    <strong>init ()</strong>
+    </dt>
+    <dd>
+    initializes the Tilemap Engine
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "render"></a>
+    <strong>render ()</strong>
+    </dt>
+    <dd>
+    renders the Tilemap Engine
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "update"></a>
+    <strong>update (dt)</strong>
+    </dt>
+    <dd>
+    updates the Tilemap Engine
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+         delta time
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getActiveScene"></a>
+    <strong>getActiveScene ()</strong>
+    </dt>
+    <dd>
+    Returns the active Scene
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "pause"></a>
+    <strong>pause ()</strong>
+    </dt>
+    <dd>
+    pauses the game
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "resume"></a>
+    <strong>resume ()</strong>
+    </dt>
+    <dd>
+    resumes the game
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "togglePause"></a>
+    <strong>togglePause ()</strong>
+    </dt>
+    <dd>
+    toggle between paused and unpaused
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "loadMap"></a>
+    <strong>loadMap (filepath)</strong>
+    </dt>
+    <dd>
+    loads a map from file
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">filepath</span>
+         path to the map you want to load
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "addScene"></a>
+    <strong>addScene (sceneWidth, sceneHeight)</strong>
+    </dt>
+    <dd>
+    adds a scene to the scene list
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sceneWidth</span>
+         Width of the scene to be created
+        </li>
+        <li><span class="parameter">sceneHeight</span>
+         Height of the scene to be created
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->

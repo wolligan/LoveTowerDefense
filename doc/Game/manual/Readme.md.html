@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Game State Manager</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Game State Manager</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Callback_functions_of_Game_States">Callback functions of Game States </a></li>
+<li><a href="#Example_Game_State">Example Game State </a></li>
+<li><a href="#Keybindings">Keybindings </a></li>
+<li><a href="#Starting_the_Game_State_Manager">Starting the Game State Manager </a></li>
+<li><a href="#Change_the_Game_State">Change the Game State </a></li>
+<li><a href="#GUI">GUI </a></li>
+<li><a href="#Coroutines">Coroutines </a></li>
+<li><a href="#Memory_functions">Memory functions </a></li>
+</ul>
+
+
+<h2>Manual</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>Readme</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/Game.html">Game</a></li>
+  <li><a href="../modules/Keys.html">Keys</a></li>
+  <li><a href="../modules/main.html">main</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h1>Game State Manager</h1>
+
+<p>The Game State Manager handles GUI Containers, <a href="../modules/Keys.html">Keybindings</a> and helps you to structure your game. It also has some useful functions to not let your memory flow over because of sounds, fonts and sprites.
+Additionaly it easily handles your coroutines.</p>
+
+<p><a name="Callback_functions_of_Game_States"></a></p>
+
+<h2>Callback functions of Game States</h2>
+
+<p>There are some Callback functions that are automatically called in your Game States if you have defined them:</p>
+
+<ul>
+<li>init() &ndash; gets the first time you start your Game State</li>
+<li>onActivate() &ndash;  gets called every time you activate the Game State</li>
+<li>onDeactivate() &ndash;  gets called when your Game State is activated you activate another Game State</li>
+<li>render() &ndash; do your rendering stuff in this function</li>
+<li>update(dt) &ndash; do your update stuff in this function</li>
+</ul>
+
+
+<p><a name="Example_Game_State"></a></p>
+
+<h2>Example Game State</h2>
+
+<p>In this section we create a simple Game State that creates, counts up and renders a number:</p>
+
+<pre>
+MyGameState = {}
+
+<span class="comment">--- initialize a simple value
+</span><span class="keyword">function</span> MyGameState.init()
+    MyGameState.value = <span class="number">0</span>
+<span class="keyword">end</span>
+
+<span class="comment">--- increase the value in update
+</span><span class="keyword">function</span> MyGameState.update(dt)
+   MyGameState.value = MyGameState.value + <span class="number">10</span>*dt
+<span class="keyword">end</span>
+
+<span class="comment">--- render the value on screen
+</span><span class="keyword">function</span> MyGameState.render()
+    love.graphics.<span class="global">print</span>(MyGameState.value, <span class="number">10</span>, <span class="number">10</span>)
+<span class="keyword">end</span>
+</pre>
+
+
+<p><a name="Keybindings"></a></p>
+
+<h2>Keybindings</h2>
+
+<p>Now where we have our game state you want to interact with the game. At this step we create a simple keybinding</p>
+
+<pre>
+MyGameState.activeKeyBinding = {}
+</pre>
+
+
+<p>There are 3 modes of key pushes:</p>
+
+<ul>
+<li>pressed</li>
+<li>released</li>
+<li>repeated</li>
+</ul>
+
+
+<p>Let&rsquo;s create three keybindings and explain what each of the three modes does</p>
+
+<pre>
+MyGameState.activeKeyBinding[<span class="string">" "</span>] = {
+   pressed = <span class="keyword">function</span>()
+        <span class="global">print</span>(<span class="string">"pressed space"</span>)
+   <span class="keyword">end</span>,
+
+   released = <span class="keyword">function</span>()
+        <span class="global">print</span>(<span class="string">"released space"</span>)
+   <span class="keyword">end</span>,
+}
+
+MyGameState.activeKeyBinding[<span class="string">"up"</span>] = {
+   repeated = <span class="keyword">function</span>(dt)
+        MyGameState.value = MyGameState.value + <span class="number">2</span>*dt
+   <span class="keyword">end</span>
+}
+
+MyGameState.activeKeyBinding[<span class="string">"down"</span>] = {
+   repeated = <span class="keyword">function</span>(dt)
+        MyGameState.value = MyGameState.value - <span class="number">2</span>*dt
+   <span class="keyword">end</span>
+}
+</pre>
+
+
+<p>As you can see each keybind can have several modes (even all three modes are possible).
+When you press space the function pressed will be called immediately.
+When you release the space button the function released will be called. In this case it just prints something to console.
+Pressing and holding up or down will change the MyGameState.value that we have defined in the MyGameState.init() function.
+Note that when you define a repeated keybinding you also have a delta time from the current frame.</p>
+
+<p><a name="Starting_the_Game_State_Manager"></a></p>
+
+<h2>Starting the Game State Manager</h2>
+
+<p>To start the Game State Manager you have to do the following in your main.lua:</p>
+
+<pre>
+<span class="global">require</span> <span class="string">"MyGameState"</span>
+
+<span class="keyword">function</span> love.<span class="global">load</span>()
+    Game.init(MyGameState)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> love.draw()
+    Game.render()
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> love.update(dt)
+    Game.update(dt)
+<span class="keyword">end</span>
+</pre>
+
+
+<p><a name="Change_the_Game_State"></a></p>
+
+<h2>Change the Game State</h2>
+
+<p>To change a Game State simply call this:</p>
+
+<pre>
+Game.changeState(AnotherGameState)
+</pre>
+
+
+<p><a name="GUI"></a></p>
+
+<h2>GUI</h2>
+
+<p>When you create a <a href="../../GUI/classes/Container.html">GUI Container</a> in a Game State the Game State Manager will automatically recognize that its in the activated Game State.
+Changine to another Game State will activate the GUI of the new Game State. Changing back to the old Game State will activate the apparent GUI.</p>
+
+<p><a name="Coroutines"></a></p>
+
+<h2>Coroutines</h2>
+
+<p>Read through the <a href="http://lua-users.org/wiki/CoroutinesTutorial">Coroutines Tutorial</a> if you are not familiar with coroutines.</p>
+
+<p>To start a coroutine do the following:</p>
+
+<pre>
+Game.startCoroutine(<span class="global">coroutine</span>.create(<span class="keyword">function</span>()
+    <span class="comment">-- do stuff
+</span>    <span class="global">coroutine</span>.yield()
+    <span class="comment">-- do more stuff
+</span>    <span class="global">coroutine</span>.yield()
+    <span class="comment">-- do even more stuff
+</span><span class="keyword">end</span>)
+</pre>
+
+
+<p>Game State Manager will yield your coroutines after updating the current frame</p>
+
+<p><a name="Memory_functions"></a></p>
+
+<h2>Memory functions</h2>
+
+<p>To not have any duplicate sprites, fonts or sounds in memory you can use these three functions:</p>
+
+<ul>
+<li><a href="../modules/Game.html#getSprite">getSprite</a></li>
+<li><a href="../modules/Game.html#getFont">getSound</a></li>
+<li><a href="../modules/Game.html#getSound">getFont</a></li>
+</ul>
+
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,10 +1,14 @@
 --- Basic Character that can interact on the tilemap and can also be an AI.
 --@author Steve Wolligandt
+--@classmod Character
 
 Tilemap.Character = {}
 Utilities.OO.createClass(Tilemap.Character)
 
----
+--- Constructor
+--@param apparentScene Scene of the character
+--@param x x-coordinate of the character
+--@param y y-coordinate of the character
 function Tilemap.Character:new(apparentScene,x,y)
 	self.x = x
 	self.y = y
@@ -20,17 +24,23 @@ function Tilemap.Character:new(apparentScene,x,y)
     self.pathToGoal = {}
 end
 
+--- Renders the Character (This should be overwritten in your derived class)
 function Tilemap.Character:render()
     self.mesh:render()
 end
 
+--- Renders the Character (This should be overwritten in your derived class)
 function Tilemap.Character:update(dt)
     self.mesh.position[1] = self.x
     self.mesh.position[2] = self.y
     self:AI_think(dt)
 end
 
----
+--- Character Movement
+--@section movement
+
+--- Moves the Character up, also regards the speed under the tile the character is located at
+--@param dt delta time
 function Tilemap.Character:moveUp(dt)
 	self.oldY = self.y
 
@@ -41,7 +51,8 @@ function Tilemap.Character:moveUp(dt)
 	self:checkObstacleY()
 end
 
----
+--- Moves the Character left, also regards the speed under the tile the character is located at
+--@param dt delta time
 function Tilemap.Character:moveLeft(dt)
 	self.oldX = self.x
 
@@ -52,7 +63,8 @@ function Tilemap.Character:moveLeft(dt)
 	self:checkObstacleX()
 end
 
----
+--- Moves the Character down, also regards the speed under the tile the character is located at
+--@param dt delta time
 function Tilemap.Character:moveDown(dt)
 	self.oldY = self.y
 
@@ -63,7 +75,8 @@ function Tilemap.Character:moveDown(dt)
 	self:checkObstacleY()
 end
 
----
+--- Moves the Character right, also regards the speed under the tile the character is located at
+--@param dt delta time
 function Tilemap.Character:moveRight(dt)
 	self.oldX = self.x
 
@@ -74,7 +87,10 @@ function Tilemap.Character:moveRight(dt)
 	self:checkObstacleX()
 end
 
----
+--- Collision Detection
+--@section collision
+
+--- checks if the Character is caught in an obstacle in x-coordinate and resets to the old x-coordinate if thats the case
 function Tilemap.Character:checkObstacleX()
 	local newTileIsObstacle = Tilemap.tileDict[self:getTileIndex()].isObstacle
 	if newTileIsObstacle then
@@ -82,7 +98,7 @@ function Tilemap.Character:checkObstacleX()
 	end
 end
 
----
+--- checks if the Character is caught in an obstacle in y-coordinate and resets to the old x-coordinate if thats the case
 function Tilemap.Character:checkObstacleY()
 	local newTileIsObstacle = Tilemap.tileDict[self:getTileIndex()].isObstacle
 	if newTileIsObstacle then
@@ -90,18 +106,18 @@ function Tilemap.Character:checkObstacleY()
 	end
 end
 
----
+--- returns the tile index the character is standing on
 function Tilemap.Character:getTileIndex()
 	local tileCoordX, tileCoordY = self.apparentScene:getTileCoordinatesUnderCharacter(self)
 	return self.apparentScene.tiles[tileCoordX][tileCoordY]
 end
 
----
+--- returns the tile coordinates the character is standing on
 function Tilemap.Character:getTileCoordinate()
 	return self.apparentScene:getTileCoordinatesUnderCharacter(self)
 end
 
----
+--- assert that the character stays in range of the map
 function Tilemap.Character:keepCharInMap()
 	if self.x < 0 then self.x = 0 end
 	if self.y < 0 then self.y = 0 end
@@ -109,12 +125,15 @@ function Tilemap.Character:keepCharInMap()
 	if self.y > #self.apparentScene.tiles[1]*Tilemap.Settings.tileSize-0.1 then self.y = #self.apparentScene.tiles[1]*Tilemap.Settings.tileSize-0.1 end
 end
 
----
+--- AI functions
+--@section ai
+
+--- Think function gets repeatedly called from update. Overwrite this method in your derived class
 function Tilemap.Character:AI_think(dt)
 	self:AI_walkToGoal(dt)
 end
 
----
+--- Call this in your think method to let the character move to its goal if defined
 function Tilemap.Character:AI_walkToGoal(dt)
 	if #self.pathToGoal > 0 then
 		local tileToGo 		= self.pathToGoal[1]
@@ -161,7 +180,7 @@ function Tilemap.Character:AI_walkToGoal(dt)
 	end
 end
 
----
+--- calculate a path to a goal
 function Tilemap.Character:AI_calculatePathToGoal(goalX, goalY)
     local tileX,tileY = self.apparentScene:getTileCoordinatesUnderCharacter(self)
     self.pathToGoal = self.apparentScene:Route_getRoute(tileX, tileY, goalX, goalY)

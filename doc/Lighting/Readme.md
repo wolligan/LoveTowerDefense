@@ -8,8 +8,8 @@ TODO
 ## Usage
     require "Lighting"
     
-    --- love init function
-    function love.init()
+    --- love load function
+    function love.load()
         -- initialize lighting
         Lighting.init()
         

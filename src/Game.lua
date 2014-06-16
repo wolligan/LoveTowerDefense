@@ -8,15 +8,7 @@ Game = {}
 
 require "Utilities"
 require "Keys"
-require "Ingame"
-require "Tilemap"
-require "MainMenu"
-require "Networking"
-require "SplashScreen"
 require "GUI"
-require "Testing"
-require "LevelEditor"
-require "Credits"
 
 Game.spritePool = {}
 Game.soundPool = {}
@@ -24,13 +16,15 @@ Game.fontPool = {}
 Game.state = nil
 Game.coroutines = {}
 
+--- State managing
+--@section manage
+
 --- initializes the engine
-function Game.init()
+--@param initialState Game State Manager will start this state at first
+function Game.init(initialState)
 	love.window.setMode( 1366, 768, { fullscreen = true } )
 	math.randomseed(os.time())
-    Game.changeState(Testing.Menu)
-    --Game.changeState(Ingame)
-    Game.changeState(SplashScreen)
+    Game.changeState(initialState)
 end
 
 --- renders current game state, gui and textoutput
@@ -43,6 +37,7 @@ function Game.render()
 end
 
 --- updates current game state, gui and keyhandling
+--@param dt delta time
 function Game.update(dt)
     Game.state.GUI = GUI.activeContainer
 	Keys.handleKeyBindings(dt)
@@ -51,16 +46,11 @@ function Game.update(dt)
         Game.state.update(dt)
     end
 
-    for i=#Game.coroutines,1,-1 do
-        if coroutine.status(Game.coroutines[i]) == "dead" then
-            table.remove(Game.coroutines, i)
-        else
-            coroutine.resume(Game.coroutines[i])
-        end
-    end
+    Game.handleCoroutines()
 end
 
 --- changes current game state and calls some callbacks
+--@param state Changes to this state
 function Game.changeState(state)
     if state ~= Game.state then
 
@@ -94,13 +84,31 @@ function Game.changeState(state)
     end
 end
 
+--- Coroutine Management
+--@section coroutine
+
 --- adds a coroutine to couroutine list
 -- @param coroutine coroutine to add
 function Game.startCoroutine(coroutine)
     Game.coroutines[#Game.coroutines+1] = coroutine
 end
 
+--- Handles active coroutines
+function Game.handleCoroutines()
+   for i=#Game.coroutines,1,-1 do
+        if coroutine.status(Game.coroutines[i]) == "dead" then
+            table.remove(Game.coroutines, i)
+        else
+            coroutine.resume(Game.coroutines[i])
+        end
+    end
+end
+
+--- Memory Management
+--@section memory
+
 --- loads sprites, if sprite is already loaded it returns a reference to this
+--@param path path to sprite
 function Game.getSprite(path)
     if not Game.spritePool[path] then
         Game.spritePool[path] = love.graphics.newImage(path)
@@ -109,6 +117,8 @@ function Game.getSprite(path)
 end
 
 --- loads fonts, if font is already loaded it returns a reference to this
+--@param path path to font
+--@param size size of the font in pt
 function Game.getFont(path, size)
     if not Game.fontPool[path.."_"..(size or 12)] then
         Game.fontPool[path.."_"..(size or 12)] = love.graphics.newFont(path, (size or 12))
@@ -117,6 +127,8 @@ function Game.getFont(path, size)
 end
 
 --- loads sounds, if sound is already loaded it returns a reference to this
+--@param path path to sound
+--@param type type of the sound [see löve wiki](http://love2d.org/wiki/SourceType)
 function Game.getSound(path, type)
     if not Game.soundPool[path] then
         Game.soundPool[path] = love.audio.newSource(path, type)

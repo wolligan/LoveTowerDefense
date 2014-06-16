@@ -91,7 +91,7 @@ You also want to have key handling (if you do not want to have the key stealing 
 ## Usage
 At first you have to create a [Container](../classes/Container.html) to hold your widgets:
 
-    -- create container
+    -- create container with default colors and font
     local guiContainer = GUI.Container()
 
 After that you can create your widgets
@@ -128,15 +128,22 @@ Now you can position the widgets. In this example we position the button to the 
 At last you have to add the widget to the container
 
     -- add widget to container
+    guiContainer:addWidget(button)
+    guiContainer:addWidget(label)
 
-Optionally you can individualize every single widget.
+After adding your widgets to the container you can optionally individualize every single widget.
 
-    -- change font and font color
+    -- change font of your label
+    label.font = love.graphics.newFont("path/to/your/font.ttf", 15)
+    
+    -- color of the button will be yellow
+    button.fontColor = {255,255,0}
 
 ## Widgets
-### Make your own Widgets
-Every Widget except Widget itself needs to be derived from the Widget class:
-    --- Label Widget
+### How to make your own Widgets
+Every [Widget](../classes/Widget.html) except Widget itself needs to be derived from the Widget class:
+
+    --- My Widget
     --@classmod MyWidget
 
     require "GUI.Widget"
@@ -166,6 +173,17 @@ Now we have our basic Widget which can be extended. For example you can overwrit
     end
     
     -- ...
+
+Here is the list of all appearance settings you can change:
+
+* font
+* backgroundColor
+* foregroundColor
+* hoverColor
+* clickedColor
+* borderColor
+* fontColor
+
 ### Callbacks
 Every Widget has the following [Callback](../classes/Widget.html#Callback_functions) functions:
 

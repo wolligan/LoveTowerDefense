@@ -9,16 +9,12 @@ require "Tilemap.Camera"
 
 Utilities.OO.createClass(Tilemap.Scene)
 
---- Constructor creates an empty Scene with size of the described one in Tilemap.Settings
---@see Tilemap.Settings
+--- Constructor creates an empty Scene with size of the described in [Tilemap.Settings](../modules/Settings.html)
 function Tilemap.Scene:new()
     self.tiles = {}
 
     self.characters = {}
     self.playerIndex = 0
-
-    self.lightSources = {}
-    self.meshes = {}
 
     self.maxTilesOnScreen = {}
     self.maxTilesOnScreen[1] = math.floor(love.graphics.getWidth()  / Tilemap.Settings.tileSize)+2
@@ -28,7 +24,21 @@ function Tilemap.Scene:new()
     self.camera = Tilemap.Camera(self)
 end
 
----
+--- updates the tilemap engine
+--@param dt delta time
+function Tilemap.Scene:update(dt)
+    --self.camera:update(dt)
+    for i,curChar in pairs(self.characters) do
+        --if i ~= Tilemap.getActiveScene().playerIndex then
+            curChar:update(dt)
+        --end
+    end
+end
+
+--- Scene creation
+--@section scenecreation
+
+--- Creates a random level with the size specified in the Tilemap Settings. All Tiles have the same weight in random factor.
 function Tilemap.Scene:createRandomLevel()
 	self.playerIndex = 1
 
@@ -63,8 +73,10 @@ function Tilemap.Scene:createRandomLevel()
     self.camera.target = self.characters[1]
 end
 
+--- creates an level filled with Tile Index 1
+--@param levelWidth width of level
+--@param levelHeight height of level
 function Tilemap.Scene:createEmptyLevel(levelWidth, levelHeight)
-
 	self.playerIndex = 1
     self.tiles = {}
 
@@ -80,7 +92,10 @@ function Tilemap.Scene:createEmptyLevel(levelWidth, levelHeight)
     --self.camera.target = self.characters[1]
 end
 
----
+--- Render Methods
+--@section render
+
+--- renders all tiles that are on screen, not the ones that are outside of the screen
 function Tilemap.Scene:renderTiles()
     self.camera:begin()
 	-- draw level
@@ -109,7 +124,7 @@ function Tilemap.Scene:renderTiles()
     self.camera:stop()
 end
 
----
+--- renders all obstacle tiles (the engine calls this after drawing shadows
 function Tilemap.Scene:renderObstacleTiles()
     self.camera:begin()
 	-- draw level
@@ -138,6 +153,7 @@ function Tilemap.Scene:renderObstacleTiles()
     self.camera:stop()
 end
 
+--- renders lighted tiles with shadows and reflections
 function Tilemap.Scene:renderShading()
     self.camera:begin()
     love.graphics.setColor(255,255,255)
@@ -151,6 +167,7 @@ function Tilemap.Scene:renderShading()
     self.camera:stop()
 end
 
+--- Returns a list of shadowcasters that will be created from obstacle tiles
 function Tilemap.Scene:getObstacleMeshes()
     local meshes = {}
     --for y = math.max(1,beginAtY), math.min(self:getLevelHeight(), beginAtY+self.maxTilesOnScreen[2])  do
@@ -165,6 +182,7 @@ function Tilemap.Scene:getObstacleMeshes()
     return meshes
 end
 
+--- renders all characters from active scene
 function Tilemap.Scene:renderCharacters()
     self.camera:begin()
 
@@ -183,31 +201,12 @@ function Tilemap.Scene:renderCharacters()
     self.camera:stop()
 end
 
-function Tilemap.Scene:update(dt)
-    --self.camera:update(dt)
-    for i,curChar in pairs(self.characters) do
-        --if i ~= Tilemap.getActiveScene().playerIndex then
-            curChar:update(dt)
-        --end
-    end
-end
+--- Tile coordinate calculations
+--@section tileco
 
----
-function Tilemap.Scene:getTileCoordinatesUnderPlayer()
-	return self:getTileCoordinatesUnderCharacter(self.characters[self.playerIndex])
-end
-
----
-function Tilemap.Scene:getTileCoordinatesByCamera(mx, my)
-	return self:getTileCoordinatesAtPosition(self.camera.x + mx - love.graphics.getWidth() * 0.5, self.camera.y + my - love.graphics.getHeight() * 0.5)
-end
-
----
-function Tilemap.Scene:getTileCoordinatesUnderCharacter(character)
-	return self:getTileCoordinatesAtPosition(character.x, character.y)
-end
-
----
+--- Returns tile coordinates under screen coordinates (camera won't be recognized)
+--@param x x-coordinate to check
+--@param y y-coordinate to check
 function Tilemap.Scene:getTileCoordinatesAtPosition(x,y)
 	local tileX, tileY
 
@@ -217,28 +216,42 @@ function Tilemap.Scene:getTileCoordinatesAtPosition(x,y)
 	return tileX, tileY
 end
 
----
+--- Returns tile coordinates under screen coordinates with camera recognition
+--@param mx x-cursor-coordinate to check
+--@param my y-cursor-coordinate to check
+function Tilemap.Scene:getTileCoordinatesByCamera(mx, my)
+	return self:getTileCoordinatesAtPosition(self.camera.x + mx - love.graphics.getWidth() * 0.5, self.camera.y + my - love.graphics.getHeight() * 0.5)
+end
+
+--- Returns the tile coordinates under character with player index
+function Tilemap.Scene:getTileCoordinatesUnderPlayer()
+	return self:getTileCoordinatesUnderCharacter(self.characters[self.playerIndex])
+end
+
+--- Returns tile coordinates under a character
+function Tilemap.Scene:getTileCoordinatesUnderCharacter(character)
+	return self:getTileCoordinatesAtPosition(character.x, character.y)
+end
+
+--- Returns level width
 function Tilemap.Scene:getLevelWidth()
 	return #self.tiles
 end
 
----
+--- Returns level height
 function Tilemap.Scene:getLevelHeight()
 	return #self.tiles[1]
 end
 
----
-function Tilemap.Scene:Route_reconstructPath(cameFrom, currentNode)
-    if cameFrom[currentNode] then
-        local path = self:Route_reconstructPath(cameFrom, cameFrom[currentNode])
-		path[#path+1] = currentNode
-        return path
-    else
-        return {currentNode}
-	end
-end
+--- Pathfinding
+--@section pathf
 
----
+--- Returns the shortest path from start to goal as a list of tile coordinates
+--@param startX x-coordinate of start point
+--@param startY y-coordinate of start point
+--@param goalX x-coordinate of goal point
+--@param goalY Y-coordinate of goal point
+--@return {{startX, startY}, {nextTileX, nextTileY}, ..., {goalX, goalY}}
 function Tilemap.Scene:Route_getRoute(startX, startY, goalX, goalY)
 	local goal 		= {goalX, goalY}
 	local start 	= {startX, startY}
@@ -303,24 +316,69 @@ function Tilemap.Scene:Route_getRoute(startX, startY, goalX, goalY)
 end
 
 ---
+function Tilemap.Scene:Route_reconstructPath(cameFrom, currentNode)
+    if cameFrom[currentNode] then
+        local path = self:Route_reconstructPath(cameFrom, cameFrom[currentNode])
+		path[#path+1] = currentNode
+        return path
+    else
+        return {currentNode}
+	end
+end
+
+---
 function Tilemap.Scene:Route_getNeighbors(node, neighborTable)
 	local neighbors = {}
 
+    -- 4-neighborhood
 	if not neighborTable[node[1] - 1][node[2]    ] then neighborTable[node[1] - 1][node[2]    ] = {node[1] - 1,	node[2]     } end
 	if not neighborTable[node[1]    ][node[2] - 1] then neighborTable[node[1]    ][node[2] - 1] = {node[1],		node[2] - 1	} end
 	if not neighborTable[node[1]    ][node[2] + 1] then neighborTable[node[1]    ][node[2] + 1] = {node[1],		node[2] + 1	} end
 	if not neighborTable[node[1] + 1][node[2]    ] then neighborTable[node[1] + 1][node[2]    ] = {node[1] + 1,	node[2]		} end
 
---	if not neighborTable[node[1] + 1][node[2] + 1] then neighborTable[node[1] + 1][node[2] + 1] = {node[1] + 1,	node[2] + 1	} end
---	if not neighborTable[node[1] - 1][node[2] + 1] then neighborTable[node[1] - 1][node[2] + 1] = {node[1] - 1,	node[2] + 1	} end
---	if not neighborTable[node[1] + 1][node[2] - 1] then neighborTable[node[1] + 1][node[2] - 1] = {node[1] + 1,	node[2] - 1	} end
---	if not neighborTable[node[1] - 1][node[2] - 1] then neighborTable[node[1] - 1][node[2] - 1] = {node[1] - 1,	node[2] - 1 } end
-
-
 	neighbors[#neighbors+1] = neighborTable[node[1] - 1][node[2]    ]
 	neighbors[#neighbors+1] = neighborTable[node[1]    ][node[2] - 1]
 	neighbors[#neighbors+1] = neighborTable[node[1]    ][node[2] + 1]
 	neighbors[#neighbors+1] = neighborTable[node[1] + 1][node[2]    ]
+
+    -- 8-neighborhood
+	if not neighborTable[node[1] + 1][node[2] + 1] and self.tiles[node[1] + 1] then
+        if self.tiles[node[1] + 1][node[2] + 1] then
+            if not Tilemap.tileDict[self.tiles[node[1] + 1][node[2]]].isObstacle and not Tilemap.tileDict[self.tiles[node[1]][node[2]+1]].isObstacle then
+                neighborTable[node[1] + 1][node[2] + 1] = {node[1] + 1,	node[2] + 1	}
+            end
+        end
+    end
+
+    if not neighborTable[node[1] - 1][node[2] + 1] and self.tiles[node[1] - 1] then
+        if self.tiles[node[1] - 1][node[2] + 1] then
+            if not Tilemap.tileDict[self.tiles[node[1] - 1][node[2]]].isObstacle and not Tilemap.tileDict[self.tiles[node[1]][node[2]+1]].isObstacle then
+                neighborTable[node[1] - 1][node[2] + 1] = {node[1] - 1,	node[2] + 1	}
+            end
+        end
+    end
+
+    if not neighborTable[node[1] + 1][node[2] - 1] and self.tiles[node[1] + 1]then
+        if self.tiles[node[1] + 1][node[2] - 1] then
+            if not Tilemap.tileDict[self.tiles[node[1] + 1][node[2]]].isObstacle and not Tilemap.tileDict[self.tiles[node[1]][node[2]-1]].isObstacle then
+                neighborTable[node[1] + 1][node[2] - 1] = {node[1] + 1,	node[2] - 1	}
+            end
+        end
+    end
+
+    if not neighborTable[node[1] - 1][node[2] - 1] and self.tiles[node[1] - 1] then
+        if self.tiles[node[1] - 1][node[2] - 1] then
+            if not Tilemap.tileDict[self.tiles[node[1] - 1][node[2]]].isObstacle and not Tilemap.tileDict[self.tiles[node[1]][node[2] - 1]].isObstacle then
+                neighborTable[node[1] - 1][node[2] - 1] = {node[1] - 1,	node[2] - 1	}
+            end
+        end
+    end
+
+	neighbors[#neighbors+1] = neighborTable[node[1] + 1][node[2] + 1]
+	neighbors[#neighbors+1] = neighborTable[node[1] - 1][node[2] + 1]
+	neighbors[#neighbors+1] = neighborTable[node[1] + 1][node[2] - 1]
+	neighbors[#neighbors+1] = neighborTable[node[1] - 1][node[2] + 1]
+
 
 
 	local correction = 0

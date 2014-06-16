@@ -44,9 +44,9 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><strong>Widget</strong></li>
   <li><a href="../classes/List.html">List</a></li>
+  <li><a href="../classes/TextEntry.html">TextEntry</a></li>
   <li><a href="../classes/Button.html">Button</a></li>
   <li><a href="../classes/Container.html">Container</a></li>
-  <li><a href="../classes/TextField.html">TextField</a></li>
   <li><a href="../classes/Label.html">Label</a></li>
 </ul>
 <h2>Modules</h2>
@@ -161,6 +161,18 @@
 	<tr>
 	<td class="name" nowrap><a href="#GUI.Widget:notifyKey">GUI.Widget:notifyKey (key)</a></td>
 	<td class="summary">notifies that a key has been pressed</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Widget:attachBackgroundImage">GUI.Widget:attachBackgroundImage (slicedBackgroundSprite, slicedClickedSprite, slicedHoveredSprite)</a></td>
+	<td class="summary">If you call this function the background of the widget will be a sliced sprite that will be positioned automatically</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Widget:attachLabelImage">GUI.Widget:attachLabelImage (labelImage)</a></td>
+	<td class="summary">If you call this function the label of the widget will be a centered sprite</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GUI.Widget:visualizeAnchors">GUI.Widget:visualizeAnchors ()</a></td>
+	<td class="summary">Visualize the anchors of this widget</td>
 	</tr>
 </table>
 <h2><a href="#Render_functions">Render functions </a></h2>
@@ -505,6 +517,66 @@
 
         </li>
     </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Widget:attachBackgroundImage"></a>
+    <strong>GUI.Widget:attachBackgroundImage (slicedBackgroundSprite, slicedClickedSprite, slicedHoveredSprite)</strong>
+    </dt>
+    <dd>
+    If you call this function the background of the widget will be a sliced sprite that will be positioned automatically
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">slicedBackgroundSprite</span>
+         Background image that will be rendered centered on the widget
+        </li>
+        <li><span class="parameter">slicedClickedSprite</span>
+         Label image that will be rendered centered on the widget when the widget is clicked
+        </li>
+        <li><span class="parameter">slicedHoveredSprite</span>
+         Label image that will be rendered centered on the widget when the widget is hovered and not clicked
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Widget:attachLabelImage"></a>
+    <strong>GUI.Widget:attachLabelImage (labelImage)</strong>
+    </dt>
+    <dd>
+    If you call this function the label of the widget will be a centered sprite
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">labelImage</span>
+         Label image that will be rendered centered on the widget
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GUI.Widget:visualizeAnchors"></a>
+    <strong>GUI.Widget:visualizeAnchors ()</strong>
+    </dt>
+    <dd>
+    Visualize the anchors of this widget
+
+
 
 
 

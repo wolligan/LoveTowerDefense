@@ -1,8 +1,8 @@
 project = 'Utilities'
 description='Some useful Modules'
 title='Utilities'
-readme='doc/Utilities/Readme.md'
+readme='Readme.md'
 file = '../../src/Utilities'
-dir='doc/Utilities'
+dir='.'
 format='discount'
 kind_names={topic='Manual'}

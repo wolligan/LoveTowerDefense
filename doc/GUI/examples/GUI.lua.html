@@ -44,9 +44,9 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../classes/Widget.html">Widget</a></li>
   <li><a href="../classes/List.html">List</a></li>
+  <li><a href="../classes/TextEntry.html">TextEntry</a></li>
   <li><a href="../classes/Button.html">Button</a></li>
   <li><a href="../classes/Container.html">Container</a></li>
-  <li><a href="../classes/TextField.html">TextField</a></li>
   <li><a href="../classes/Label.html">Label</a></li>
 </ul>
 <h2>Manual</h2>
@@ -277,8 +277,8 @@ function Testing.GUI.fillContainer2()
     l2_cont2.topAnchorOffset = 20
     l2_cont2.bottomAnchorOffset = 50
 
-    -- create a textfield
-    local tf1_cont2 = GUI.Textfield("</span>blubb<span class="string">")
+    -- create a TextEntry
+    local tf1_cont2 = GUI.TextEntry("</span>blubb<span class="string">")
     tf1_cont2:setLeftAnchor(l2_cont2, "</span>left<span class="string">")
     tf1_cont2:setRightAnchor(l2_cont2, "</span>right<span class="string">")
     tf1_cont2:setTopAnchor(l2_cont2, "</span>bottom<span class="string">")

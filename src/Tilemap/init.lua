@@ -18,7 +18,7 @@ Tilemap.curTickTime = 0
 Tilemap.paused = false
 
 
----
+--- initializes the Tilemap Engine
 function Tilemap.init()
     Tilemap.lastTime = love.timer.getTime()
     Lighting.init()
@@ -27,7 +27,7 @@ function Tilemap.init()
     Lighting.drawUnlitBackground = function() Tilemap.getActiveScene():renderTiles() end
 end
 
----
+--- renders the Tilemap Engine
 function Tilemap.render()
     Lighting.renderShadedScene(love.graphics.getWidth()/2-Tilemap.getActiveScene().camera.x, love.graphics.getHeight()/2 - Tilemap.getActiveScene().camera.y)
     Tilemap.getActiveScene():renderObstacleTiles()
@@ -36,7 +36,8 @@ function Tilemap.render()
     --Tilemap.renderActiveSceneTiles()
 end
 
----
+--- updates the Tilemap Engine
+--@param dt delta time
 function Tilemap.update(dt)
     if #Tilemap.loadedScenes > 0 then
         Tilemap.getActiveScene().camera:update(dt)
@@ -69,31 +70,36 @@ function Tilemap.update(dt)
     Lighting.update(dt, shadowCasters)
 end
 
----
+--- Returns the active Scene
 function Tilemap.getActiveScene()
     return Tilemap.loadedScenes[Tilemap.activeSceneIndex]
 end
 
----
+--- pauses the game
 function Tilemap.pause()
     Tilemap.paused = true
 end
 
----
+--- resumes the game
 function Tilemap.resume()
     Tilemap.paused = false
 end
 
----
+--- toggle between paused and unpaused
 function Tilemap.togglePause()
     Tilemap.paused = not Tilemap.paused
 end
 
+--- loads a map from file
+--@param filepath path to the map you want to load
 function Tilemap.loadMap(filepath)
     Tilemap.getActiveScene():loadMap(filepath)
     return Tilemap.loadedScenes[#Tilemap.loadedScenes]
 end
 
+--- adds a scene to the scene list
+--@param sceneWidth Width of the scene to be created
+--@param sceneHeight Height of the scene to be created
 function Tilemap.addScene(sceneWidth, sceneHeight)
     Tilemap.loadedScenes[#Tilemap.loadedScenes+1] = Tilemap.Scene()
     Tilemap.activeSceneIndex = #Tilemap.loadedScenes

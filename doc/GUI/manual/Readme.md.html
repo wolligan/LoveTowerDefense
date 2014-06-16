@@ -51,9 +51,9 @@
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../classes/Widget.html">Widget</a></li>
   <li><a href="../classes/List.html">List</a></li>
+  <li><a href="../classes/TextEntry.html">TextEntry</a></li>
   <li><a href="../classes/Button.html">Button</a></li>
   <li><a href="../classes/Container.html">Container</a></li>
-  <li><a href="../classes/TextField.html">TextField</a></li>
   <li><a href="../classes/Label.html">Label</a></li>
 </ul>
 <h2>Examples</h2>
@@ -178,7 +178,7 @@ You can snap those anchors to anchors of other widgets or the borders of the scr
 <p>At first you have to create a <a href="../classes/Container.html">Container</a> to hold your widgets:</p>
 
 <pre>
-<span class="comment">-- create container
+<span class="comment">-- create container with default colors and font
 </span><span class="keyword">local</span> guiContainer = GUI.Container()
 </pre>
 
@@ -223,15 +223,19 @@ label.topAnchorOffset = <span class="number">0</span>
 
 <pre>
 <span class="comment">-- add widget to container
-</span>
+</span>guiContainer:addWidget(button)
+guiContainer:addWidget(label)
 </pre>
 
 
-<p>Optionally you can individualize every single widget.</p>
+<p>After adding your widgets to the container you can optionally individualize every single widget.</p>
 
 <pre>
-<span class="comment">-- change font and font color
-</span>
+<span class="comment">-- change font of your label
+</span>label.font = love.graphics.newFont(<span class="string">"path/to/your/font.ttf"</span>, <span class="number">15</span>)
+
+<span class="comment">-- color of the button will be yellow
+</span>button.fontColor = {<span class="number">255</span>,<span class="number">255</span>,<span class="number">0</span>}
 </pre>
 
 
@@ -239,24 +243,27 @@ label.topAnchorOffset = <span class="number">0</span>
 
 <h2>Widgets</h2>
 
-<h3>Make your own Widgets</h3>
+<h3>How to make your own Widgets</h3>
 
-<p>Every Widget except Widget itself needs to be derived from the Widget class:
+<p>Every <a href="../classes/Widget.html">Widget</a> except Widget itself needs to be derived from the Widget class:</p>
+
 <pre>
-<span class="comment">&mdash;&ndash; Label Widget
-</span><span class="comment">&mdash;@classmod MyWidget
+<span class="comment">--- My Widget
+</span><span class="comment">--@classmod MyWidget
 </span>
-<span class="global">require</span> <span class="string">&ldquo;GUI.Widget&rdquo;</span></p>
+<span class="global">require</span> <span class="string">"GUI.Widget"</span>
 
-<p>GUI.MyWidget = {}
-Utilities.OO.createDerivedClass(GUI.MyWidget, GUI.Widget)</p>
+GUI.MyWidget = {}
+Utilities.OO.createDerivedClass(GUI.MyWidget, GUI.Widget)
 
-<p><span class="comment">&mdash;&ndash; Constructor
+<span class="comment">--- Constructor
 </span><span class="keyword">function</span> MyWidget:new()
    self.label = <span class="number">0</span>
 <span class="keyword">end</span>
 </pre>
-Now we have our basic Widget which can be extended. For example you can overwrite the render and update functions.
+
+
+<p>Now we have our basic Widget which can be extended. For example you can overwrite the render and update functions.
 (The Widget class has some useful <a href="../classes/Widget.html#Render_functions">predefined methods</a> that can be used for rendering.)</p>
 
 <pre>
@@ -276,6 +283,19 @@ Now we have our basic Widget which can be extended. For example you can overwrit
 <span class="comment">-- ...
 </span>
 </pre>
+
+
+<p>Here is the list of all appearance settings you can change:</p>
+
+<ul>
+<li>font</li>
+<li>backgroundColor</li>
+<li>foregroundColor</li>
+<li>hoverColor</li>
+<li>clickedColor</li>
+<li>borderColor</li>
+<li>fontColor</li>
+</ul>
 
 
 <h3>Callbacks</h3>

@@ -33,8 +33,10 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Usage">Usage </a></li>
+<li><a href="#Lighting">Lighting </a></li>
+<li><a href="#Structure_of_Tilemap">Structure of Tilemap </a></li>
 <li><a href="#Tile_Dictionary">Tile Dictionary </a></li>
-<li><a href="#Pathfinding">Pathfinding </a></li>
+<li><a href="#Scenes">Scenes </a></li>
 </ul>
 
 
@@ -45,13 +47,13 @@
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../modules/Tilemap.html">Tilemap</a></li>
-  <li><a href="../modules/Character.html">Character</a></li>
   <li><a href="../modules/Settings.html">Settings</a></li>
-  <li><a href="../modules/Camera.html">Camera</a></li>
   <li><a href="../modules/TileDict.html">TileDict</a></li>
 </ul>
 <h2>Classes</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/Character.html">Character</a></li>
+  <li><a href="../classes/Camera.html">Camera</a></li>
   <li><a href="../classes/Scene.html">Scene</a></li>
 </ul>
 <h2>Examples</h2>
@@ -69,28 +71,150 @@
 
 <h2>Usage</h2>
 
-<pre>
-<span class="keyword">function</span> love.<span class="global">load</span>()
+<p>To integrate the tilemap engine into your löve2D project you need to require it and call the standard callbacks</p>
 
+<pre>
+<span class="global">require</span> <span class="string">"Tilemap"</span>
+
+<span class="keyword">function</span> love.<span class="global">load</span>()
+    Tilemap.init()
 <span class="keyword">end</span>
 
 <span class="keyword">function</span> love.draw()
-
+    Tilemap.render()
 <span class="keyword">end</span>
 
 <span class="keyword">function</span> love.update(dt)
-
+    Tilemap.update(dt)
 <span class="keyword">end</span>
 </pre>
 
 
-<p><a name="Tile_Dictionary"></a></p>
+<p><a name="Lighting"></a></p>
+
+<h2>Lighting</h2>
+
+<p>By doing</p>
+
+<pre>
+<span class="global">require</span> <span class="string">"Tilemap"</span>
+</pre>
+
+
+<p>you also require the <a href="../../Lighting/manual/Readme.md.html">Lighting Engine</a>. Simply add a <a href="../../Lighting/classes/LightSource.html">LightSource</a> to the Lighting Engine as described in its <a href="../../Lighting/manual/Readme.md.html">Documentation</a> and the Tilemap Engine will do everything for you.</p>
+
+<p><a name="Structure_of_Tilemap"></a></p>
+
+<h2>Structure of Tilemap</h2>
+
+<p><a href="../modules/Tilemap.lua">Tilemap</a> can hold more than one <a href="../classes/Scene.html">Scene</a>. To add a Scene do the following:
+<pre>
+Tilemap.scenes[#Tilemap.scenes+<span class="number">1</span>] = Tilemap.Scene()
+</pre>
+<a name="Tile_Dictionary"></a></p>
 
 <h2>Tile Dictionary</h2>
 
-<p><a name="Pathfinding"></a></p>
+<p>The <a href="../modules/TileDict.html">Tile Dictionary</a> brings logic in the tilemap. Every Tile has some fields that you can set. Following fields are allowed in Tile Dictionary:
+<em> name &ndash; string with the name of the tile.
+</em> draw &ndash; function that gets called for rendering the tile.
+<em> drawParams &ndash; parameters of the draw function.
+</em> color &ndash; color of the tile as {r,g,b}.
+<em> speed &ndash; multiplicator of the speed, 1 changes nothing.
+</em> isObstacle &ndash; a character cannot walk of an obstacle.
+* update &ndash; function that gets called before rendering</p>
 
-<h2>Pathfinding</h2>
+<p>To add a simple white tile without logic to your Dictionary do something like this:
+<pre>
+Tilemap.tileDict[#Tilemap.tileDict+<span class="number">1</span>] = {
+   name = <span class="string">&ldquo;my nile name&rdquo;</span>,
+   draw = love.graphics.rectangle,
+   drawParams = {<span class="string">&ldquo;fill&rdquo;</span>, <span class="number">0</span>, <span class="number">0</span>, Tilemap.Settings.tileSize, Tilemap.Settings.tileSize},
+   color = {<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>},
+   speed = <span class="number">1</span>,
+   isObstacle = <span class="keyword">false</span>,
+   update = <span class="keyword">function</span>(apparentScene, posX, posY, tick)
+   <span class="comment">&mdash; do stuff
+</span>   <span class="keyword">end</span>
+}
+</pre></p>
+
+<h3>Render function and parameters</h3>
+
+<p>As you can see we have</p>
+
+<pre>
+love.graphics.rectangle
+</pre>
+
+
+<p>as render function and</p>
+
+<pre>
+{<span class="string">"fill"</span>, <span class="number">0</span>, <span class="number">0</span>, Tilemap.Settings.tileSize, Tilemap.Settings.tileSize}
+</pre>
+
+
+<p>as the parameters for our render function. The engine automatically calls the specified render function with the specified parameters. You can also do the following:</p>
+
+<pre>
+draw = <span class="keyword">function</span>()
+    love.graphics.circle(<span class="string">"fill"</span>,
+                         Tilemap.Settings.tileSize/<span class="number">2</span>,
+                         Tilemap.Settings.tileSize/<span class="number">2</span>,
+                         Tilemap.Settings.tileSize/<span class="number">2</span>)
+    love.graphics.setColor(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>)
+    love.graphics.circle(<span class="string">"fill"</span>,
+                         Tilemap.Settings.tileSize/<span class="number">2</span>,
+                         Tilemap.Settings.tileSize/<span class="number">2</span>,
+                         Tilemap.Settings.tileSize/<span class="number">2</span>-<span class="number">2</span>)
+<span class="keyword">end</span>,
+
+drawParams = {}
+</pre>
+
+
+<p>To render a black circle with a contour that is coloured as specified in the field &ldquo;color&rdquo;.</p>
+
+<h3>Update function</h3>
+
+<p>You can specify an update function to bring some logic into your tiles, for example every tick the engine sends you can let spawn some characters.
+The structure of update looks like this:</p>
+
+<pre>
+update = <span class="keyword">function</span>(apparentScene, posX, posY, tick)
+    <span class="comment">-- do stuff
+</span><span class="keyword">end</span>
+</pre>
+
+
+<p>The engine sends in which scene the current tile is located (apparentScene), where in the scene it is located (posX and posY) and if there was a tick.
+You can use the tick parameter to do something in intervals, for example you can let spawn enemies.</p>
+
+<p><a name="Scenes"></a></p>
+
+<h2>Scenes</h2>
+
+<h3>Structure of a scene</h3>
+
+<p><a href="../classes/Scene.html">Scenes</a> hold the following basic tables:</p>
+
+<ul>
+<li>tiles (The actual tilemap as a 2D table that holds only indices that will reference the Tile Dictionary)</li>
+<li>characters (a list of all characters or objects instantiated from classes that are derived from Tilemap.Character)</li>
+<li>playerIndex (index of the currently activated character in the characters table, you could move this character or upgrade it, &hellip;)</li>
+<li>camera (the camera will transform the map, can follow characters or you can just fly over the map)</li>
+</ul>
+
+
+<h3>Pathfinding</h3>
+
+<p>Every Scene can calculate the shortest path from one tile position to another. The calculated path won&rsquo;t have obstacle in its list of tiles and will try to take the tiles with the least speed factor.</p>
+
+<h3>Characters</h3>
+
+<p><a href="../classes/Character.html">Characters</a> are non-static objects in the scene. You can create derived classes like NPCs or items that you can collect or towers that attack other characters &hellip;..
+Every Character has path finding methods for its scene and can have a basic AI.</p>
 
 
 </div> <!-- id="content" -->

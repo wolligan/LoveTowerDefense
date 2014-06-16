@@ -3,6 +3,14 @@
 
 Ingame = {}
 
+require "Tilemap"
+require "MainMenu"
+require "Networking"
+require "SplashScreen"
+require "Testing"
+require "LevelEditor"
+require "Credits"
+
 require "Ingame.BuildPhase"
 require "Ingame.SpawnPhase"
 

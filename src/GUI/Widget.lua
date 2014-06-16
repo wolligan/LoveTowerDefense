@@ -181,6 +181,10 @@ function GUI.Widget:notifyKey(key)
 
 end
 
+--- If you call this function the background of the widget will be a sliced sprite that will be positioned automatically
+--@param slicedBackgroundSprite Background image that will be rendered centered on the widget
+--@param slicedClickedSprite Label image that will be rendered centered on the widget when the widget is clicked
+--@param slicedHoveredSprite Label image that will be rendered centered on the widget when the widget is hovered and not clicked
 function GUI.Widget:attachBackgroundImage(slicedBackgroundSprite, slicedClickedSprite, slicedHoveredSprite)
     self.backgroundIsImaged = true
     self.backgroundImage = slicedBackgroundSprite
@@ -188,11 +192,14 @@ function GUI.Widget:attachBackgroundImage(slicedBackgroundSprite, slicedClickedS
     self.hoveredImage = slicedHoveredSprite or slicedBackgroundSprite
 end
 
+--- If you call this function the label of the widget will be a centered sprite
+--@param labelImage Label image that will be rendered centered on the widget
 function GUI.Widget:attachLabelImage(labelImage)
     self.labelIsImaged = true
     self.labelImage = labelImage
 end
 
+--- Visualize the anchors of this widget
 function GUI.Widget:visualizeAnchors()
 -- left anchor
     love.graphics.setColor(150,150,0)
